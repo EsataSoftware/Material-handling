@@ -137,9 +137,9 @@ void Control_Mode()
                 Write_Flag = 0;
                 Stop_Flag  = 1;
             }
-            // if (LX != 0 && LY != 0) {
-            // 回传位置数据跳出停止状态
-            // }
+            if (LX != 0 && LY != 0) {
+            //回传位置数据跳出停止状态
+            }
         }
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
@@ -210,10 +210,10 @@ void Control_Mode()
 
             Place_ALL(Serial_TxPacket[2]);
         }
-        // if (Find3 == 1) {
+        if (Find3 == 1) {
 
-        //     Place_ALL(Serial_TxPacket[3]);
-        // }
+            Place_ALL(Serial_TxPacket[3]);
+        }
         if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
             if (Catch_11 == 0) {
                 if (Serial_TxPacket[1] <= Serial_TxPacket[3]) {
