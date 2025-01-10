@@ -137,9 +137,9 @@ void Control_Mode()
                 Write_Flag = 0;
                 Stop_Flag  = 1;
             }
-            if (LX != 0 && LY != 0) {
-            //回传位置数据跳出停止状态
-            }
+            // if (LX != 0 && LY != 0) {
+            // //回传位置数据跳出停止状态
+            // }
         }
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
