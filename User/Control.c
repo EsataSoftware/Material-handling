@@ -162,16 +162,16 @@ void Control_Mode()
         if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0X01;
+            Serial_TxPacket[0] = 0X01; //放置树莓派重复进入状态
             Serial_SendPacket();
         } else if (Mode_Flag == REVOLVE_MODE_90 && Catch_Flag == 0) {
             Mode_Flag          = TRANS_RIGHT_MODE;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial_SendPacket();
             Tran_Flag = 1;
-        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) {
+        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) {//还未使用过的姿态调节
             Mode_Flag          = STOP_MODE;
-            Serial_TxPacket[0] = 0XAD;
+            Serial_TxPacket[0] = 0XAD;// 给树莓派寻黄的指令
             Serial_SendPacket();
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
