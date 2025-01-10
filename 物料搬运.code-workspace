@@ -1,0 +1,41 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "delay.h": "c",
+            "encoder.h": "c",
+            "servo.h": "c",
+            "control.h": "c",
+            "init.h": "c",
+            "timer4.h": "c",
+            "oled.h": "c",
+            "all_data.h": "c",
+            "serial.h": "c",
+            "pid.h": "c",
+            "stdio.h": "c",
+            "mpu6050.h": "c",
+            "stm32f10x.h": "c"
+        }
+    },
+    "extensions": {},
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "cwd": "${workspaceFolder}",
+                "executable": "./bin/executable.elf",
+                "name": "Debug with ST-Link",
+                "request": "launch",
+                "type": "cortex-debug",
+                "runToEntryPoint": "main",
+                "showDevDebugOutput": "none",
+                "servertype": "stlink"
+            }
+
+        ]
+    }
+}
