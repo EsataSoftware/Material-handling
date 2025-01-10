@@ -162,16 +162,16 @@ void Control_Mode()
         if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0X01; // 放置树莓派重复进入状态
+            Serial_TxPacket[0] = 0X01; //放置树莓派重复进入状态
             Serial_SendPacket();
         } else if (Mode_Flag == REVOLVE_MODE_90 && Catch_Flag == 0) {
             Mode_Flag          = TRANS_RIGHT_MODE;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial_SendPacket();
             Tran_Flag = 1;
-        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
+        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) {//还未使用过的姿态调节
             Mode_Flag          = STOP_MODE;
-            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
+            Serial_TxPacket[0] = 0XAD;// 给树莓派寻黄的指令
             Serial_SendPacket();
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
@@ -187,148 +187,148 @@ void Control_Mode()
                 ALL_Place++;
             }
         }
-        // } else if (ALL_Place == 1 || ALL_Place == 4) {
-        //     if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Catch_11 == 0) {
-        //         Mode_Flag          = FOR_MODE;
-        //         Serial_TxPacket[0] = 0XAA;
-        //         Serial_SendPacket();                            // 给树莓派寻白的指令
-        //     } else if (Write_Flag == 0XAA && Catch_Flag == 1) { // 寻找到白色进入此状态
-        //         Mode_Flag          = LOCATION_MODE;
-        //         Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
-        //         Serial_SendPacket();
-        //         if (LX != 0 && LY != 0) {
-        //             Write_Flag  = 0;
-        //             Search_Flag = 1;
-        //             Serial_SendPacket();
-        //         }
-        //     }
-        //     if (Find1 == 1 && Search_Flag == 1) {
+    } else if (ALL_Place == 1 || ALL_Place == 4) {
+        if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Catch_11 == 0) {
+            Mode_Flag          = FOR_MODE;
+            Serial_TxPacket[0] = 0XAA;
+            Serial_SendPacket();                            // 给树莓派寻白的指令
+        } else if (Write_Flag == 0XAA && Catch_Flag == 1) { // 寻找到白色进入此状态
+            Mode_Flag          = LOCATION_MODE;
+            Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
+            Serial_SendPacket();
+            if (LX != 0 && LY != 0) {
+                Write_Flag  = 0;
+                Search_Flag = 1;
+                Serial_SendPacket();
+            }
+        }
+        if (Find1 == 1 && Search_Flag == 1) {
 
-        //         Place_ALL(Serial_TxPacket[1]);
-        //     }
-        //     if (Find2 == 1) {
+            Place_ALL(Serial_TxPacket[1]);
+        }
+        if (Find2 == 1) {
 
-        //         Place_ALL(Serial_TxPacket[2]);
-        //     }
-        //     if (Find3 == 1) {
+            Place_ALL(Serial_TxPacket[2]);
+        }
+        if (Find3 == 1) {
 
-        //         Place_ALL(Serial_TxPacket[3]);
-        //     }
-        //     if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
-        //         if (Catch_11 == 0) {
-        //             if (Serial_TxPacket[1] <= Serial_TxPacket[3]) {
-        //                 Mode_Flag = BACK_MODE;
-        //             } else {
-        //                 Mode_Flag = FOR_MODE;
-        //             }
-        //             Catch_11 = 1;
-        //         }
+            Place_ALL(Serial_TxPacket[3]);
+        }
+        if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
+            if (Catch_11 == 0) {
+                if (Serial_TxPacket[1] <= Serial_TxPacket[3]) {
+                    Mode_Flag = BACK_MODE;
+                } else {
+                    Mode_Flag = FOR_MODE;
+                }
+                Catch_11 = 1;
+            }
 
-        //         Catch_All(Serial_TxPacket[1]);
-        //     }
-        //     if (Catch2 == 1) {
-        //         Catch_All(Serial_TxPacket[2]);
-        //     }
-        //     if (Catch3 == 1) {
-        //         Catch_All(Serial_TxPacket[3]);
-        //     }
+            Catch_All(Serial_TxPacket[1]);
+        }
+        if (Catch2 == 1) {
+            Catch_All(Serial_TxPacket[2]);
+        }
+        if (Catch3 == 1) {
+            Catch_All(Serial_TxPacket[3]);
+        }
 
-        //     if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0) // 此处Mode_Flag由main函数设置
-        //     {
-        //         pidRest(pPidObject, 6);                // 数据复位
-        //         Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
-        //         Angle_Yaw          = Angle_Yaw;
-        //         Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-        //         Serial_SendPacket();
-        //     }
-        //     if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
-        //         Mode_Flag = STOP_MODE;
-        //         Adjust_Timer++;
-        //         if (Adjust_Timer >= 400) {
-        //             Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
-        //             Mode_Flag          = BACK_MODE;
-        //             Serial_TxPacket[0] = 0XAA;
-        //             Serial_SendPacket();
-        //             Search_Flag2 = 1;
-        //             ALL_Place++;
-        //             Find1            = 1;
-        //             Catch1           = 1; // 下次要用的数据进行恢复
-        //             P_1              = 0;
-        //             P_2              = 0;
-        //             P_3              = 0;
-        //             Place_Over_Red   = 0;
-        //             Place_Over_Blue  = 0;
-        //             Place_Over_Green = 0;
-        //             Adjust_Timer     = 0;
-        //         }
-        //     }
-        // } else if (ALL_Place == 2 || ALL_Place == 5) {
-        //     if (Find1 == 1 && Search_Flag2 == 1) {
-        //         Place_ALL(Serial_TxPacket[1]);
-        //     }
-        //     if (Find2 == 1) {
+        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0) // 此处Mode_Flag由main函数设置
+        {
+            pidRest(pPidObject, 6);                // 数据复位
+            Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw          = Angle_Yaw;
+            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
+            Serial_SendPacket();
+        }
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
+            Mode_Flag = STOP_MODE;
+            Adjust_Timer++;
+            if (Adjust_Timer >= 400) {
+                Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
+                Mode_Flag          = BACK_MODE;
+                Serial_TxPacket[0] = 0XAA;
+                Serial_SendPacket();
+                Search_Flag2 = 1;
+                ALL_Place++;
+                Find1            = 1;
+                Catch1           = 1; // 下次要用的数据进行恢复
+                P_1              = 0;
+                P_2              = 0;
+                P_3              = 0;
+                Place_Over_Red   = 0;
+                Place_Over_Blue  = 0;
+                Place_Over_Green = 0;
+                Adjust_Timer     = 0;
+            }
+        }
+    } else if (ALL_Place == 2 || ALL_Place == 5) {
+        if (Find1 == 1 && Search_Flag2 == 1) {
+            Place_ALL(Serial_TxPacket[1]);
+        }
+        if (Find2 == 1) {
 
-        //         Place_ALL(Serial_TxPacket[2]);
-        //     }
-        //     if (Find3 == 1) {
+            Place_ALL(Serial_TxPacket[2]);
+        }
+        if (Find3 == 1) {
 
-        //         Place_ALL(Serial_TxPacket[3]);
-        //     }
-        //     if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Tran_Flag == 0) // 此处Mode_Flag由main函数设置
-        //     {
-        //         pidRest(pPidObject, 6);       // 数据复位
-        //         Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
-        //         Angle_Yaw = Angle_Yaw - 75;
-        //         Tran_Flag = 1;
-        //     }
+            Place_ALL(Serial_TxPacket[3]);
+        }
+        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Tran_Flag == 0) // 此处Mode_Flag由main函数设置
+        {
+            pidRest(pPidObject, 6);       // 数据复位
+            Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw = Angle_Yaw - 75;
+            Tran_Flag = 1;
+        }
 
-        //     if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
-        //         Serial_TxPacket[0] = 0XAA;
-        //         Mode_Flag          = BACK_MODE;
-        //         Serial_SendPacket();
-        //         Adjust_Timer = 0;
-        //     }
-        // }
-        // if (Write_Flag == 0XAA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
-        //     if (ALL_Place == 2) {
-        //         Serial_TxPacket[0] = 0XFA; // 进入寻白模式
-        //         Serial_SendPacket();
-        //     } else if (ALL_Place == 5) {
-        //         Serial_TxPacket[0] = 0XEA; // 结束寻蓝
-        //         Serial_SendPacket();
-        //     }
-        //     Serial_SendPacket();
-        //     ALL_Place++;
-        //     Stop_Flag        = 0;
-        //     Location_Flag    = 0;
-        //     Catch_Flag       = 0;
-        //     Find1            = 1;
-        //     Catch1           = 1;
-        //     P_1              = 0;
-        //     P_2              = 0;
-        //     P_3              = 0;
-        //     C_1              = 0;
-        //     C_2              = 0;
-        //     C_3              = 0;
-        //     Adjust_Timer     = 0;
-        //     Search_Flag      = 1;
-        //     Place_Over_Red   = 0;
-        //     Place_Over_Blue  = 0;
-        //     Place_Over_Green = 0;
-        //     Catch_Over_Red   = 0;
-        //     Catch_Over_Blue  = 0;
-        //     Catch_Over_Green = 0;
-        //     Red_Place_Over   = 0;
-        //     Blue_Place_Over  = 0;
-        //     Green_Place_Over = 0;
-        // } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
-        //     Mode_Flag          = TRANS_RIGHT_MODE;
-        //     Serial_TxPacket[0] = 0XAA;
-        //     Serial_SendPacket();
-        //     Adjust_Timer++;
-        //     if (Adjust_Timer >= 160) {
-        //         Mode_Flag = STOP_MODE;
-        //     }
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
+            Serial_TxPacket[0] = 0XAA;
+            Mode_Flag          = BACK_MODE;
+            Serial_SendPacket();
+            Adjust_Timer = 0;
+        }
+    }
+    if (Write_Flag == 0XAA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+        if (ALL_Place == 2) {
+            Serial_TxPacket[0] = 0XFA; // 进入寻白模式
+            Serial_SendPacket();
+        } else if (ALL_Place == 5) {
+            Serial_TxPacket[0] = 0XEA; // 结束寻蓝
+            Serial_SendPacket();
+        }
+        Serial_SendPacket();
+        ALL_Place++;
+        Stop_Flag        = 0;
+        Location_Flag    = 0;
+        Catch_Flag       = 0;
+        Find1            = 1;
+        Catch1           = 1;
+        P_1              = 0;
+        P_2              = 0;
+        P_3              = 0;
+        C_1              = 0;
+        C_2              = 0;
+        C_3              = 0;
+        Adjust_Timer     = 0;
+        Search_Flag      = 1;
+        Place_Over_Red   = 0;
+        Place_Over_Blue  = 0;
+        Place_Over_Green = 0;
+        Catch_Over_Red   = 0;
+        Catch_Over_Blue  = 0;
+        Catch_Over_Green = 0;
+        Red_Place_Over   = 0;
+        Blue_Place_Over  = 0;
+        Green_Place_Over = 0;
+    } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+        Mode_Flag          = TRANS_RIGHT_MODE;
+        Serial_TxPacket[0] = 0XAA;
+        Serial_SendPacket();
+        Adjust_Timer++;
+        if (Adjust_Timer >= 160) {
+            Mode_Flag = STOP_MODE;
+        }
     }
 }
 
