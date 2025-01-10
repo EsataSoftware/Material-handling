@@ -125,22 +125,22 @@ void Control_Mode()
                 Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
             }
         }
-        // if (Trans_Flag >= 1900 && Stop_Flag == 0) // 寻找到白色进入此状态
-        // {
-        //     Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
-        //     Serial_SendPacket();
-        //     Mode_Flag = TRANS_RIGHT_MODE;
-        //     OLED_ShowString_high(2, 1, "Trans");
-        //     if (Trans_Flag >= 2050) {
-        //         OLED_ShowString_high(2, 1, "STOP!");
-        //         Mode_Flag  = STOP_MODE;
-        //         Write_Flag = 0;
-        //         Stop_Flag  = 1;
-        //     }
-        //     // if (LX != 0 && LY != 0) {
-        //     // //回传位置数据跳出停止状态
-        //     // }
-        // }
+        if (Trans_Flag >= 1900 && Stop_Flag == 0) // 寻找到白色进入此状态
+        {
+            Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
+            Serial_SendPacket();
+            Mode_Flag = TRANS_RIGHT_MODE;
+            OLED_ShowString_high(2, 1, "Trans");
+            if (Trans_Flag >= 2050) {
+                OLED_ShowString_high(2, 1, "STOP!");
+                Mode_Flag  = STOP_MODE;
+                Write_Flag = 0;
+                Stop_Flag  = 1;
+            }
+            // if (LX != 0 && LY != 0) {
+            // //回传位置数据跳出停止状态
+            // }
+        }
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
             Mode_Flag = LOCATION_MODE; // 进入定位状态
