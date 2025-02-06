@@ -190,7 +190,7 @@ int16_t right_back_Encoder_Get(void)
 {
 	int16_t Temp;
 	Temp = TIM_GetCounter(TIM4);
-	TIM_SetCounter(TIM4, 0);//给CNT清零
+	TIM_SetCounter(TIM4, 0);//给CNT
 	return -Temp;
 }
 
