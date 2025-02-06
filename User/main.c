@@ -18,7 +18,7 @@ unsigned char QrCode = 0;
 
 int main(void)
 {
-    unsigned char Oled_Show_Flag  = 0;
+    unsigned char Oled_Show_Flag  = 0;// 显示二维码
     unsigned char Catch_Frequency = 0; // 抓取的次数
     ALL_Init();
     while (1) {
