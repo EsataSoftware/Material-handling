@@ -130,9 +130,9 @@ void Control_Mode()
             Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
             Serial_SendPacket();
             Mode_Flag = TRANS_RIGHT_MODE;
-            OLED_ShowString_high(2, 1, "Trans");
+            // OLED_ShowString_high(2, 1, "Trans");
             if (Trans_Flag >= 2050) {
-                OLED_ShowString_high(2, 1, "STOP!");
+                // OLED_ShowString_high(2, 1, "STOP!");
                 Mode_Flag  = STOP_MODE;
                 Write_Flag = 0;
                 Stop_Flag  = 1;
@@ -144,12 +144,12 @@ void Control_Mode()
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
             Mode_Flag = LOCATION_MODE; // 进入定位状态
-            OLED_ShowString_high(2, 1, "LOCAT");
+            // OLED_ShowString_high(2, 1, "LOCAT");
             Location_Flag = 1;
         }
         if (Write_Flag == 0XCD && Mode_Flag == LOCATION_MODE) { // 进入抓取状态
             Mode_Flag = STOP_MODE;
-            OLED_ShowString_high(2, 1, "STOP");
+            // OLED_ShowString_high(2, 1, "STOP");
             Catch_Flag = 1; // 抓取标志位置
         }
         if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
@@ -162,16 +162,16 @@ void Control_Mode()
         if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0X01; //放置树莓派重复进入状态
+            Serial_TxPacket[0] = 0X01; // 放置树莓派重复进入状态
             Serial_SendPacket();
         } else if (Mode_Flag == REVOLVE_MODE_90 && Catch_Flag == 0) {
             Mode_Flag          = TRANS_RIGHT_MODE;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial_SendPacket();
             Tran_Flag = 1;
-        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) {//还未使用过的姿态调节
+        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
             Mode_Flag          = STOP_MODE;
-            Serial_TxPacket[0] = 0XAD;// 给树莓派寻黄的指令
+            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial_SendPacket();
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
