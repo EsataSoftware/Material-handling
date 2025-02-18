@@ -18,7 +18,9 @@
             "pid.h": "c",
             "stdio.h": "c",
             "mpu6050.h": "c",
-            "stm32f10x.h": "c"
+            "stm32f10x.h": "c",
+            "string_to_num.h": "c",
+            "hmi.h": "c"
         }
     },
     "extensions": {},

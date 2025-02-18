@@ -55,47 +55,47 @@ void Serial4_Init(void)
     USART_Cmd(UART4, ENABLE);
 }
 
-// void Serial_5_Init(void)
-// {
-//     RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
-//     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-//     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+void Serial_5_Init(void)
+{
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
 
-//     GPIO_InitTypeDef GPIO_InitStructure;
-//     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
-//     GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_2;
-//     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//     GPIO_Init(GPIOD, &GPIO_InitStructure);
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-//     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
-//     GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
-//     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//     GPIO_Init(GPIOC, &GPIO_InitStructure);
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-//     USART_InitTypeDef USART_InitStructure;
-//     USART_InitStructure.USART_BaudRate            = 57600;
-//     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-//     USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
-//     USART_InitStructure.USART_Parity              = USART_Parity_No;
-//     USART_InitStructure.USART_StopBits            = USART_StopBits_1;
-//     USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
-//     USART_Init(UART5, &USART_InitStructure);
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 57600;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    USART_Init(UART5, &USART_InitStructure);
 
-//     USART_ITConfig(UART5, USART_IT_RXNE, ENABLE);
+    USART_ITConfig(UART5, USART_IT_RXNE, ENABLE);
 
-//     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-//     NVIC_InitTypeDef NVIC_InitStructure;
-//     NVIC_InitStructure.NVIC_IRQChannel                   = UART5_IRQn;
-//     NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
-//     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-//     NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
-//     NVIC_Init(&NVIC_InitStructure);
+    NVIC_InitTypeDef NVIC_InitStructure;
+    NVIC_InitStructure.NVIC_IRQChannel                   = UART5_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+    NVIC_Init(&NVIC_InitStructure);
 
-//     USART_Cmd(UART5, ENABLE);
-// }
+    USART_Cmd(UART5, ENABLE);
+}
 
-void Serial_SendByte(uint8_t Byte)
+void Serial5_SendByte(uint8_t Byte)
 {
     USART_SendData(UART5, Byte);
     while (USART_GetFlagStatus(UART5, USART_FLAG_TXE) == RESET);
@@ -107,7 +107,7 @@ void Serial4_SendByte(uint8_t Byte)
     while (USART_GetFlagStatus(UART4, USART_FLAG_TXE) == RESET);
 }
 
-void Serial_SendArray(uint8_t *Array, uint16_t Length)
+void Serial4_SendArray(uint8_t *Array, uint16_t Length)
 {
     uint16_t i;
     for (i = 0; i < Length; i++) {
@@ -115,11 +115,11 @@ void Serial_SendArray(uint8_t *Array, uint16_t Length)
     }
 }
 
-void Serial_SendString(char *String)
+void Serial5_SendString(char *String)
 {
     uint8_t i;
     for (i = 0; String[i] != '\0'; i++) {
-        Serial_SendByte(String[i]);
+        Serial5_SendByte(String[i]);
     }
 }
 
@@ -136,13 +136,13 @@ void Serial_SendNumber(uint32_t Number, uint8_t Length)
 {
     uint8_t i;
     for (i = 0; i < Length; i++) {
-        Serial_SendByte(Number / Serial_Pow(10, Length - i - 1) % 10 + '0');
+        Serial5_SendByte(Number / Serial_Pow(10, Length - i - 1) % 10 + '0');
     }
 }
 
 int fputc(int ch, FILE *f)
 {
-    Serial_SendByte(ch);
+    Serial5_SendByte(ch);
     return ch;
 }
 
@@ -153,13 +153,13 @@ void Serial_Printf(char *format, ...)
     va_start(arg, format);
     vsprintf(String, format, arg);
     va_end(arg);
-    Serial_SendString(String);
+    Serial5_SendString(String);
 }
 
-void Serial_SendPacket(void)
+void Serial4_SendPacket(void)
 {
     Serial4_SendByte(0xFF);
-    Serial_SendArray(Serial_TxPacket, 4);
+    Serial4_SendArray(Serial_TxPacket, 4);
     Serial4_SendByte(0xFE);
 }
 

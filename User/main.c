@@ -13,9 +13,10 @@
 #include "init.h"
 #include "all_data.h"
 #include "control.h"
+#include "HMI.h"
 
 unsigned char QrCode = 0;
-
+char msg[100];
 int main(void)
 {
     unsigned char Oled_Show_Flag  = 0; // 二维码标志位
@@ -24,13 +25,19 @@ int main(void)
     while (1) {
         if (Oled_Show_Flag == 0 && (Serial5_RxPacket[5] == 1 || Serial5_RxPacket[5] == 2 || Serial5_RxPacket[5] == 3)) // 屏幕显示扫到的二维码
         {
-            OLED_ShowNum_high(1, 1, Serial5_RxPacket[0], 1);
-            OLED_ShowNum_high(1, 2, Serial5_RxPacket[1], 1);
-            OLED_ShowNum_high(1, 3, Serial5_RxPacket[2], 1);
-            OLED_ShowChar_high(1, 4, '+');
-            OLED_ShowNum_high(1, 5, Serial5_RxPacket[3], 1);
-            OLED_ShowNum_high(1, 6, Serial5_RxPacket[4], 1);
-            OLED_ShowNum_high(1, 7, Serial5_RxPacket[5], 1);
+            // OLED_ShowNum_high(1, 1, Serial5_RxPacket[0], 1);
+            // OLED_ShowNum_high(1, 2, Serial5_RxPacket[1], 1);
+            // OLED_ShowNum_high(1, 3, Serial5_RxPacket[2], 1);
+            // OLED_ShowChar_high(1, 4, '+');
+            // OLED_ShowNum_high(1, 5, Serial5_RxPacket[3], 1);
+            // OLED_ShowNum_high(1, 6, Serial5_RxPacket[4], 1);
+            // OLED_ShowNum_high(1, 7, Serial5_RxPacket[5], 1);
+            Serial_SendHMI("t0","txt",Serial5_RxPacket[0]);
+            Serial_SendHMI("t1","txt",Serial5_RxPacket[1]);
+            Serial_SendHMI("t2","txt",Serial5_RxPacket[2]);
+            Serial_SendHMI("t3","txt",Serial5_RxPacket[3]);
+            Serial_SendHMI("t4","txt",Serial5_RxPacket[4]);
+            Serial_SendHMI("t5","txt",Serial5_RxPacket[5]);
             Oled_Show_Flag = 1;
             QrCode         = 1;
         }
@@ -43,13 +50,13 @@ int main(void)
             if (Catch_Frequency == 3) { // 三个物块抓取完毕
                 OLED_ShowString_high(2, 1, "Over");
                 Serial_TxPacket[0] = 0XAD;
-                Serial_SendPacket();
+                Serial4_SendPacket();
                 Mode_Flag = REVOLVE_MODE_90;
             }
         }
         if (Place_Blue == 1 || Place_Green == 1 || Place_Red == 1) {
             Serial_TxPacket[0] = 0x01;
-            Serial_SendPacket();
+            Serial4_SendPacket();
             Place_Sthing();
             Place_Blue  = 0;
             Place_Green = 0;
@@ -57,7 +64,7 @@ int main(void)
         }
         if (Catch_Blue == 1 || Catch_Green == 1 || Catch_Red == 1) {
             Serial_TxPacket[0] = 0x01;
-            Serial_SendPacket();
+            Serial4_SendPacket();
             Catch_Sthing();
             Catch_Blue  = 0;
             Catch_Green = 0;
@@ -72,6 +79,8 @@ int main(void)
             Serial_TxPacket[2] = Serial5_RxPacket[4];
             Serial_TxPacket[3] = Serial5_RxPacket[5];
         }
+        Catch_Mode(1);
+        Delay_ms(500);
     }
 }
 
@@ -82,7 +91,7 @@ void TIM6_IRQHandler(void)
         i++;
         j++;
         i %= 5;
-        j %= 10000;
+        j %= 1000;
         if (i == 0) {
             MpuGetData();
             GetAngle(&MPU6050, &Angle, 0.005f);

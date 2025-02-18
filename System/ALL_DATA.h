@@ -1,6 +1,6 @@
 #ifndef __ALL_DATA_H
 #define __ALL_DATA_H
-
+#include "stm32f10x.h"
 
 typedef struct{
 	int16_t accX;
@@ -67,6 +67,7 @@ extern unsigned char Write_Flag;//寻白，寻黄色标志位
 extern unsigned char Serial_Yaw;//串口传输过来的校准角度
 extern unsigned char Yellow_Flag;
 extern unsigned char QrCode;
+extern char msg[100];
 extern PidObject *(pPidObject[]);
 extern unsigned char Catch_Flag;//抓取模式标志位
 extern unsigned char Place_Red_Flag;

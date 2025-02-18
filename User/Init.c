@@ -8,7 +8,6 @@ PidObject pidLY;
 
 void ALL_Init()
 {
-    Delay_ms(12000);
     Kalman_Init();
     OLED_Init();
     //OLED_ShowString_high(2, 1, "Hello");
@@ -19,6 +18,7 @@ void ALL_Init()
     IIC_Init();
     MpuInit();
     Serial4_Init(); 
+    Serial_5_Init();
     Motor_Init();
     Servo_Init();
     Encoder_Init();
