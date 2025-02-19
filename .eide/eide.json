@@ -255,6 +255,12 @@
           },
           {
             "path": "Hardware/OLED_Font.h"
+          },
+          {
+            "path": "Hardware/HMI.h"
+          },
+          {
+            "path": "Hardware/HMI.c"
           }
         ],
         "folders": []
@@ -297,6 +303,12 @@
           },
           {
             "path": "User/Filter.h"
+          },
+          {
+            "path": "Hardware/HMI.h"
+          },
+          {
+            "path": "Hardware/HMI.c"
           }
         ],
         "folders": []
@@ -426,17 +438,12 @@
         },
         "options": "null"
       },
-      "uploader": "STLink",
+      "uploader": "OpenOCD",
       "uploadConfig": {
         "bin": "",
-        "proType": "SWD",
-        "resetMode": "default",
-        "runAfterProgram": true,
-        "speed": 4000,
-        "address": "0x8000000",
-        "elFile": "None",
-        "optionBytes": ".eide/target 1.st.option.bytes.ini",
-        "otherCmds": ""
+        "target": "stm32f1x",
+        "interface": "cmsis-dap",
+        "baseAddr": "0x08000000"
       },
       "uploadConfigMap": {
         "JLink": {
@@ -464,7 +471,7 @@
         "OpenOCD": {
           "bin": "",
           "target": "stm32f1x",
-          "interface": "stlink",
+          "interface": "cmsis-dap",
           "baseAddr": "0x08000000"
         }
       },
