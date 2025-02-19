@@ -1,7 +1,7 @@
 #include "control.h"
 #include "Servo.h"
 #include "OLED.h"
-unsigned char Mode_Flag = STOP_MODE;
+unsigned char Mode_Flag = TRANS_LEFT_MODE;
 unsigned char Work_Mode;
 unsigned int Timer            = 0;
 unsigned char Stop_Flag       = 0;
@@ -121,7 +121,6 @@ void Control_Mode()
                 Mode_Flag = FOR_MODE_LOW;
             } else if (QrCode == 1) { // 扫到了二维码
                 Mode_Flag = FOR_MODE;
-                // OLED_ShowNum_high(2, 1, Serial_TxPacket[0], 5);
                 Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
             }
         }
@@ -130,9 +129,7 @@ void Control_Mode()
             Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
             Serial4_SendPacket();
             Mode_Flag = TRANS_RIGHT_MODE;
-            // OLED_ShowString_high(2, 1, "Trans");
             if (Trans_Flag >= 2050) {
-                // OLED_ShowString_high(2, 1, "STOP!");
                 Mode_Flag  = STOP_MODE;
                 Write_Flag = 0;
                 Stop_Flag  = 1;
@@ -144,62 +141,74 @@ void Control_Mode()
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
             Mode_Flag = LOCATION_MODE; // 进入定位状态
-            // OLED_ShowString_high(2, 1, "LOCAT");
+            OLED_ShowString_high(2, 1, "LOCAT");
             Location_Flag = 1;
         }
         if (Write_Flag == 0XCD && Mode_Flag == LOCATION_MODE) { // 进入抓取状态
             Mode_Flag = STOP_MODE;
-            // OLED_ShowString_high(2, 1, "STOP");
+            DOWN(3.00);
+            Delay_ms(500);
+            OLED_ShowString_high(2, 1, "STOP");
+            OLED_ShowHexNum_high(3, 1, Write_Flag, 1);
             Catch_Flag = 1; // 抓取标志位置
         }
         if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle.yaw;
-            Serial_TxPacket[0] = 0XAD;
+            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
         }
         if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0X01; // 放置树莓派重复进入状态
+            Serial_TxPacket[0] = 0X01; // 防止树莓派重复进入状态
             Serial4_SendPacket();
-        } else if (Mode_Flag == REVOLVE_MODE_90 && Catch_Flag == 0) {
-            Mode_Flag          = TRANS_RIGHT_MODE;
+            Catch_Flag = 0;
+        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
+            pidRest(pPidObject, 6);                // 数据复位
+            Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw          = Angle.yaw;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
-            Tran_Flag = 1;
-        } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
-            Mode_Flag          = STOP_MODE;
-            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-            Serial4_SendPacket();
-            Adjust_Timer++;
-            if (Adjust_Timer >= 400) {
-                Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
-                Trans_Flag         = 0;
-                Adjust_Timer       = 0;
-                Serial_TxPacket[0] = 0XAD;
-                Serial4_SendPacket();
-                Tran_Flag    = 0;
-                Adjust_Timer = 0;
-                Mode_Flag    = TRANS_RIGHT_MODE;
-                Search_Flag  = 0;
-                ALL_Place++;
-            }
+            Tran_Flag  = 1;
+            Trans_Flag = 0;
         }
+        if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Tran_Flag == 1) {
+            Mode_Flag    = FOR_MODE;
+            Tran_Flag    = 0;
+            Adjust_Timer = 0;
+            Search_Flag  = 0;
+            ALL_Place++;
+        }
+        // } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
+        //     Mode_Flag          = STOP_MODE;
+        //     Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
+        //     Serial4_SendPacket();
+        //     Adjust_Timer++;
+        //     if (Adjust_Timer >= 400) {
+        //         Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
+        //         Trans_Flag         = 0;
+        //         Adjust_Timer       = 0;
+        //         Serial_TxPacket[0] = 0XAD;
+        //         Serial4_SendPacket();
+        //         Tran_Flag    = 0;
+        //         Adjust_Timer = 0;
+        //         Mode_Flag    = TRANS_RIGHT_MODE;
+        //         Search_Flag  = 0;
+        //         ALL_Place++;
+        //     }
+        // }
     } else if (ALL_Place == 1 || ALL_Place == 4) {
-        if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Catch_11 == 0) {
-            Mode_Flag          = FOR_MODE;
-            Serial_TxPacket[0] = 0XAA;
-            Serial4_SendPacket();                            // 给树莓派寻白的指令
-        } else if (Write_Flag == 0XAA && Catch_Flag == 1) { // 寻找到白色进入此状态
+        Trans_Flag++;
+        if (Trans_Flag >= 1500 && Catch_Flag == 0 && Mode_Flag == FOR_MODE) { // 寻找到白色进入此状态
             Mode_Flag          = LOCATION_MODE;
+            Catch_Flag         = 1;
             Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
             Serial4_SendPacket();
             if (LX != 0 && LY != 0) {
                 Write_Flag  = 0;
                 Search_Flag = 1;
-                Serial4_SendPacket();
             }
         }
         if (Find1 == 1 && Search_Flag == 1) {
@@ -242,13 +251,13 @@ void Control_Mode()
             Serial4_SendPacket();
         }
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
-            Mode_Flag = STOP_MODE;
+            Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
                 Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
-                Mode_Flag          = BACK_MODE;
-                Serial_TxPacket[0] = 0XAA;
+                Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
                 Serial4_SendPacket();
+                Mode_Flag    = LOCATION_PLACE_MODE;
                 Search_Flag2 = 1;
                 ALL_Place++;
                 Find1            = 1;
@@ -278,56 +287,56 @@ void Control_Mode()
         {
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
-            Angle_Yaw = Angle_Yaw - 75;
+            Angle_Yaw = Angle_Yaw;
             Tran_Flag = 1;
         }
 
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
-            Serial_TxPacket[0] = 0XAA;
-            Mode_Flag          = BACK_MODE;
-            Serial4_SendPacket();
+            Mode_Flag    = BACK_MODE;
             Adjust_Timer = 0;
         }
-    }
-    if (Write_Flag == 0XAA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
-        if (ALL_Place == 2) {
-            Serial_TxPacket[0] = 0XFA; // 进入寻白模式
-            Serial4_SendPacket();
-        } else if (ALL_Place == 5) {
-            Serial_TxPacket[0] = 0XEA; // 结束寻蓝
-            Serial4_SendPacket();
-        }
-        Serial4_SendPacket();
-        ALL_Place++;
-        Stop_Flag        = 0;
-        Location_Flag    = 0;
-        Catch_Flag       = 0;
-        Find1            = 1;
-        Catch1           = 1;
-        P_1              = 0;
-        P_2              = 0;
-        P_3              = 0;
-        C_1              = 0;
-        C_2              = 0;
-        C_3              = 0;
-        Adjust_Timer     = 0;
-        Search_Flag      = 1;
-        Place_Over_Red   = 0;
-        Place_Over_Blue  = 0;
-        Place_Over_Green = 0;
-        Catch_Over_Red   = 0;
-        Catch_Over_Blue  = 0;
-        Catch_Over_Green = 0;
-        Red_Place_Over   = 0;
-        Blue_Place_Over  = 0;
-        Green_Place_Over = 0;
-    } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
-        Mode_Flag          = TRANS_RIGHT_MODE;
-        Serial_TxPacket[0] = 0XAA;
-        Serial4_SendPacket();
-        Adjust_Timer++;
-        if (Adjust_Timer >= 160) {
-            Mode_Flag = STOP_MODE;
+        if (Tran_Flag == 1 && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+            Trans_Flag++;
+            if (Trans_Flag >= 500) {
+                if (ALL_Place == 2) {
+                    Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
+                    Serial4_SendPacket();
+                    ALL_Place++;
+                } else if (ALL_Place == 5) {
+                    Write_Flag = 0XEA; // 结束寻蓝
+                }
+                Stop_Flag        = 0;
+                Location_Flag    = 0;
+                Catch_Flag       = 0;
+                Find1            = 1;
+                Catch1           = 1;
+                P_1              = 0;
+                P_2              = 0;
+                P_3              = 0;
+                C_1              = 0;
+                C_2              = 0;
+                C_3              = 0;
+                Adjust_Timer     = 0;
+                Search_Flag      = 1;
+                Place_Over_Red   = 0;
+                Place_Over_Blue  = 0;
+                Place_Over_Green = 0;
+                Catch_Over_Red   = 0;
+                Catch_Over_Blue  = 0;
+                Catch_Over_Green = 0;
+                Red_Place_Over   = 0;
+                Blue_Place_Over  = 0;
+                Green_Place_Over = 0;
+            }
+        } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+            Trans_Flag++;
+            if (Trans_Flag >= 1500) {
+                Mode_Flag          = TRANS_RIGHT_MODE;
+                Adjust_Timer++;
+                if (Adjust_Timer >= 160) {
+                    Mode_Flag = STOP_MODE;
+                }
+            }
         }
     }
 }

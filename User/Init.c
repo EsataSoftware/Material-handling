@@ -8,17 +8,18 @@ PidObject pidLY;
 
 void ALL_Init()
 {
+    Delay_ms(1200);
     Kalman_Init();
     OLED_Init();
-    //OLED_ShowString_high(2, 1, "Hello");
+    // OLED_ShowString_high(2, 1, "Hello");
     Micorstep_Driver_Init(); // 步进电机初始化 最高11.20
     UP(5.00);
-    Delay_ms(1000);
+    Delay_ms(2000);
     Micorstep_Enable();
     IIC_Init();
     MpuInit();
-    Serial4_Init(); 
-    Serial_5_Init();
+    Serial4_Init();
+    // Serial_5_Init();
     Motor_Init();
     Servo_Init();
     Encoder_Init();
@@ -37,7 +38,7 @@ void pid_Para_Init_Location()
     PID_BAC_R.kp = 30;    // 450    455  455
     pidYaw.kp    = 0.85;  // 0.85    1.35  0.95 1.15   3.286
     pidRateZ.kp  = 0.6;   // 0.454   0.460   0.465   0.4658   0.335  0.400  0.410 0.80  0.70
-    pidLX.kp     = 0.01; // 0.065   0.002  0.013  0.023  0.013
+    pidLX.kp     = 0.01;  // 0.065   0.002  0.013  0.023  0.013
     pidLY.kp     = 0.006; // 0.055    0.002  0.013  0.023  0.013
 
     PID_FOR_L.ki = 3;   // 360
@@ -46,7 +47,7 @@ void pid_Para_Init_Location()
     PID_BAC_R.ki = 3;   // 360
     pidYaw.ki    = 0.0; // 0.015 0.39
     pidRateZ.ki  = 0.0; // 0.25 0.08 0.21
-    pidLX.ki     = 0.00;  
+    pidLX.ki     = 0.00;
     pidLY.ki     = 0.00;
 
     PID_FOR_L.kd = 0.05;  // 0.01

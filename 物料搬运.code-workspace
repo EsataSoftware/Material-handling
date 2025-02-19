@@ -30,12 +30,12 @@
             {
                 "cwd": "${workspaceFolder}",
                 "executable": "./bin/executable.elf",
-                "name": "Debug with ST-Link",
+                "name": "Debug with openocd",
                 "request": "launch",
                 "type": "cortex-debug",
                 "runToEntryPoint": "main",
                 "showDevDebugOutput": "none",
-                "servertype": "stlink"
+                "servertype": "openocd"
             }
 
         ]
