@@ -7,7 +7,8 @@ unsigned int Timer            = 0;
 unsigned char Stop_Flag       = 0;
 unsigned char Location_Flag   = 0;
 unsigned int Trans_Flag       = 0;
-unsigned char Tran_Flag       = 0;
+unsigned char Tran_Flag       = 1;
+unsigned char Yellow_flag     = 0;
 unsigned char Start_Flag      = 0; // 此处调整边线
 unsigned int Adjust_Timer     = 0;
 unsigned char Catch_Flag      = 0; // 抓取标志位//此处调整边线
@@ -124,30 +125,25 @@ void Control_Mode()
                 Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
             }
         }
-        if (Trans_Flag >= 1730 && Stop_Flag == 0) // 寻找到白色进入此状态
-        {
-            Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
+        if (Trans_Flag >= 1900 && Stop_Flag == 0) {
+            Mode_Flag          = STOP_MODE;
+            Serial_TxPacket[0] = 0XFC; // 树莓派定位转盘
             Serial4_SendPacket();
+            Serial_TxPacket[0] = 0XAD;
+            // OLED_ShowHexNum_high(1, 1, Serial_TxPacket[0], 4);
+            Stop_Flag = 1;
+        } else if (Trans_Flag >= 1730 && Stop_Flag == 0) {
             Mode_Flag = TRANS_RIGHT_MODE;
-            if (Trans_Flag >= 1930) {
-                Mode_Flag = STOP_MODE;
-                Stop_Flag = 1;
-            }
-            // if (LX != 0 && LY != 0) {
-            // //回传位置数据跳出停止状态
-            // }
         }
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
             Mode_Flag = LOCATION_MODE; // 进入定位状态
-            OLED_ShowString_high(2, 1, "LOCA");
-            OLED_ShowHexNum_high(1, 1, Write_Flag, 4);
+            // OLED_ShowString_high(2, 1, "LOCA");
             Location_Flag = 1;
         }
         if (Write_Flag == 0XCD && Mode_Flag == LOCATION_MODE) { // 进入抓取状态
             Mode_Flag = STOP_MODE;
-            OLED_ShowString_high(2, 1, "STOP");
-            OLED_ShowHexNum_high(1, 1, Write_Flag, 4);
+            // OLED_ShowString_high(2, 1, "STOP");
             Catch_Flag = 1; // 抓取标志位置
         }
         if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 0) {
@@ -156,28 +152,31 @@ void Control_Mode()
             Angle_Yaw          = Angle.yaw;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
+            Tran_Flag = 1;
+            // OLED_ShowHexNum_high(2, 1, Serial_TxPacket[0], 4);
         }
-        if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1) {
+        if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Tran_Flag == 1) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
             Serial_TxPacket[0] = 0X01; // 防止树莓派重复进入状态
             Serial4_SendPacket();
             Catch_Flag = 0;
-            Tran_Flag  = 1;
-        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 1) {
-            pidRest(pPidObject, 6);                // 数据复位
-            Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
-            Angle_Yaw          = Angle.yaw;
-            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-            Serial4_SendPacket();
-            Trans_Flag = 0;
-        }
-        if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Tran_Flag == 1) {
-            Mode_Flag    = FOR_MODE;
-            Tran_Flag    = 0;
-            Adjust_Timer = 0;
-            Search_Flag  = 0;
-            ALL_Place++;
+            Tran_Flag  = 0;
+        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 0) {
+            pidRest(pPidObject, 6);         // 数据复位
+            Mode_Flag   = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw   = Angle.yaw;
+            Yellow_Flag = 0;
+        } else if (Mode_Flag == TRANS_RIGHT_MODE && Tran_Flag == 0) {
+            Yellow_Flag++;
+            if (Yellow_Flag >= 2000) {
+                Mode_Flag    = FOR_MODE;
+                Tran_Flag    = 0;
+                Adjust_Timer = 0;
+                Search_Flag  = 0;
+                ALL_Place++;
+                Yellow_Flag = 1;
+            }
         }
         // } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
         //     Mode_Flag          = STOP_MODE;
@@ -252,7 +251,7 @@ void Control_Mode()
             Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
-                Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
+                // Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
                 Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
                 Serial4_SendPacket();
                 Mode_Flag    = LOCATION_PLACE_MODE;
@@ -297,7 +296,7 @@ void Control_Mode()
             Trans_Flag++;
             if (Trans_Flag >= 500) {
                 if (ALL_Place == 2) {
-                    Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
+                    Serial_TxPacket[0] = 0XFC; // 树莓派定位转盘
                     Serial4_SendPacket();
                     ALL_Place++;
                 } else if (ALL_Place == 5) {
@@ -758,7 +757,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             PWM1_SetCompare2(600);
             Micorstep_Enable();
             UP(1.9);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
         case 2:
             PWM1_SetCompare3(1000);
@@ -769,7 +768,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            cloud_tai(2300);
+            PWM1_SetCompare4(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
@@ -777,7 +776,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             PWM1_SetCompare2(600);
             Micorstep_Enable();
             UP(1.9);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
         case 3:
             PWM1_SetCompare3(1710);
@@ -788,7 +787,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            cloud_tai(2300);
+            PWM1_SetCompare4(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
@@ -796,7 +795,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             PWM1_SetCompare2(600);
             Micorstep_Enable();
             UP(1.9);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
     }
 }

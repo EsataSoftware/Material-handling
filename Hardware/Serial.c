@@ -5,7 +5,7 @@
 #include "all_data.h"
 #include "Filter.h"
 #include "control.h"
-uint8_t Serial_TxPacket[10] = {0xAD, 0X03, 0X01, 0X02}; // FF 01 02 03 04 FE [0]是寻找标志位 [1] [2] [3]扫码得到的物料顺序
+uint8_t Serial_TxPacket[10] = {0xFC, 0X03, 0X01, 0X02}; // FF 01 02 03 04 FE [0]是寻找标志位 [1] [2] [3]扫码得到的物料顺序
 uint8_t Serial_RxPacket[10];
 uint8_t Serial5_RxPacket[10] = {0};
 uint8_t Serial_RxFlag;
@@ -33,7 +33,7 @@ void Serial4_Init(void)
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
     USART_InitTypeDef USART_InitStructure;
-    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_BaudRate            = 9600;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
     USART_InitStructure.USART_Parity              = USART_Parity_No;
@@ -192,10 +192,10 @@ void UART4_IRQHandler(void)
             }
             if (RxData == 0xFE) {
                 RxState    = 0;
-                Serial_Yaw = Serial_RxPacket[0]; // 偏航角
+                //Serial_Yaw = Serial_RxPacket[0]; // 偏航角
                 // Serial_RxPacket[1]无意义懒得改
                 //				Serial_Yaw = Kalman_Filter(&KF_Angle,Serial_Yaw);
-                Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
+                //Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
                 LX         = Serial_RxPacket[2] * 3;
                 LY         = Serial_RxPacket[3] * 2;
                 Write_Flag = Serial_RxPacket[4]; // 寻白,寻黄和抓取标志位
