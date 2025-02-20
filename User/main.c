@@ -23,65 +23,68 @@ int main(void)
     unsigned char Catch_Frequency = 0; // 抓取的次数
     ALL_Init();
     while (1) {
-        if (Oled_Show_Flag == 0 && (Serial5_RxPacket[5] == 1 || Serial5_RxPacket[5] == 2 || Serial5_RxPacket[5] == 3)) // 屏幕显示扫到的二维码
-        {
-            OLED_ShowNum_high(1, 1, Serial5_RxPacket[0], 1);
-            OLED_ShowNum_high(1, 2, Serial5_RxPacket[1], 1);
-            OLED_ShowNum_high(1, 3, Serial5_RxPacket[2], 1);
-            OLED_ShowChar_high(1, 4, '+');
-            OLED_ShowNum_high(1, 5, Serial5_RxPacket[3], 1);
-            OLED_ShowNum_high(1, 6, Serial5_RxPacket[4], 1);
-            OLED_ShowNum_high(1, 7, Serial5_RxPacket[5], 1);
-            // Serial_SendHMI("t0","txt",Serial5_RxPacket[0]);
-            // Serial_SendHMI("t1","txt",Serial5_RxPacket[1]);
-            // Serial_SendHMI("t2","txt",Serial5_RxPacket[2]);
-            // Serial_SendHMI("t3","txt",Serial5_RxPacket[3]);
-            // Serial_SendHMI("t4","txt",Serial5_RxPacket[4]);
-            // Serial_SendHMI("t5","txt",Serial5_RxPacket[5]);
-            Oled_Show_Flag = 1;
-            QrCode         = 1;
-        }
-        if (Write_Flag == 0xcc && Catch_Flag == 1) { // 收到树莓派抓取指令,开始抓取
-            Catch_Frequency %= 3;
-            PWM1_SetCompare2(600);
-            Catch_Mode(++Catch_Frequency);
-            Write_Flag = 0x01;
-            OLED_ShowString_high(2, 1, "Catch");
-            OLED_ShowHexNum_high(3, 1, Write_Flag, 1);
-            if (Catch_Frequency == 3) { // 三个物块抓取完毕
-                UP(3.00);
-                Delay_ms(500);
-                //OLED_ShowString_high(2, 1, "Over");
-                Serial_TxPacket[0] = 0XAD;
-                Serial4_SendPacket();
-                Mode_Flag = REVOLVE_MODE_90;
-            }
-        }
-        if (Place_Blue == 1 || Place_Green == 1 || Place_Red == 1) {
-            Serial_TxPacket[0] = 0x01;
-            Serial4_SendPacket();
-            Place_Sthing();
-            Place_Blue  = 0;
-            Place_Green = 0;
-            Place_Red   = 0;
-        }
-        if (Catch_Blue == 1 || Catch_Green == 1 || Catch_Red == 1) {
-            Serial_TxPacket[0] = 0x01;
-            Serial4_SendPacket();
-            Catch_Sthing();
-            Catch_Blue  = 0;
-            Catch_Green = 0;
-            Catch_Red   = 0;
-        }
-        if (ALL_Place < 3) {
-            Serial_TxPacket[1] = Serial5_RxPacket[0];
-            Serial_TxPacket[2] = Serial5_RxPacket[1];
-            Serial_TxPacket[3] = Serial5_RxPacket[2];
-        } else {
-            Serial_TxPacket[1] = Serial5_RxPacket[3];
-            Serial_TxPacket[2] = Serial5_RxPacket[4];
-            Serial_TxPacket[3] = Serial5_RxPacket[5];
-        }
+       
+        Serial4_SendPacket();
+        // if (Oled_Show_Flag == 0 && (Serial5_RxPacket[5] == 1 || Serial5_RxPacket[5] == 2 || Serial5_RxPacket[5] == 3)) // 屏幕显示扫到的二维码
+        // {
+        //     OLED_ShowNum_high(1, 1, Serial5_RxPacket[0], 1);
+        //     OLED_ShowNum_high(1, 2, Serial5_RxPacket[1], 1);
+        //     OLED_ShowNum_high(1, 3, Serial5_RxPacket[2], 1);
+        //     OLED_ShowChar_high(1, 4, '+');
+        //     OLED_ShowNum_high(1, 5, Serial5_RxPacket[3], 1);
+        //     OLED_ShowNum_high(1, 6, Serial5_RxPacket[4], 1);
+        //     OLED_ShowNum_high(1, 7, Serial5_RxPacket[5], 1);
+        //     // Serial_SendHMI("t0","txt",Serial5_RxPacket[0]);
+        //     // Serial_SendHMI("t1","txt",Serial5_RxPacket[1]);
+        //     // Serial_SendHMI("t2","txt",Serial5_RxPacket[2]);
+        //     // Serial_SendHMI("t3","txt",Serial5_RxPacket[3]);
+        //     // Serial_SendHMI("t4","txt",Serial5_RxPacket[4]);
+        //     // Serial_SendHMI("t5","txt",Serial5_RxPacket[5]);
+        //     Oled_Show_Flag = 1;
+        //     QrCode         = 1;
+        // }
+        // if (Write_Flag == 0xcc && Catch_Flag == 1) { // 收到树莓派抓取指令,开始抓取
+        //     Catch_Frequency %= 3;
+        //     PWM1_SetCompare2(600);
+        //     Write_Flag = 0x01;
+
+        //     if (Catch_Frequency == 2) {
+        //         Serial_TxPacket[0] = 0XAD;
+        //         Serial4_SendPacket();
+        //     }
+        //     Catch_Mode(++Catch_Frequency);
+        //     OLED_ShowString_high(2, 1, "Catch");
+        //     if (Catch_Frequency == 3) { // 三个物块抓取完毕
+        //         // UP(3.00);
+        //         // Delay_ms(500);
+        //         Mode_Flag = REVOLVE_MODE_90;
+        //     }
+        // }
+        // if (Place_Blue == 1 || Place_Green == 1 || Place_Red == 1) {
+        //     Serial_TxPacket[0] = 0x01;
+        //     Serial4_SendPacket();
+        //     Place_Sthing();
+        //     Place_Blue  = 0;
+        //     Place_Green = 0;
+        //     Place_Red   = 0;
+        // }
+        // if (Catch_Blue == 1 || Catch_Green == 1 || Catch_Red == 1) {
+        //     Serial_TxPacket[0] = 0x01;
+        //     Serial4_SendPacket();
+        //     Catch_Sthing();
+        //     Catch_Blue  = 0;
+        //     Catch_Green = 0;
+        //     Catch_Red   = 0;
+        // }
+        // if (ALL_Place < 3) {
+        //     Serial_TxPacket[1] = Serial5_RxPacket[0];
+        //     Serial_TxPacket[2] = Serial5_RxPacket[1];
+        //     Serial_TxPacket[3] = Serial5_RxPacket[2];
+        // } else {
+        //     Serial_TxPacket[1] = Serial5_RxPacket[3];
+        //     Serial_TxPacket[2] = Serial5_RxPacket[4];
+        //     Serial_TxPacket[3] = Serial5_RxPacket[5];
+        // }
     }
 }
 

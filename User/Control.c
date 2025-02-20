@@ -120,19 +120,18 @@ void Control_Mode()
             if (QrCode == 0) { // 没扫到二维码之前慢走
                 Mode_Flag = FOR_MODE_LOW;
             } else if (QrCode == 1) { // 扫到了二维码
-                Mode_Flag = FOR_MODE;
+                Mode_Flag  = FOR_MODE;
                 Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
             }
         }
-        if (Trans_Flag >= 1900 && Stop_Flag == 0) // 寻找到白色进入此状态
+        if (Trans_Flag >= 1730 && Stop_Flag == 0) // 寻找到白色进入此状态
         {
             Serial_TxPacket[0] = 0XFA; // 树莓派定位转盘
             Serial4_SendPacket();
             Mode_Flag = TRANS_RIGHT_MODE;
-            if (Trans_Flag >= 2050) {
-                Mode_Flag  = STOP_MODE;
-                Write_Flag = 0;
-                Stop_Flag  = 1;
+            if (Trans_Flag >= 1930) {
+                Mode_Flag = STOP_MODE;
+                Stop_Flag = 1;
             }
             // if (LX != 0 && LY != 0) {
             // //回传位置数据跳出停止状态
@@ -141,18 +140,17 @@ void Control_Mode()
         if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
         {
             Mode_Flag = LOCATION_MODE; // 进入定位状态
-            OLED_ShowString_high(2, 1, "LOCAT");
+            OLED_ShowString_high(2, 1, "LOCA");
+            OLED_ShowHexNum_high(1, 1, Write_Flag, 4);
             Location_Flag = 1;
         }
         if (Write_Flag == 0XCD && Mode_Flag == LOCATION_MODE) { // 进入抓取状态
             Mode_Flag = STOP_MODE;
-            DOWN(3.00);
-            Delay_ms(500);
             OLED_ShowString_high(2, 1, "STOP");
-            OLED_ShowHexNum_high(3, 1, Write_Flag, 1);
+            OLED_ShowHexNum_high(1, 1, Write_Flag, 4);
             Catch_Flag = 1; // 抓取标志位置
         }
-        if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
+        if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 0) {
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle.yaw;
@@ -165,13 +163,13 @@ void Control_Mode()
             Serial_TxPacket[0] = 0X01; // 防止树莓派重复进入状态
             Serial4_SendPacket();
             Catch_Flag = 0;
-        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
+            Tran_Flag  = 1;
+        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 1) {
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle.yaw;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
-            Tran_Flag  = 1;
             Trans_Flag = 0;
         }
         if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Tran_Flag == 1) {
@@ -331,7 +329,7 @@ void Control_Mode()
         } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
             Trans_Flag++;
             if (Trans_Flag >= 1500) {
-                Mode_Flag          = TRANS_RIGHT_MODE;
+                Mode_Flag = TRANS_RIGHT_MODE;
                 Adjust_Timer++;
                 if (Adjust_Timer >= 160) {
                     Mode_Flag = STOP_MODE;
@@ -467,10 +465,10 @@ void Forward_Mode(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = 4 * u - pidRateZ.out;
-    PID_FOR_R.desired = 4 * u + pidRateZ.out;
-    PID_BAC_L.desired = 4 * u - pidRateZ.out;
-    PID_BAC_R.desired = 4 * u + pidRateZ.out;
+    PID_FOR_L.desired = 5 * u - pidRateZ.out;
+    PID_FOR_R.desired = 5 * u + pidRateZ.out;
+    PID_BAC_L.desired = 5 * u - pidRateZ.out;
+    PID_BAC_R.desired = 5 * u + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -497,10 +495,10 @@ void Back_Mode(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = -4 * u - pidRateZ.out;
-    PID_FOR_R.desired = -4 * u + pidRateZ.out;
-    PID_BAC_L.desired = -4 * u - pidRateZ.out;
-    PID_BAC_R.desired = -4 * u + pidRateZ.out;
+    PID_FOR_L.desired = -5 * u - pidRateZ.out;
+    PID_FOR_R.desired = -5 * u + pidRateZ.out;
+    PID_BAC_L.desired = -5 * u - pidRateZ.out;
+    PID_BAC_R.desired = -5 * u + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -753,12 +751,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
             PWM1_SetCompare4(2300);
-            Delay_ms(1500);
+            Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(500);
             PWM1_SetCompare2(600);
-            Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             cloud_tai(1080);
@@ -773,12 +770,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
             cloud_tai(2300);
-            Delay_ms(1500);
+            Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(500);
             PWM1_SetCompare2(600);
-            Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             cloud_tai(1080);
@@ -793,12 +789,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
             cloud_tai(2300);
-            Delay_ms(1500);
+            Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(500);
             PWM1_SetCompare2(600);
-            Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             cloud_tai(1080);

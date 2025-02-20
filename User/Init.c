@@ -14,7 +14,7 @@ void ALL_Init()
     // OLED_ShowString_high(2, 1, "Hello");
     Micorstep_Driver_Init(); // 步进电机初始化 最高11.20
     UP(5.00);
-    Delay_ms(2000);
+    Delay_ms(1000);
     Micorstep_Enable();
     IIC_Init();
     MpuInit();
