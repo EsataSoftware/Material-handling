@@ -14,13 +14,19 @@
 #include "all_data.h"
 #include "control.h"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 unsigned char QrCode = 0;
 =======
+=======
+>>>>>>> Stashed changes
 #include "HMI.h"
 unsigned int Yellow_Flag = 0;
 unsigned char QrCode     = 0;
 char msg[100];
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 int main(void)
@@ -50,6 +56,7 @@ int main(void)
             //  if (Catch_Flag % 2) {
             Catch_Frequency %= 3;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             PWM1_SetCompare2(600);
             Catch_Mode(++Catch_Frequency);
             Write_Flag = 0x01;
@@ -59,6 +66,8 @@ int main(void)
                 Serial_TxPacket[0] = 0XAD;
                 Serial_SendPacket();
 =======
+=======
+>>>>>>> Stashed changes
             PWM1_SetCompare2(800);
             Write_Flag = 0x01;
             Catch_Mode(++Catch_Frequency);
@@ -68,6 +77,9 @@ int main(void)
                 // Delay_ms(500);
                 Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
                 Serial4_SendPacket();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 Mode_Flag = REVOLVE_MODE_90;
             }

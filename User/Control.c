@@ -10,7 +10,10 @@ extern unsigned int Yellow_Flag;
 unsigned char Location_Flag   = 0;
 unsigned int Trans_Flag       = 0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 unsigned char Tran_Flag       = 0;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 unsigned char Start_Flag      = 0; // 此处调整边线
@@ -144,6 +147,9 @@ void Control_Mode()
             // OLED_ShowHexNum_high(1, 1, Serial_TxPacket[0], 4);
             Stop_Flag = 1;
         } else if (Trans_Flag >= 1750 && Stop_Flag == 0) {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             Mode_Flag = TRANS_RIGHT_MODE;
             // OLED_ShowString_high(2, 1, "Trans");
@@ -169,6 +175,7 @@ void Control_Mode()
             Catch_Flag = 1; // 抓取标志位置
             Modes_Flag++;
         }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90) {
             pidRest(pPidObject, 6);                // 数据复位
@@ -204,6 +211,8 @@ void Control_Mode()
                 Search_Flag  = 0;
                 ALL_Place++;
 =======
+=======
+>>>>>>> Stashed changes
         if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Modes_Flag == 1) {
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
@@ -241,10 +250,14 @@ void Control_Mode()
                     ALL_Place++;
                     Yellow_Flag = 0;
                 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             }
         }
     } else if (ALL_Place == 1 || ALL_Place == 4) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         if (Write_Flag == 0xAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Catch_11 == 0) {
             Mode_Flag          = FOR_MODE;
@@ -260,6 +273,8 @@ void Control_Mode()
                 Serial_SendPacket();
             }
 =======
+=======
+>>>>>>> Stashed changes
         Trans_Flag++;
         if (Trans_Flag >= 600 && Mode_Flag == FOR_MODE && Modes_Flag == 0) { // 寻找到白色进入此状态
             Serial_TxPacket[0] = 0XFB;                                       // 树莓派定位色环
@@ -274,6 +289,9 @@ void Control_Mode()
             Serial4_SendPacket();
             Search_Flag = 1;
             Search_Flag = 1;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
         if (Find1 == 1 && Search_Flag == 1) {
@@ -312,9 +330,12 @@ void Control_Mode()
             Serial_SendPacket();
         }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
             Mode_Flag = STOP_MODE;
 =======
+=======
+>>>>>>> Stashed changes
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
             Mode_Flag = BACK_MODE;
 >>>>>>> Stashed changes
@@ -355,8 +376,12 @@ void Control_Mode()
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             Angle_Yaw = Angle_Yaw - 75;
             Tran_Flag = 1;
+=======
+            Angle_Yaw = Angle_Yaw;
+>>>>>>> Stashed changes
 =======
             Angle_Yaw = Angle_Yaw;
 >>>>>>> Stashed changes
@@ -368,6 +393,7 @@ void Control_Mode()
             Serial_SendPacket();
             Adjust_Timer = 0;
         }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     }
     if (Write_Flag == 0XAA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
@@ -410,6 +436,8 @@ void Control_Mode()
         if (Adjust_Timer >= 160) {
             Mode_Flag = STOP_MODE;
 =======
+=======
+>>>>>>> Stashed changes
         if ((Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
             Trans_Flag++;
             if (Trans_Flag >= 500) {
@@ -869,6 +897,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             PWM1_SetCompare4(2300);
 =======
             PWM1_SetCompare4(2350);
@@ -884,6 +913,15 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             UP(1.9);
             cloud_tai(1080);
 =======
+=======
+            PWM1_SetCompare4(2350);
+            Delay_ms(1500);
+            Micorstep_Enable();
+            DOWN(1.8);
+            Delay_ms(1000);
+            PWM1_SetCompare2(600);
+            Micorstep_Enable();
+>>>>>>> Stashed changes
             UP(1.8);
             PWM1_SetCompare4(1080);
 >>>>>>> Stashed changes
@@ -901,6 +939,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             cloud_tai(2300);
 =======
             PWM1_SetCompare4(2300);
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
             Delay_ms(1500);
             Micorstep_Enable();
@@ -913,6 +952,14 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             UP(1.9);
             cloud_tai(1080);
 =======
+=======
+            Delay_ms(1500);
+            Micorstep_Enable();
+            DOWN(1.8);
+            Delay_ms(1000);
+            PWM1_SetCompare2(600);
+            Micorstep_Enable();
+>>>>>>> Stashed changes
             UP(1.8);
             PWM1_SetCompare4(1080);
 >>>>>>> Stashed changes
@@ -930,6 +977,7 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             cloud_tai(2300);
 =======
             PWM1_SetCompare4(2300);
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
             Delay_ms(1500);
             Micorstep_Enable();
@@ -942,6 +990,14 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             UP(1.9);
             cloud_tai(1080);
 =======
+=======
+            Delay_ms(1500);
+            Micorstep_Enable();
+            DOWN(1.8);
+            Delay_ms(1000);
+            PWM1_SetCompare2(600);
+            Micorstep_Enable();
+>>>>>>> Stashed changes
             UP(1.8);
             PWM1_SetCompare4(1080);
 >>>>>>> Stashed changes

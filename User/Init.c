@@ -21,8 +21,11 @@ void ALL_Init()
     IIC_Init();
     MpuInit();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     Serial4_Init(); 
 =======
+=======
+>>>>>>> Stashed changes
     // Serial_5_Init();
 >>>>>>> Stashed changes
     Motor_Init();
@@ -42,11 +45,14 @@ void pid_Para_Init_Location()
     PID_BAC_L.kp = 16;    // 430  420   430
     PID_BAC_R.kp = 30;    // 450    455  455
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     pidYaw.kp    = 0.85;  // 0.85    1.35  0.95 1.15   3.286
     pidRateZ.kp  = 0.6;   // 0.454   0.460   0.465   0.4658   0.335  0.400  0.410 0.80  0.70
     pidLX.kp     = 0.01; // 0.065   0.002  0.013  0.023  0.013
     pidLY.kp     = 0.006; // 0.055    0.002  0.013  0.023  0.013
 =======
+=======
+>>>>>>> Stashed changes
     pidYaw.kp    = 0.87;  // 0.85    1.35  0.95 1.15  0.85
     pidRateZ.kp  = 0.67;   // 0.454   0.460   0.465   0.4658   0.335  0.400  0.410 0.80  0.60
     pidLX.kp     = 0.015;  // 0.065   0.002  0.013  0.023  0.01
@@ -54,6 +60,9 @@ void pid_Para_Init_Location()
 
     pidLX1.kp     = 0.006;  // 0.065   0.002  0.013  0.023  0.015
     pidLY1.kp     = 0.037; // 0.055    0.002  0.013  0.023  0.015
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     PID_FOR_L.ki = 3;   // 360
@@ -73,11 +82,14 @@ void pid_Para_Init_Location()
     PID_BAC_L.kd = 0.05;  // 0.001
     PID_BAC_R.kd = 0.05;  // 0.01
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     pidYaw.kd    = 0.01;  // 0.03  0.34
     pidRateZ.kd  = 0.002; // 0.00108    0.00123    0.00125    0.00138   0.00148
     pidLX.kd     = 0.00;
     pidLY.kd     = 0.00;
 =======
+=======
+>>>>>>> Stashed changes
     pidYaw.kd    = 0.013;  // 0.03  0.34
     pidRateZ.kd  = 0.0022; // 0.00108    0.00123    0.00125    0.00138   0.00148
     pidLX.kd     = 0.001;
@@ -85,5 +97,8 @@ void pid_Para_Init_Location()
 
     pidLX1.kd     = 0.102;
     pidLY1.kd     = 17.951;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
