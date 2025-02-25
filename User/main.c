@@ -21,6 +21,8 @@ int main(void)
 {
     unsigned char Oled_Show_Flag  = 0; // 二维码标志位
     unsigned char Catch_Frequency = 0; // 抓取的次数
+    Serial4_Init();
+    while (Write_Flag != 0xFA);
     ALL_Init();
     while (1) {
         if (Oled_Show_Flag == 0 && (Serial5_RxPacket[5] == 1 || Serial5_RxPacket[5] == 2 || Serial5_RxPacket[5] == 3)) // 屏幕显示扫到的二维码
@@ -43,13 +45,14 @@ int main(void)
         }
         if (Write_Flag == 0xcc && Catch_Flag == 1) { // 收到树莓派抓取指令,开始抓取
             Catch_Frequency %= 3;
-            PWM1_SetCompare2(600);
+            PWM1_SetCompare2(800);
             Write_Flag = 0x01;
             Catch_Mode(++Catch_Frequency);
-            //OLED_ShowHexNum_high(2, 1, Serial_TxPacket[0], 4);
             if (Catch_Frequency == 3) { // 三个物块抓取完毕
                 // UP(3.00);
                 // Delay_ms(500);
+                Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
+                Serial4_SendPacket();
                 Mode_Flag = REVOLVE_MODE_90;
             }
         }
@@ -103,7 +106,7 @@ void TIM6_IRQHandler(void)
             Pid_Control_Trans();
         }
         // if (j == 3) {
-        //     Serial_SendPacket();
+        //     Serial4_SendPacket();
         // }
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
     }

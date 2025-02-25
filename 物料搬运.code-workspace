@@ -20,7 +20,8 @@
             "mpu6050.h": "c",
             "stm32f10x.h": "c",
             "string_to_num.h": "c",
-            "hmi.h": "c"
+            "hmi.h": "c",
+            "pwm.h": "c"
         }
     },
     "extensions": {},

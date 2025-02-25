@@ -3,12 +3,11 @@
 #include "OLED.h"
 unsigned char Mode_Flag = TRANS_LEFT_MODE;
 unsigned char Work_Mode;
-unsigned int Timer            = 0;
+unsigned char Modes_Flag      = 0;
 unsigned char Stop_Flag       = 0;
+unsigned int Yellow_Flag      = 0;
 unsigned char Location_Flag   = 0;
 unsigned int Trans_Flag       = 0;
-unsigned char Tran_Flag       = 1;
-unsigned char Yellow_flag     = 0;
 unsigned char Start_Flag      = 0; // 此处调整边线
 unsigned int Adjust_Timer     = 0;
 unsigned char Catch_Flag      = 0; // 抓取标志位//此处调整边线
@@ -58,11 +57,11 @@ unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 #define Cloud_Location    1080 // 云台观察位置//1080 1700
 #define Could_Palace      2300 // 云台放置载物台上位置//2300
 #define stage_datum_point 1200 // 载物台初始位置
-#define stage_state1      330  // 载物台物块1放置
+#define stage_state1      600  // 载物台物块1放置
 #define stage_state2      970  // 载物台物块2放置
 #define stage_state3      1710 // 载物台物块3放置
 #define claw_grab         300  // 机械爪抓取
-#define claw_free         500  // 机械爪释放
+#define claw_free         700  // 机械爪释放
 #define cloud_place       2250
 
 PidObject *(pPidObject[]) = {&pidYaw, &pidRateZ, &PID_FOR_L, &PID_FOR_R, &PID_BAC_L, &PID_BAC_R, &pidLX, &pidLY};
@@ -116,7 +115,7 @@ void Control_Mode()
 {
     if (ALL_Place == 0 || ALL_Place == 3) {
         Trans_Flag++;
-        if (Trans_Flag >= 250 && Start_Flag == 0) // 代码开始左平移出库，之后到达计时时间直走
+        if (Trans_Flag >= 230 && Start_Flag == 0) // 代码开始左平移出库，之后到达计时时间直走
         {
             if (QrCode == 0) { // 没扫到二维码之前慢走
                 Mode_Flag = FOR_MODE_LOW;
@@ -132,92 +131,82 @@ void Control_Mode()
             Serial_TxPacket[0] = 0XAD;
             // OLED_ShowHexNum_high(1, 1, Serial_TxPacket[0], 4);
             Stop_Flag = 1;
-        } else if (Trans_Flag >= 1730 && Stop_Flag == 0) {
+        } else if (Trans_Flag >= 1750 && Stop_Flag == 0) {
             Mode_Flag = TRANS_RIGHT_MODE;
         }
-        if (LX != 0 && LY != 0 && Location_Flag == 0 && Stop_Flag == 1) // 防止状态跳回此处加入STOP_MODE
-        {
-            Mode_Flag = LOCATION_MODE; // 进入定位状态
-            // OLED_ShowString_high(2, 1, "LOCA");
+        if (LX != 0 && LY != 0 && Location_Flag == 0) {
+            Mode_Flag     = LOCATION_MODE; // 进入定位状态
             Location_Flag = 1;
         }
         if (Write_Flag == 0XCD && Mode_Flag == LOCATION_MODE) { // 进入抓取状态
-            Mode_Flag = STOP_MODE;
-            // OLED_ShowString_high(2, 1, "STOP");
+            Mode_Flag  = STOP_MODE;
             Catch_Flag = 1; // 抓取标志位置
+            Modes_Flag++;
         }
-        if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 0) {
-            pidRest(pPidObject, 6);                // 数据复位
-            Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
-            Angle_Yaw          = Angle.yaw;
+        if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Modes_Flag == 1) {
+            pidRest(pPidObject, 6);       // 数据复位
+            Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw = Angle.yaw;
+            Modes_Flag++;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
-            Tran_Flag = 1;
             // OLED_ShowHexNum_high(2, 1, Serial_TxPacket[0], 4);
         }
-        if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Catch_Flag == 1 && Tran_Flag == 1) {
+        if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Modes_Flag == 2) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
             Serial_TxPacket[0] = 0X01; // 防止树莓派重复进入状态
             Serial4_SendPacket();
             Catch_Flag = 0;
-            Tran_Flag  = 0;
-        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Tran_Flag == 0) {
-            pidRest(pPidObject, 6);         // 数据复位
-            Mode_Flag   = TRANS_RIGHT_MODE; // 切换模式到平移模式
-            Angle_Yaw   = Angle.yaw;
-            Yellow_Flag = 0;
-        } else if (Mode_Flag == TRANS_RIGHT_MODE && Tran_Flag == 0) {
+            Modes_Flag++;
+        } else if (Angle.yaw >= Angle_Yaw + 75 && Mode_Flag == REVOLVE_MODE_90 && Modes_Flag == 3) {
+            pidRest(pPidObject, 6);       // 数据复位
+            Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
+            Angle_Yaw = Angle.yaw;
+            Modes_Flag++;
+        } else if (Mode_Flag == TRANS_RIGHT_MODE && Modes_Flag == 4) {
             Yellow_Flag++;
-            if (Yellow_Flag >= 2000) {
-                Mode_Flag    = FOR_MODE;
-                Tran_Flag    = 0;
-                Adjust_Timer = 0;
-                Search_Flag  = 0;
-                ALL_Place++;
-                Yellow_Flag = 1;
+            if (Yellow_Flag == 1000) {
+                Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
+                Serial4_SendPacket();
+            }
+            if (Yellow_Flag >= 1000) {
+                if (Write_Flag == 0XAD) {
+                    pidRest(pPidObject, 6);
+                    Mode_Flag          = FOR_MODE;
+                    Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
+                    Serial4_SendPacket();
+                    Modes_Flag   = 0;
+                    Adjust_Timer = 0;
+                    Search_Flag  = 0;
+                    Trans_Flag   = 0;
+                    ALL_Place++;
+                    Yellow_Flag = 0;
+                    Modes_Flag  = 0;
+                }
             }
         }
-        // } else if ((Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Catch_Flag == 1 && Tran_Flag == 1) { // 还未使用过的姿态调节
-        //     Mode_Flag          = STOP_MODE;
-        //     Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-        //     Serial4_SendPacket();
-        //     Adjust_Timer++;
-        //     if (Adjust_Timer >= 400) {
-        //         Angle_Yaw          = 0.41 * (90 - Last_Yaw) + Angle.yaw;
-        //         Trans_Flag         = 0;
-        //         Adjust_Timer       = 0;
-        //         Serial_TxPacket[0] = 0XAD;
-        //         Serial4_SendPacket();
-        //         Tran_Flag    = 0;
-        //         Adjust_Timer = 0;
-        //         Mode_Flag    = TRANS_RIGHT_MODE;
-        //         Search_Flag  = 0;
-        //         ALL_Place++;
-        //     }
-        // }
     } else if (ALL_Place == 1 || ALL_Place == 4) {
         Trans_Flag++;
-        if (Trans_Flag >= 1500 && Catch_Flag == 0 && Mode_Flag == FOR_MODE) { // 寻找到白色进入此状态
-            Mode_Flag          = LOCATION_MODE;
+        if (Trans_Flag >= 600 && Mode_Flag == FOR_MODE && Modes_Flag == 0) { // 寻找到白色进入此状态
             Catch_Flag         = 1;
             Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
             Serial4_SendPacket();
-            if (LX != 0 && LY != 0) {
-                Write_Flag  = 0;
-                Search_Flag = 1;
-            }
+            Mode_Flag = LOCATION_PLACE_MODE;
+            Modes_Flag++;
+            Write_Flag = 0;
+        }
+        if (Write_Flag == 0XCD && Modes_Flag == 1) {
+            Modes_Flag++;
+            Serial_TxPacket[0] = 0x01;
+            Serial4_SendPacket();
+            Search_Flag = 1;
         }
         if (Find1 == 1 && Search_Flag == 1) {
-
             Place_ALL(Serial_TxPacket[1]);
-        }
-        if (Find2 == 1) {
-
+        } else if (Find2 == 1) {
             Place_ALL(Serial_TxPacket[2]);
-        }
-        if (Find3 == 1) {
-
+        } else if (Find3 == 1) {
             Place_ALL(Serial_TxPacket[3]);
         }
         if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
@@ -239,15 +228,16 @@ void Control_Mode()
             Catch_All(Serial_TxPacket[3]);
         }
 
-        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0) // 此处Mode_Flag由main函数设置
+        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 2) // 此处Mode_Flag由main函数设置
         {
+            Modes_Flag++;
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle_Yaw;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
         }
-        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
             Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
@@ -266,6 +256,7 @@ void Control_Mode()
                 Place_Over_Blue  = 0;
                 Place_Over_Green = 0;
                 Adjust_Timer     = 0;
+                Modes_Flag       = 0;
             }
         }
     } else if (ALL_Place == 2 || ALL_Place == 5) {
@@ -280,19 +271,18 @@ void Control_Mode()
 
             Place_ALL(Serial_TxPacket[3]);
         }
-        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Tran_Flag == 0) // 此处Mode_Flag由main函数设置
+        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0) // 此处Mode_Flag由main函数设置
         {
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw = Angle_Yaw;
-            Tran_Flag = 1;
         }
 
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE)) {
             Mode_Flag    = BACK_MODE;
             Adjust_Timer = 0;
         }
-        if (Tran_Flag == 1 && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+        if ((Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
             Trans_Flag++;
             if (Trans_Flag >= 500) {
                 if (ALL_Place == 2) {
@@ -585,7 +575,7 @@ void Trans_Right_Mode(float dt) // 横移模式
     pidUpdate(&pidRateZ, dt);
 
     PID_FOR_L.desired = 5 * u - pidRateZ.out;
-    PID_FOR_R.desired = -4 * u + pidRateZ.out;
+    PID_FOR_R.desired = -5 * u + pidRateZ.out;
     PID_BAC_L.desired = -5 * u - pidRateZ.out;
     PID_BAC_R.desired = 5 * u + pidRateZ.out;
     //*****************************************************************************************
@@ -607,8 +597,8 @@ void Location_Mode(float dt)
     //************************************************************************************
     // 位置环pid
 
-    pidLX.desired = 320;
-    pidLY.desired = 250;
+    pidLX.desired = 315;
+    pidLY.desired = 225;
     if (LX == 0 || LY == 0) {
         pidLX.desired = 0;
         pidLY.desired = 0;
@@ -653,8 +643,8 @@ void Location_Mode_Place(float dt)
     //************************************************************************************
     // 位置环pid
 
-    pidLX.desired = 320;
-    pidLY.desired = 250;
+    pidLX.desired = 315;
+    pidLY.desired = 190;
     if (LX == 0 || LY == 0) {
         pidLX.desired = 0;
         pidLY.desired = 0;
@@ -735,13 +725,13 @@ void Control_Moto()
     Motor_right_back_wheel_SetSpeed(PID_BAC_R.out);
 }
 
-// 1载物355，2载物970，3载物1710，抓取330 970 1710
+// 1载物600，2载物1080，3载物1710，抓取600 970 1710
 //  0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
 void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘上的一系列移动
 {
     switch (Color) {
         case 1:
-            PWM1_SetCompare3(350); //
+            PWM1_SetCompare3(600); //
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
@@ -749,18 +739,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            PWM1_SetCompare4(2300);
-            Delay_ms(1000);
+            PWM1_SetCompare4(2350);
+            Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.9);
-            Delay_ms(500);
+            DOWN(1.6);
+            Delay_ms(1000);
             PWM1_SetCompare2(600);
             Micorstep_Enable();
-            UP(1.9);
+            UP(1.6);
             PWM1_SetCompare4(1080);
             break;
         case 2:
-            PWM1_SetCompare3(1000);
+            PWM1_SetCompare3(1080);
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
@@ -769,13 +759,13 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
             PWM1_SetCompare4(2300);
-            Delay_ms(1000);
+            Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.9);
-            Delay_ms(500);
+            DOWN(1.6);
+            Delay_ms(1000);
             PWM1_SetCompare2(600);
             Micorstep_Enable();
-            UP(1.9);
+            UP(1.6);
             PWM1_SetCompare4(1080);
             break;
         case 3:
@@ -788,34 +778,34 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Micorstep_Enable();
             UP(5.00);
             PWM1_SetCompare4(2300);
-            Delay_ms(1000);
+            Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.9);
-            Delay_ms(500);
+            DOWN(1.6);
+            Delay_ms(1000);
             PWM1_SetCompare2(600);
             Micorstep_Enable();
-            UP(1.9);
+            UP(1.6);
             PWM1_SetCompare4(1080);
             break;
     }
 }
 
-// 1载物355，2载物970，3载物1710，抓取330 970 1710
+// 1载物600，2载物1080，3载物1710，抓取600 970 1710
 //  0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
 void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一系列移动
 {
     if (Color == 1) {
-        PWM1_SetCompare3(355);
-        cloud_tai(2300);
+        PWM1_SetCompare3(600);
+        PWM1_SetCompare4(2350);
         Micorstep_Enable();
         Delay_ms(1500);
-        DOWN(1.9);
+        DOWN(1.6);
         Delay_ms(1000);
         PWM1_SetCompare2(300);
         Delay_ms(1000);
         Micorstep_Enable();
-        UP(1.9);
-        cloud_tai(1080);
+        UP(1.6);
+        PWM1_SetCompare4(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -835,17 +825,17 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         Delay_ms(1000);
     }
     if (Color == 2) {
-        PWM1_SetCompare3(970);
-        cloud_tai(2300);
+        PWM1_SetCompare3(1080);
+        PWM1_SetCompare4(2300);
         Micorstep_Enable();
         Delay_ms(500);
-        DOWN(1.9);
+        DOWN(1.6);
         Delay_ms(1000);
         PWM1_SetCompare2(300);
         Delay_ms(1000);
         Micorstep_Enable();
-        UP(1.9);
-        cloud_tai(1080);
+        UP(1.6);
+        PWM1_SetCompare4(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -866,16 +856,16 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
     }
     if (Color == 3) {
         PWM1_SetCompare3(1710);
-        cloud_tai(2300);
+        PWM1_SetCompare4(2300);
         Micorstep_Enable();
         Delay_ms(500);
-        DOWN(1.90);
+        DOWN(1.6);
         Delay_ms(1000);
         PWM1_SetCompare2(300);
         Delay_ms(1000);
         Micorstep_Enable();
-        UP(1.90);
-        cloud_tai(1080);
+        UP(1.6);
+        PWM1_SetCompare4(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -896,13 +886,13 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
     }
 }
 
-// 3 1载物355，2载物970，3载物1710，抓取330 970 1710    2 350 机械爪抓取    500 机械爪释放
+// 1载物600，2载物1080，3载物1710，抓取600 970 1710  2 280 机械爪抓取    600 机械爪释放
 //  0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
 void Catch_Mode_St(unsigned char Color)
 {
     switch (Color) {
         case 1:
-            PWM1_SetCompare3(355);
+            PWM1_SetCompare3(600);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
@@ -912,7 +902,7 @@ void Catch_Mode_St(unsigned char Color)
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            PWM1_SetCompare4(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
@@ -924,10 +914,10 @@ void Catch_Mode_St(unsigned char Color)
             Delay_ms(1000);
             PWM1_SetCompare2(500);
             PWM1_SetCompare3(960);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
         case 2:
-            PWM1_SetCompare3(960);
+            PWM1_SetCompare3(1080);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
@@ -937,7 +927,7 @@ void Catch_Mode_St(unsigned char Color)
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            PWM1_SetCompare4(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
@@ -949,7 +939,7 @@ void Catch_Mode_St(unsigned char Color)
             Delay_ms(1000);
             PWM1_SetCompare2(500);
             PWM1_SetCompare3(1710);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
         case 3:
             PWM1_SetCompare3(1710);
@@ -962,7 +952,7 @@ void Catch_Mode_St(unsigned char Color)
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            PWM1_SetCompare4(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
@@ -974,7 +964,7 @@ void Catch_Mode_St(unsigned char Color)
             Delay_ms(1000);
             PWM1_SetCompare2(500);
             PWM1_SetCompare3(355);
-            cloud_tai(1080);
+            PWM1_SetCompare4(1080);
             break;
     }
 }
@@ -990,7 +980,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Red_Place_Over == 0 && Place_Red == 0 && Place_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Red_Place_Over == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Red_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Red == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -1008,7 +998,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Green_Place_Over == 0 && Place_Green == 0 && Place_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Green_Place_Over == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Green_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Green == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -1028,7 +1018,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Blue_Place_Over == 0 && Place_Blue == 0 && Place_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Blue_Place_Over == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Blue_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Blue == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -1094,7 +1084,7 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Catch_Over_Red == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Red == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
@@ -1110,7 +1100,7 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Catch_Over_Green == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Green == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
@@ -1128,7 +1118,7 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 450 && LX <= 750 && LY >= 140 && LY <= 440 && Catch_Over_Blue == 0) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Blue == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
