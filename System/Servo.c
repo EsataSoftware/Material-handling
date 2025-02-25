@@ -1,6 +1,4 @@
 #include "Servo.h"
-
-int Grab_falg = 0;
 #define Cloud_Location    1080 // 云台观察位置//1080 1700
 #define Could_Palace      2300 // 云台放置载物台上位置//2300
 #define stage_datum_point 1200 // 载物台初始位置
