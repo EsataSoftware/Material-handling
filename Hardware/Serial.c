@@ -5,15 +5,19 @@
 #include "all_data.h"
 #include "Filter.h"
 #include "control.h"
+<<<<<<< Updated upstream
 uint8_t Serial_TxPacket[10] = {0x01, 0X03, 0X01, 0X55}; // FF 01 02 03 04 FE openmv[0]是寻找标志位 1 2 3扫码得到的物料顺序
+=======
+uint8_t Serial_TxPacket[10] = {0x01, 0X03, 0X01, 0X02}; // FF 01 02 03 04 FE [0]是寻找标志位 [1] [2] [3]扫码得到的物料顺序
+>>>>>>> Stashed changes
 uint8_t Serial_RxPacket[10];
 uint8_t Serial5_RxPacket[10] = {0};
 uint8_t Serial_RxFlag;
-float LX, LY, Angle_Yaw;
+float LX, LY,LX1, LY1, Angle_Yaw;
 unsigned char Write_Flag;
 unsigned char Serial_Yaw;
-unsigned char Yellow_Flag;
 unsigned char QFlag;
+unsigned char Start = 0;
 float Last_Yaw;
 
 void Serial4_Init(void)
@@ -185,18 +189,29 @@ void UART4_IRQHandler(void)
             }
         } else if (RxState == 1) {
             if (RxData != 0xFE) {
-                if (QrCode == 0) {
+                if (!Start) {
+                    Serial_RxPacket[pRxPacket++] = RxData;
+                } else if (QrCode == 0) {
                     Serial5_RxPacket[pRxPacket++] = RxData;
                 } else
                     Serial_RxPacket[pRxPacket++] = RxData;
             }
             if (RxData == 0xFE) {
+<<<<<<< Updated upstream
                 RxState       = 0;
                 Serial_RxFlag = 1;
                 Serial_Yaw    = Serial_RxPacket[0]; // 偏航角
                 // Serial_RxPacket[1]是oled显示的标志位
                 //				Serial_Yaw = Kalman_Filter(&KF_Angle,Serial_Yaw);
                 Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
+=======
+                Start   = 1;
+                RxState = 0;
+                // Serial_Yaw = Serial_RxPacket[0]; // 偏航角
+                //  Serial_RxPacket[1]无意义懒得改
+                //				Serial_Yaw = Kalman_Filter(&KF_Angle,Serial_Yaw);
+                // Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
+>>>>>>> Stashed changes
                 LX         = Serial_RxPacket[2] * 3;
                 LY         = Serial_RxPacket[3] * 2;
                 Write_Flag = Serial_RxPacket[4]; // 寻白,寻黄和抓取标志位

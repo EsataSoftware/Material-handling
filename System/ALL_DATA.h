@@ -53,6 +53,9 @@ extern PidObject pidRateZ;
 extern PidObject pidLX;
 extern PidObject pidLY;
 
+extern PidObject pidLX1;
+extern PidObject pidLY1;
+
 
 extern _st_Mpu MPU6050;
 extern _st_AngE Angle;
@@ -61,11 +64,10 @@ extern unsigned char Work_Mode;
 
 extern const float Gyro_G;
 
-extern float LX,LY,Angle_Yaw;
+extern float LX,LY,Angle_Yaw,LX1,LY1;
 extern unsigned char Serial_TxPacket[10];//发送数据包
 extern unsigned char Write_Flag;//寻白，寻黄色标志位
 extern unsigned char Serial_Yaw;//串口传输过来的校准角度
-extern unsigned char Yellow_Flag;
 extern unsigned char QrCode;
 extern PidObject *(pPidObject[]);
 extern unsigned char Catch_Flag;//抓取模式标志位

@@ -4,10 +4,10 @@ int Grab_falg = 0;
 #define Cloud_Location    1080 // 云台观察位置//1080 1700
 #define Could_Palace      2300 // 云台放置载物台上位置//2300
 #define stage_datum_point 1200 // 载物台初始位置
-#define stage_state1      330  // 载物台物块1放置
+#define stage_state1      600  // 载物台物块1放置
 #define stage_state2      970  // 载物台物块2放置
 #define stage_state3      1710 // 载物台物块3放置
-#define claw_grab         300  // 机械爪抓取
+#define claw_grab         280  // 机械爪抓取
 #define claw_free         500  // 机械爪释放
 #define cloud_place       2250
 /// 1载物330，2载物970，3载物1710，抓取330 970 1710
