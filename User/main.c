@@ -16,7 +16,7 @@
 #include "HMI.h"
 
 unsigned char QrCode = 0;
-char msg[100];
+
 int main(void)
 {
     unsigned char Catch_Frequency = 0; // 抓取的次数

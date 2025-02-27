@@ -2,7 +2,8 @@
 #include "Serial.h"
 #include "stm32f10x.h"
 #include "HMI.h"
-#include<string.h>
+#include <string.h>
+char msg[100];
 void Serial_SendEnd()
 {
     for (int i = 0; i < 3; i++)
@@ -10,11 +11,8 @@ void Serial_SendEnd()
 }
 void Serial_SendHMI(char *Tn, char *Val, uint16_t Num)
 {
-    memset(msg, 0, sizeof msg);  
+    memset(msg, 0, sizeof msg);
     sprintf(msg, "%s.%s=\"%d\"", Tn, Val, Num);
     Serial5_SendString(msg);
     Serial_SendEnd();
 }
-
-
-
