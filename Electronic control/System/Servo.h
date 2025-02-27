@@ -4,11 +4,9 @@
 #include "Delay.h"
 
 
-void PWM1_SetCompare2(uint16_t Compare);
-void PWM1_SetCompare3(uint16_t Compare);
-void PWM1_SetCompare4(uint16_t Compare);
-void cloud_tai(int site); // 770 1950
-void robotic_grab(int site); //890 760 500 claw_grab抓取 claw_free释放  claw_look初始位置方便openmv观察
+void robotic_grab(uint16_t Compare);
+void stage(uint16_t Compare);
+void cloud_tai(uint16_t Compare);
 
 void Servo_Init(void);
 #endif

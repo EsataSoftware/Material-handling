@@ -236,3 +236,15 @@ These source files will be recompiled
 [2025-02-27 17:16:00]	[done]
 	build successfully !
 
+[2025-02-27 18:27:05]	[info] incremental build: 5 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\servo.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\System\Servo.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': source file has been changed.
+
+[2025-02-27 18:27:07]	[done]
+	build successfully !
+

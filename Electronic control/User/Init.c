@@ -26,8 +26,8 @@ void ALL_Init()
     MpuGetOffset();
     pid_Para_Init_Location();
     TIM6_Init();
-    PWM1_SetCompare2(600);
-    PWM1_SetCompare4(1080);
+    robotic_grab(600);
+    cloud_tai(1080);
 }
 
 void pid_Para_Init_Location()

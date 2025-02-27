@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\build\Target 1\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\build\Target 1\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Feb 27 17:15:59 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Feb 27 18:27:06 2025
 <BR><P>
 <H3>Maximum Stack Usage =        344 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -427,8 +427,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Speed
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Speed
+<LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MpuGetData
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAngle
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trans_Right_Mode
@@ -661,17 +661,17 @@ Global Symbols
 <P><STRONG><a name="[66]"></a>ALL_Init</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, Init.o(i.ALL_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = ALL_Init &rArr; MpuGetOffset &rArr; MpuGetData &rArr; kalman_1 &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
-<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
+<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Init
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Init
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Enable
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Init
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cloud_tai
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare4
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MpuInit
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MpuGetOffset
@@ -699,9 +699,9 @@ Global Symbols
 <P><STRONG><a name="[7a]"></a>Catch_All</STRONG> (Thumb, 440 bytes, Stack size 8 bytes, Control.o(i.Catch_All))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Catch_All &rArr; Serial4_SendPacket &rArr; Serial4_SendArray &rArr; Serial4_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmpeq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Mode
@@ -713,9 +713,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Enable
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DOWN
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare4
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare3
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stage
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cloud_tai
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -727,9 +727,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Enable
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DOWN
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare4
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare3
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stage
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cloud_tai
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Sthing
@@ -748,12 +748,12 @@ Global Symbols
 <P><STRONG><a name="[84]"></a>Control_Mode</STRONG> (Thumb, 1620 bytes, Stack size 8 bytes, Control.o(i.Control_Mode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Control_Mode &rArr; Place_ALL &rArr; Serial4_SendPacket &rArr; Serial4_SendArray &rArr; Serial4_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
+<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidRest
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmpeq
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_ALL
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_All
@@ -850,9 +850,7 @@ Global Symbols
 <P><STRONG><a name="[af]"></a>GPIO_Init</STRONG> (Thumb, 278 bytes, Stack size 24 bytes, stm32f10x_gpio.o(i.GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
+<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Init
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;right_front_Encoder_Init
@@ -860,6 +858,8 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_front_Encoder_Init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_back_Encoder_Init
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
@@ -1135,67 +1135,34 @@ Global Symbols
 <P><STRONG><a name="[91]"></a>NVIC_Init</STRONG> (Thumb, 100 bytes, Stack size 16 bytes, misc.o(i.NVIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
+<BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DOWN
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Init
 </UL>
 
 <P><STRONG><a name="[b8]"></a>NVIC_PriorityGroupConfig</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, misc.o(i.NVIC_PriorityGroupConfig))
-<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
+<BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
-</UL>
-
-<P><STRONG><a name="[75]"></a>PWM1_SetCompare2</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.PWM1_SetCompare2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM1_SetCompare2
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare2
-</UL>
-<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
-</UL>
-
-<P><STRONG><a name="[80]"></a>PWM1_SetCompare3</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.PWM1_SetCompare3))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM1_SetCompare3
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
-</UL>
-<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
-</UL>
-
-<P><STRONG><a name="[76]"></a>PWM1_SetCompare4</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.PWM1_SetCompare4))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM1_SetCompare4
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare4
-</UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
 </UL>
 
 <P><STRONG><a name="[ba]"></a>PWM_Init</STRONG> (Thumb, 206 bytes, Stack size 40 bytes, PWM.o(i.PWM_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = PWM_Init &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OCStructInit
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4PreloadConfig
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4Init
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3PreloadConfig
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3Init
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2PreloadConfig
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2Init
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC1PreloadConfig
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC1Init
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_InternalClockConfig
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CtrlPWMOutputs
+<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OCStructInit
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4PreloadConfig
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4Init
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3PreloadConfig
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3Init
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2PreloadConfig
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2Init
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC1PreloadConfig
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC1Init
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_InternalClockConfig
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CtrlPWMOutputs
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -1207,7 +1174,7 @@ Global Symbols
 <P><STRONG><a name="[bc]"></a>PWM_SetCompare1</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, PWM.o(i.PWM_SetCompare1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_SetCompare1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare1
+<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare1
 </UL>
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_left_front_wheel_SetSpeed
 </UL>
@@ -1215,7 +1182,7 @@ Global Symbols
 <P><STRONG><a name="[bb]"></a>PWM_SetCompare2</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, PWM.o(i.PWM_SetCompare2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_SetCompare2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare2
+<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare2
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_left_back_wheel_SetSpeed
 </UL>
@@ -1223,7 +1190,7 @@ Global Symbols
 <P><STRONG><a name="[be]"></a>PWM_SetCompare3</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, PWM.o(i.PWM_SetCompare3))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_SetCompare3
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_right_front_wheel_SetSpeed
 </UL>
@@ -1231,7 +1198,7 @@ Global Symbols
 <P><STRONG><a name="[bd]"></a>PWM_SetCompare4</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, PWM.o(i.PWM_SetCompare4))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_SetCompare4
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare4
+<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_right_back_wheel_SetSpeed
 </UL>
@@ -1263,9 +1230,9 @@ Global Symbols
 <P><STRONG><a name="[86]"></a>Place_ALL</STRONG> (Thumb, 510 bytes, Stack size 8 bytes, Control.o(i.Place_ALL))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Place_ALL &rArr; Serial4_SendPacket &rArr; Serial4_SendArray &rArr; Serial4_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmpeq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Mode
@@ -1277,9 +1244,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Enable
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DOWN
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare4
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare3
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stage
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cloud_tai
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Sthing
@@ -1288,8 +1255,8 @@ Global Symbols
 <P><STRONG><a name="[db]"></a>Place_Sthing</STRONG> (Thumb, 228 bytes, Stack size 8 bytes, Control.o(i.Place_Sthing))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Place_Sthing &rArr; Place_Mode &rArr; UP &rArr; NVIC_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidRest
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidRest
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
 </UL>
@@ -1306,20 +1273,18 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b5]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;right_front_Encoder_Init
+<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;right_front_Encoder_Init
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;right_back_Encoder_Init
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_front_Encoder_Init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_back_Encoder_Init
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Init
 </UL>
 
 <P><STRONG><a name="[ae]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
+<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Init
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Init
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;right_front_Encoder_Init
@@ -1327,6 +1292,8 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_front_Encoder_Init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;left_back_Encoder_Init
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Driver_Init
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_Init
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
@@ -1386,14 +1353,14 @@ Global Symbols
 <P><STRONG><a name="[dc]"></a>Serial4_Init</STRONG> (Thumb, 178 bytes, Stack size 32 bytes, Serial.o(i.Serial4_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = Serial4_Init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_PriorityGroupConfig
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1433,14 +1400,14 @@ Global Symbols
 <P><STRONG><a name="[6e]"></a>Serial5_Init</STRONG> (Thumb, 182 bytes, Stack size 32 bytes, Serial.o(i.Serial5_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = Serial5_Init &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_PriorityGroupConfig
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
 </UL>
@@ -1485,15 +1452,15 @@ Global Symbols
 <P><STRONG><a name="[70]"></a>Servo_Init</STRONG> (Thumb, 216 bytes, Stack size 40 bytes, Servo.o(i.Servo_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Servo_Init &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OCStructInit
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4PreloadConfig
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4Init
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3PreloadConfig
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3Init
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2PreloadConfig
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2Init
-<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_InternalClockConfig
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CtrlPWMOutputs
+<BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OCStructInit
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4PreloadConfig
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4Init
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3PreloadConfig
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3Init
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2PreloadConfig
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2Init
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_InternalClockConfig
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CtrlPWMOutputs
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -1585,7 +1552,7 @@ Global Symbols
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[cf]"></a>TIM_CtrlPWMOutputs</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_CtrlPWMOutputs))
+<P><STRONG><a name="[cc]"></a>TIM_CtrlPWMOutputs</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_CtrlPWMOutputs))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
@@ -1645,79 +1612,79 @@ Global Symbols
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MpuGetOffset
 </UL>
 
-<P><STRONG><a name="[c5]"></a>TIM_InternalClockConfig</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_InternalClockConfig))
+<P><STRONG><a name="[c2]"></a>TIM_InternalClockConfig</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_InternalClockConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[c7]"></a>TIM_OC1Init</STRONG> (Thumb, 132 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC1Init))
+<P><STRONG><a name="[c4]"></a>TIM_OC1Init</STRONG> (Thumb, 132 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC1Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIM_OC1Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 </UL>
 
-<P><STRONG><a name="[cb]"></a>TIM_OC1PreloadConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC1PreloadConfig))
+<P><STRONG><a name="[c8]"></a>TIM_OC1PreloadConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC1PreloadConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 </UL>
 
-<P><STRONG><a name="[c8]"></a>TIM_OC2Init</STRONG> (Thumb, 154 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC2Init))
+<P><STRONG><a name="[c5]"></a>TIM_OC2Init</STRONG> (Thumb, 154 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC2Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIM_OC2Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[cc]"></a>TIM_OC2PreloadConfig</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC2PreloadConfig))
+<P><STRONG><a name="[c9]"></a>TIM_OC2PreloadConfig</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC2PreloadConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[c9]"></a>TIM_OC3Init</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC3Init))
+<P><STRONG><a name="[c6]"></a>TIM_OC3Init</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC3Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIM_OC3Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[cd]"></a>TIM_OC3PreloadConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC3PreloadConfig))
+<P><STRONG><a name="[ca]"></a>TIM_OC3PreloadConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC3PreloadConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[ca]"></a>TIM_OC4Init</STRONG> (Thumb, 114 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC4Init))
+<P><STRONG><a name="[c7]"></a>TIM_OC4Init</STRONG> (Thumb, 114 bytes, Stack size 16 bytes, stm32f10x_tim.o(i.TIM_OC4Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = TIM_OC4Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[ce]"></a>TIM_OC4PreloadConfig</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC4PreloadConfig))
+<P><STRONG><a name="[cb]"></a>TIM_OC4PreloadConfig</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OC4PreloadConfig))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[c6]"></a>TIM_OCStructInit</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OCStructInit))
+<P><STRONG><a name="[c3]"></a>TIM_OCStructInit</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_OCStructInit))
 <BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Servo_Init
 </UL>
 
-<P><STRONG><a name="[d0]"></a>TIM_SetCompare1</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare1))
+<P><STRONG><a name="[cd]"></a>TIM_SetCompare1</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare1))
 <BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetCompare1
 </UL>
 
-<P><STRONG><a name="[c2]"></a>TIM_SetCompare2</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare2))
+<P><STRONG><a name="[ce]"></a>TIM_SetCompare2</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare2))
 <BR><BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetCompare2
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
 </UL>
 
-<P><STRONG><a name="[c3]"></a>TIM_SetCompare3</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare3))
+<P><STRONG><a name="[cf]"></a>TIM_SetCompare3</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare3))
 <BR><BR>[Called By]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetCompare3
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare3
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stage
 </UL>
 
-<P><STRONG><a name="[c4]"></a>TIM_SetCompare4</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare4))
+<P><STRONG><a name="[d0]"></a>TIM_SetCompare4</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCompare4))
 <BR><BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetCompare4
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare4
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cloud_tai
 </UL>
 
 <P><STRONG><a name="[10b]"></a>TIM_SetCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_tim.o(i.TIM_SetCounter))
@@ -1793,10 +1760,10 @@ Global Symbols
 <P><STRONG><a name="[3e]"></a>UART4_IRQHandler</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, Serial.o(i.UART4_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = UART4_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<BR>[Calls]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
@@ -1829,8 +1796,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e3]"></a>USART_GetFlagStatus</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_GetFlagStatus))
-<BR><BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendByte
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_SendByte
+<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_SendByte
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendByte
 </UL>
 
 <P><STRONG><a name="[f5]"></a>USART_GetITStatus</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, stm32f10x_usart.o(i.USART_GetITStatus))
@@ -1860,8 +1827,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e2]"></a>USART_SendData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_SendData))
-<BR><BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendByte
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_SendByte
+<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial5_SendByte
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendByte
 </UL>
 
 <P><STRONG><a name="[5]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.UsageFault_Handler))
@@ -1993,6 +1960,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetAngle
 </UL>
 
+<P><STRONG><a name="[76]"></a>cloud_tai</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.cloud_tai))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = cloud_tai
+</UL>
+<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare4
+</UL>
+<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
+</UL>
+
 <P><STRONG><a name="[c0]"></a>kalman_1</STRONG> (Thumb, 88 bytes, Stack size 24 bytes, mpu6050.o(i.kalman_1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = kalman_1 &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
@@ -2055,10 +2033,10 @@ Global Symbols
 <P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 362 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = main &rArr; ALL_Init &rArr; MpuGetOffset &rArr; MpuGetData &rArr; kalman_1 &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
+<BR>[Calls]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHMI
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_Init
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHMI
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM1_SetCompare2
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Sthing
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Sthing
@@ -2148,6 +2126,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Init
 </UL>
 
+<P><STRONG><a name="[75]"></a>robotic_grab</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.robotic_grab))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = robotic_grab
+</UL>
+<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare2
+</UL>
+<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
+</UL>
+
 <P><STRONG><a name="[108]"></a>sqrt</STRONG> (Thumb, 76 bytes, Stack size 24 bytes, sqrt.o(i.sqrt))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = sqrt &rArr; _dsqrt &rArr; _double_round
 </UL>
@@ -2155,6 +2145,16 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsqrt
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;asin
+</UL>
+
+<P><STRONG><a name="[80]"></a>stage</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, Servo.o(i.stage))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = stage
+</UL>
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCompare3
+</UL>
+<BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
 </UL>
 <P>
 <H3>

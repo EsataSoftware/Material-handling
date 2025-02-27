@@ -731,61 +731,61 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
 {
     switch (Color) {
         case 1:
-            PWM1_SetCompare3(600); //
+            stage(600); //
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
-            PWM1_SetCompare2(claw_grab);
+            robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            PWM1_SetCompare4(2350);
+            cloud_tai(2350);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            PWM1_SetCompare2(600);
+            robotic_grab(600);
             Micorstep_Enable();
             UP(1.6);
-            PWM1_SetCompare4(1080);
+            cloud_tai(1080);
             break;
         case 2:
-            PWM1_SetCompare3(1080);
+            stage(1080);
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
-            PWM1_SetCompare2(claw_grab);
+            robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            PWM1_SetCompare4(2300);
+            cloud_tai(2300);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            PWM1_SetCompare2(600);
+            robotic_grab(600);
             Micorstep_Enable();
             UP(1.6);
-            PWM1_SetCompare4(1080);
+            cloud_tai(1080);
             break;
         case 3:
-            PWM1_SetCompare3(1710);
+            stage(1710);
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
-            PWM1_SetCompare2(claw_grab);
+            robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            PWM1_SetCompare4(2300);
+            cloud_tai(2300);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            PWM1_SetCompare2(600);
+            robotic_grab(600);
             Micorstep_Enable();
             UP(1.6);
-            PWM1_SetCompare4(1080);
+            cloud_tai(1080);
             break;
     }
 }
@@ -795,17 +795,17 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
 void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一系列移动
 {
     if (Color == 1) {
-        PWM1_SetCompare3(600);
-        PWM1_SetCompare4(2350);
+        stage(600);
+        cloud_tai(2350);
         Micorstep_Enable();
         Delay_ms(1500);
         DOWN(1.6);
         Delay_ms(1000);
-        PWM1_SetCompare2(300);
+        robotic_grab(300);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        PWM1_SetCompare4(1080);
+        cloud_tai(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -815,7 +815,7 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
             DOWN(10.35);
         }
         Delay_ms(1000);
-        PWM1_SetCompare2(500);
+        robotic_grab(500);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -825,17 +825,17 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         Delay_ms(1000);
     }
     if (Color == 2) {
-        PWM1_SetCompare3(1080);
-        PWM1_SetCompare4(2300);
+        stage(1080);
+        cloud_tai(2300);
         Micorstep_Enable();
         Delay_ms(500);
         DOWN(1.6);
         Delay_ms(1000);
-        PWM1_SetCompare2(300);
+        robotic_grab(300);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        PWM1_SetCompare4(1080);
+        cloud_tai(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -845,7 +845,7 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
             DOWN(10.35);
         }
         Delay_ms(1000);
-        PWM1_SetCompare2(500);
+        robotic_grab(500);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -855,17 +855,17 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         Delay_ms(1000);
     }
     if (Color == 3) {
-        PWM1_SetCompare3(1710);
-        PWM1_SetCompare4(2300);
+        stage(1710);
+        cloud_tai(2300);
         Micorstep_Enable();
         Delay_ms(500);
         DOWN(1.6);
         Delay_ms(1000);
-        PWM1_SetCompare2(300);
+        robotic_grab(300);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        PWM1_SetCompare4(1080);
+        cloud_tai(1080);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -875,7 +875,7 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
             DOWN(10.35);
         }
         Delay_ms(1000);
-        PWM1_SetCompare2(500);
+        robotic_grab(500);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -892,79 +892,79 @@ void Catch_Mode_St(unsigned char Color)
 {
     switch (Color) {
         case 1:
-            PWM1_SetCompare3(600);
+            stage(600);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare2(300);
+            robotic_grab(300);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare4(2300);
+            cloud_tai(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
+            robotic_grab(500);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
-            PWM1_SetCompare3(960);
-            PWM1_SetCompare4(1080);
+            robotic_grab(500);
+            stage(960);
+            cloud_tai(1080);
             break;
         case 2:
-            PWM1_SetCompare3(1080);
+            stage(1080);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare2(300);
+            robotic_grab(300);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare4(2300);
+            cloud_tai(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
+            robotic_grab(500);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
-            PWM1_SetCompare3(1710);
-            PWM1_SetCompare4(1080);
+            robotic_grab(500);
+            stage(1710);
+            cloud_tai(1080);
             break;
         case 3:
-            PWM1_SetCompare3(1710);
+            stage(1710);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare2(300);
+            robotic_grab(300);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            PWM1_SetCompare4(2300);
+            cloud_tai(2300);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
+            robotic_grab(500);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            PWM1_SetCompare2(500);
-            PWM1_SetCompare3(355);
-            PWM1_SetCompare4(1080);
+            robotic_grab(500);
+            stage(355);
+            cloud_tai(1080);
             break;
     }
 }
