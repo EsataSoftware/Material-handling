@@ -54,7 +54,7 @@ void Serial4_Init(void)
     USART_Cmd(UART4, ENABLE);
 }
 
-void Serial_5_Init(void)
+void Serial5_Init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);

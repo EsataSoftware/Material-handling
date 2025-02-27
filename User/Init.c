@@ -10,7 +10,7 @@ void ALL_Init()
 {
     Delay_ms(1200);
     Kalman_Init();
-    OLED_Init();
+    // OLED_Init();
     // OLED_ShowString_high(2, 1, "Hello");
     Micorstep_Driver_Init(); // 步进电机初始化 最高11.20
     UP(5.00);
@@ -19,7 +19,7 @@ void ALL_Init()
     IIC_Init();
     MpuInit();
     // Serial4_Init();
-    //  Serial_5_Init();
+    Serial5_Init();
     Motor_Init();
     Servo_Init();
     Encoder_Init();
