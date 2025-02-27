@@ -1,0 +1,238 @@
+[2025-02-27 15:35:19]	[info] incremental build: 44 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\HardWare\Step_Diver.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\Encoder.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\HMI.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\IIC.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\Motor.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\OLED.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\PID.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\PWM.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Hardware\Serial.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\misc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_adc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_bkp.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_can.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_cec.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_crc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_dac.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_dbgmcu.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_dma.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_exti.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_flash.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_fsmc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_gpio.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_i2c.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_iwdg.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_pwr.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_rcc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_rtc.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_sdio.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_spi.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_tim.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_usart.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Library\stm32f10x_wwdg.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Start\core_cm3.c': object (.o) file not exist
+'d:\project\stm32\Material handling\Start\startup_stm32f10x_hd.s': object (.o) file not exist
+'d:\project\stm32\Material handling\Start\system_stm32f10x.c': object (.o) file not exist
+'d:\project\stm32\Material handling\System\Delay.c': object (.o) file not exist
+'d:\project\stm32\Material handling\System\Servo.c': object (.o) file not exist
+'d:\project\stm32\Material handling\System\Timer4.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Control.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Filter.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Init.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\main.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\mpu6050.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\stm32f10x_it.c': object (.o) file not exist
+
+[2025-02-27 15:35:24]	compilation failed at : "d:\project\stm32\Material handling\User\Control.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\User\Control.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\User\Control.d" .\User\Control.c
+   at unify_builder.Program.compileByMulThread(Int32 thrNum, CmdInfo[] cmds_, List`1 errLogs)
+   at unify_builder.Program.Main(String[] args_)
+---
+".\User\Control.c", line 8: Error:  #147: declaration is incompatible with "unsigned char Yellow_Flag"  (declared at line 68 of "System\all_data.h")
+  unsigned int Yellow_Flag      = 0;
+               ^
+.\User\Control.c: 0 warnings, 1 error
+
+[2025-02-27 15:36:35]	[info] incremental build: 11 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Encoder.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Hardware\HMI.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Hardware\PID.c': dependence 'd:\project\stm32\Material handling\System\ALL_DATA.h' has been changed.
+'d:\project\stm32\Material handling\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\System\Timer4.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\User\Control.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Filter.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Init.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\main.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\mpu6050.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\stm32f10x_it.c': object (.o) file not exist
+
+[2025-02-27 15:36:35]	compilation failed at : "d:\project\stm32\Material handling\Hardware\Serial.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\Hardware\Serial.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\Hardware\Serial.d" .\Hardware\Serial.c
+   at unify_builder.Program.compileByMulThread(Int32 thrNum, CmdInfo[] cmds_, List`1 errLogs)
+   at unify_builder.Program.Main(String[] args_)
+---
+".\Hardware\Serial.c", line 15: Error:  #147: declaration is incompatible with "unsigned int Yellow_Flag"  (declared at line 68 of "System\all_data.h")
+  unsigned char Yellow_Flag;
+                ^
+.\Hardware\Serial.c: 0 warnings, 1 error
+
+[2025-02-27 15:36:45]	[info] incremental build: 7 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\User\Control.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Filter.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Init.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\main.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\mpu6050.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\stm32f10x_it.c': object (.o) file not exist
+
+[2025-02-27 15:36:45]	compilation failed at : "d:\project\stm32\Material handling\Hardware\Serial.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\Hardware\Serial.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\Hardware\Serial.d" .\Hardware\Serial.c
+   at unify_builder.Program.Main(String[] args_)
+---
+".\Hardware\Serial.c", line 15: Error:  #147: declaration is incompatible with "unsigned int Yellow_Flag"  (declared at line 68 of "System\all_data.h")
+  unsigned char Yellow_Flag;
+                ^
+.\Hardware\Serial.c: 0 warnings, 1 error
+
+[2025-02-27 15:37:51]	[info] incremental build: 7 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\User\Control.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Filter.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Init.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\main.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\mpu6050.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\stm32f10x_it.c': object (.o) file not exist
+
+[2025-02-27 15:37:52]	compilation failed at : "d:\project\stm32\Material handling\Hardware\Serial.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\Hardware\Serial.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\Hardware\Serial.d" .\Hardware\Serial.c
+   at unify_builder.Program.Main(String[] args_)
+---
+".\Hardware\Serial.c", line 15: Error:  #147: declaration is incompatible with "unsigned int Yellow_Flag"  (declared at line 68 of "System\all_data.h")
+  unsigned char Yellow_Flag;
+                ^
+.\Hardware\Serial.c: 0 warnings, 1 error
+
+[2025-02-27 15:38:20]	[info] incremental build: 7 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': source file has been changed.
+'d:\project\stm32\Material handling\User\Control.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Filter.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\Init.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\main.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\mpu6050.c': object (.o) file not exist
+'d:\project\stm32\Material handling\User\stm32f10x_it.c': object (.o) file not exist
+
+[2025-02-27 15:38:22]	[done]
+	build successfully !
+
+[2025-02-27 16:46:06]	[info] incremental build: 5 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\HMI.c': dependence 'd:\project\stm32\Material handling\Hardware\Serial.h' has been changed.
+'d:\project\stm32\Material handling\Hardware\Serial.c': source file has been changed.
+'d:\project\stm32\Material handling\User\Control.c': dependence 'd:\project\stm32\Material handling\Hardware\serial.h' has been changed.
+'d:\project\stm32\Material handling\User\Init.c': source file has been changed.
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:46:08]	[done]
+	build successfully !
+
+[2025-02-27 16:48:00]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': source file has been changed.
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:48:01]	[done]
+	build successfully !
+
+[2025-02-27 16:48:32]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': source file has been changed.
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:48:33]	[done]
+	build successfully !
+
+[2025-02-27 16:49:39]	[info] incremental build: 3 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\Serial.c': source file has been changed.
+'d:\project\stm32\Material handling\User\Init.c': source file has been changed.
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:49:40]	[done]
+	build successfully !
+
+[2025-02-27 16:51:44]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:51:44]	link failed !, exit code: 1
+   at unify_builder.Program.Main(String[] args_)
+---
+Error: L6218E: Undefined symbol msg (referred from HMI.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 1 error messages.
+
+
+[2025-02-27 16:52:04]	link failed !, exit code: 1
+   at unify_builder.Program.Main(String[] args_)
+---
+Error: L6218E: Undefined symbol msg (referred from HMI.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 1 error messages.
+
+
+[2025-02-27 16:52:12]	link failed !, exit code: 1
+   at unify_builder.Program.Main(String[] args_)
+---
+Error: L6218E: Undefined symbol msg (referred from HMI.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 1 error messages.
+
+
+[2025-02-27 16:52:21]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:52:21]	[done]
+	build successfully !
+
+[2025-02-27 16:52:41]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Hardware\HMI.c': source file has been changed.
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:52:42]	[done]
+	build successfully !
+
+[2025-02-27 16:54:01]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\User\main.c': source file has been changed.
+
+[2025-02-27 16:54:02]	[done]
+	build successfully !
+
+[2025-02-27 17:16:00]	[done]
+	build successfully !
+
