@@ -12,7 +12,6 @@ uint8_t Serial_RxFlag;
 float LX, LY, Angle_Yaw;
 unsigned char Write_Flag;
 unsigned char Serial_Yaw;
-unsigned char Yellow_Flag;
 unsigned char QFlag;
 float Last_Yaw;
 

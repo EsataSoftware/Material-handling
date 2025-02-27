@@ -65,7 +65,7 @@ extern float LX,LY,Angle_Yaw;
 extern unsigned char Serial_TxPacket[10];//发送数据包
 extern unsigned char Write_Flag;//寻白，寻黄色标志位
 extern unsigned char Serial_Yaw;//串口传输过来的校准角度
-extern unsigned char Yellow_Flag;
+extern unsigned int Yellow_Flag;
 extern unsigned char QrCode;
 extern char msg[100];
 extern PidObject *(pPidObject[]);
