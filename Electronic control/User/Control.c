@@ -54,16 +54,16 @@ unsigned char Search_Flag2 = 0;
 unsigned char Find2_1  = 1, Find2_2, Find2_3;
 unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 
-#define Cloud_Location    1080 // 云台观察位置//1080 1700
-#define Could_Palace      2300 // 云台放置载物台上位置//2300
-#define stage_datum_point 1200 // 载物台初始位置
-#define stage_state1      600  // 载物台物块1放置
-#define stage_state2      970  // 载物台物块2放置
-#define stage_state3      1710 // 载物台物块3放置
-#define claw_grab         300  // 机械爪抓取
-#define claw_free         700  // 机械爪释放
-#define cloud_place       2250
-
+#define Cloud_Location  1080 // 云台观察位置
+#define Cloud_Palace1   2350 // 云台放置载物台1上位置
+#define Cloud_Palace2   2300 // 云台放置载物台2上位置
+#define Cloud_Palace3   2300 // 云台放置载物台3上位置
+#define stage_state1    600  // 载物台物块1放置
+#define stage_state2    1080 // 载物台物块2放置
+#define stage_state3    1710 // 载物台物块3放置
+#define claw_grab       280  // 机械爪抓取
+#define claw_free       700  // 机械爪释放
+#define claw_free_stage 500  // 载物台机械爪释放
 PidObject *(pPidObject[]) = {&pidYaw, &pidRateZ, &PID_FOR_L, &PID_FOR_R, &PID_BAC_L, &PID_BAC_R, &pidLX, &pidLY};
 
 // 0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
@@ -725,13 +725,13 @@ void Control_Moto()
     Motor_right_back_wheel_SetSpeed(PID_BAC_R.out);
 }
 
-// 1载物600，2载物1080，3载物1710，抓取600 970 1710
+// 1载物600，2载物1080，3载物1710，抓取600 1080 1710
 //  0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
 void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘上的一系列移动
 {
     switch (Color) {
         case 1:
-            stage(600); //
+            stage(stage_state1); //
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
@@ -739,18 +739,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            cloud_tai(2350);
+            cloud_tai(Cloud_Palace1);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            robotic_grab(600);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             UP(1.6);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
         case 2:
-            stage(1080);
+            stage(stage_state2);
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
@@ -758,18 +758,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            cloud_tai(2300);
+            cloud_tai(Cloud_Palace2);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            robotic_grab(600);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             UP(1.6);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
         case 3:
-            stage(1710);
+            stage(stage_state3);
             Micorstep_Enable();
             DOWN(5.00);
             Delay_ms(500);
@@ -777,15 +777,15 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             Delay_ms(500);
             Micorstep_Enable();
             UP(5.00);
-            cloud_tai(2300);
+            cloud_tai(Cloud_Palace3);
             Delay_ms(1500);
             Micorstep_Enable();
             DOWN(1.6);
             Delay_ms(1000);
-            robotic_grab(600);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             UP(1.6);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
     }
 }
@@ -795,27 +795,27 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
 void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一系列移动
 {
     if (Color == 1) {
-        stage(600);
-        cloud_tai(2350);
+        stage(stage_state1);
+        cloud_tai(Cloud_Palace1);
         Micorstep_Enable();
         Delay_ms(1500);
         DOWN(1.6);
         Delay_ms(1000);
-        robotic_grab(300);
+        robotic_grab(claw_grab);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        cloud_tai(1080);
+        cloud_tai(Cloud_Location);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
-        if (ALL_Place == 5) { // 记得改数值还没测
+        if (ALL_Place == 5) {
             DOWN(6.0);
         } else {
             DOWN(10.35);
         }
         Delay_ms(1000);
-        robotic_grab(500);
+        robotic_grab(claw_free);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -825,17 +825,17 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         Delay_ms(1000);
     }
     if (Color == 2) {
-        stage(1080);
-        cloud_tai(2300);
+        stage(stage_state2);
+        cloud_tai(Cloud_Palace2);
         Micorstep_Enable();
         Delay_ms(500);
         DOWN(1.6);
         Delay_ms(1000);
-        robotic_grab(300);
+        robotic_grab(claw_grab);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        cloud_tai(1080);
+        cloud_tai(Cloud_Location);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -845,7 +845,7 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
             DOWN(10.35);
         }
         Delay_ms(1000);
-        robotic_grab(500);
+        robotic_grab(claw_grab);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -855,17 +855,17 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         Delay_ms(1000);
     }
     if (Color == 3) {
-        stage(1710);
-        cloud_tai(2300);
+        stage(stage_state3);
+        cloud_tai(Cloud_Palace3);
         Micorstep_Enable();
         Delay_ms(500);
         DOWN(1.6);
         Delay_ms(1000);
-        robotic_grab(300);
+        robotic_grab(claw_grab);
         Delay_ms(1000);
         Micorstep_Enable();
         UP(1.6);
-        cloud_tai(1080);
+        cloud_tai(Cloud_Location);
         Delay_ms(1000);
         Micorstep_Enable();
         Delay_ms(1000);
@@ -875,7 +875,7 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
             DOWN(10.35);
         }
         Delay_ms(1000);
-        robotic_grab(500);
+        robotic_grab(claw_free);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             UP(6.0);
@@ -892,79 +892,73 @@ void Catch_Mode_St(unsigned char Color)
 {
     switch (Color) {
         case 1:
-            stage(600);
+            stage(stage_state1);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            robotic_grab(300);
+            robotic_grab(claw_grab);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            cloud_tai(Cloud_Palace1);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
+            robotic_grab(claw_free_stage);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
-            stage(960);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
         case 2:
-            stage(1080);
+            stage(stage_state2);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            robotic_grab(300);
+            robotic_grab(claw_grab);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            cloud_tai(Cloud_Palace2);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
+            robotic_grab(claw_free_stage);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
-            stage(1710);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
         case 3:
-            stage(1710);
+            stage(stage_state3);
             Micorstep_Enable();
             Delay_ms(500);
             DOWN(10.35);
             Delay_ms(1000);
-            robotic_grab(300);
+            robotic_grab(claw_grab);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(10.35);
             Delay_ms(1000);
-            cloud_tai(2300);
+            cloud_tai(Cloud_Palace3);
             Delay_ms(1000);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
+            robotic_grab(claw_free_stage);
             Delay_ms(1000);
             Micorstep_Enable();
             UP(1.9);
             Delay_ms(1000);
-            robotic_grab(500);
-            stage(355);
-            cloud_tai(1080);
+            cloud_tai(Cloud_Location);
             break;
     }
 }
