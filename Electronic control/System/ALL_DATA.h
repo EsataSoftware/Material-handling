@@ -52,6 +52,8 @@ extern PidObject pidYaw;
 extern PidObject pidRateZ;
 extern PidObject pidLX;
 extern PidObject pidLY;
+extern PidObject pidLX1;
+extern PidObject pidLY1;
 
 
 extern _st_Mpu MPU6050;

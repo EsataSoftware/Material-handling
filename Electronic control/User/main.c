@@ -33,17 +33,17 @@ int main(void)
             // OLED_ShowNum_high(1, 5, Serial5_RxPacket[3], 1);
             // OLED_ShowNum_high(1, 6, Serial5_RxPacket[4], 1);
             // OLED_ShowNum_high(1, 7, Serial5_RxPacket[5], 1);
-            Serial_SendHMI("t0","txt",Serial5_RxPacket[0]);
-            Serial_SendHMI("t1","txt",Serial5_RxPacket[1]);
-            Serial_SendHMI("t2","txt",Serial5_RxPacket[2]);
-            Serial_SendHMI("t3","txt",Serial5_RxPacket[3]);
-            Serial_SendHMI("t4","txt",Serial5_RxPacket[4]);
-            Serial_SendHMI("t5","txt",Serial5_RxPacket[5]);
+            Serial_SendHMI("t0", "txt", Serial5_RxPacket[0]);
+            Serial_SendHMI("t1", "txt", Serial5_RxPacket[1]);
+            Serial_SendHMI("t2", "txt", Serial5_RxPacket[2]);
+            Serial_SendHMI("t3", "txt", Serial5_RxPacket[3]);
+            Serial_SendHMI("t4", "txt", Serial5_RxPacket[4]);
+            Serial_SendHMI("t5", "txt", Serial5_RxPacket[5]);
             QrCode = 1;
         }
         if (Write_Flag == 0xcc && Catch_Flag == 1) { // 收到树莓派抓取指令,开始抓取
             Catch_Frequency %= 3;
-            robotic_grab(800);
+            robotic_grab(700);
             Write_Flag = 0x01;
             Catch_Mode(++Catch_Frequency);
             if (Catch_Frequency == 3) { // 三个物块抓取完毕

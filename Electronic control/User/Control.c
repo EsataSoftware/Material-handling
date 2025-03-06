@@ -643,16 +643,16 @@ void Location_Mode_Place(float dt)
     //************************************************************************************
     // 位置环pid
 
-    pidLX.desired = 315;
-    pidLY.desired = 190;
+    pidLX1.desired = 315;
+    pidLY1.desired = 190;
     if (LX == 0 || LY == 0) {
-        pidLX.desired = 0;
-        pidLY.desired = 0;
+        pidLX1.desired = 0;
+        pidLY1.desired = 0;
     }
-    pidLX.measured = LX;
-    pidLY.measured = LY;
-    pidUpdate(&pidLX, dt);
-    pidUpdate(&pidLY, dt);
+    pidLX1.measured = LX;
+    pidLY1.measured = LY;
+    pidUpdate(&pidLX1, dt);
+    pidUpdate(&pidLY1, dt);
     //*****************************************************************************************
     // 姿态环pid
     pidYaw.desired  = Angle_Yaw;
@@ -666,10 +666,10 @@ void Location_Mode_Place(float dt)
     //*****************************************************************************************
     // 编码器环pid
     // 目标值更改
-    PID_FOR_L.desired = pidLX.out + pidLY.out - pidYaw.out;
-    PID_FOR_R.desired = pidLX.out - pidLY.out + pidYaw.out;
-    PID_BAC_L.desired = pidLX.out - pidLY.out - pidYaw.out;
-    PID_BAC_R.desired = pidLX.out + pidLY.out + pidYaw.out;
+    PID_FOR_L.desired = pidLX1.out + pidLY1.out - pidYaw.out;
+    PID_FOR_R.desired = pidLX1.out - pidLY1.out + pidYaw.out;
+    PID_BAC_L.desired = pidLX1.out - pidLY1.out - pidYaw.out;
+    PID_BAC_R.desired = pidLX1.out + pidLY1.out + pidYaw.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;

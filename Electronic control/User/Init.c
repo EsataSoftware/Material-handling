@@ -6,6 +6,9 @@ PidObject pidRateZ; // 陀螺仪pidh'fe'j'k'l'l'k'jiou'j'sa'l'd'f'k'k'l'j'a'u'l
 PidObject pidLX;
 PidObject pidLY;
 
+PidObject pidLX1;
+PidObject pidLY1;
+
 void ALL_Init()
 {
     Delay_ms(1200);
@@ -41,6 +44,10 @@ void pid_Para_Init_Location()
     pidLX.kp     = 0.015; // 0.065   0.002  0.013  0.023  0.01
     pidLY.kp     = 0.013; // 0.055    0.002  0.013  0.023  0.006
 
+    pidLX1.kp     = 0.026; // 0.065   0.002  0.013  0.023  0.01
+    pidLY1.kp     = 0.02; // 0.055    0.002  0.013  0.023  0.006
+
+
     PID_FOR_L.ki = 3;   // 360
     PID_FOR_R.ki = 3;   // 360
     PID_BAC_L.ki = 3;   // 360
@@ -50,6 +57,9 @@ void pid_Para_Init_Location()
     pidLX.ki     = 0.00;
     pidLY.ki     = 0.00;
 
+    pidLX1.ki     = 0.00;
+    pidLY1.ki     = 0.00;
+
     PID_FOR_L.kd = 0.05;   // 0.01
     PID_FOR_R.kd = 0.05;   // 0.001
     PID_BAC_L.kd = 0.05;   // 0.001
@@ -58,4 +68,7 @@ void pid_Para_Init_Location()
     pidRateZ.kd  = 0.0022; // 0.00108    0.00123    0.00125    0.00138   0.00148
     pidLX.kd     = 0.001;
     pidLY.kd     = 0.002;
+
+    pidLX1.kd     = 0.001;
+    pidLY1.kd     = 0.002;
 }

@@ -248,3 +248,38 @@ These source files will be recompiled
 [2025-02-27 18:27:07]	[done]
 	build successfully !
 
+[2025-03-02 20:25:46]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\System\Servo.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-02 20:25:48]	[done]
+	build successfully !
+
+[2025-03-06 17:03:03]	[info] incremental build: 10 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\Hardware\Encoder.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\Hardware\HMI.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\Hardware\PID.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\ALL_DATA.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\System\Timer4.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Filter.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\mpu6050.c': dependence 'd:\project\stm32\Material handling\Electronic control\System\all_data.h' has been changed.
+
+[2025-03-06 17:03:07]	[done]
+	build successfully !
+
+[2025-03-06 17:03:31]	[done]
+	build successfully !
+
+[2025-03-06 17:05:48]	[done]
+	build successfully !
+
+[2025-03-06 17:09:22]	[done]
+	build successfully !
+
