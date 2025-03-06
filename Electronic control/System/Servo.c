@@ -6,7 +6,7 @@
 #define stage_state1      600  // 载物台物块1放置
 #define stage_state2      1080 // 载物台物块2放置
 #define stage_state3      1710 // 载物台物块3放置
-#define claw_grab         280  // 机械爪抓取
+#define claw_grab         300  // 机械爪抓取
 #define claw_free         700  // 机械爪释放
 #define claw_free_stage   500  // 载物台机械爪释放
 /// 1载物330，2载物970，3载物1710，抓取330 970 1710
