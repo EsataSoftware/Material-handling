@@ -29,7 +29,7 @@ void ALL_Init()
     MpuGetOffset();
     pid_Para_Init_Location();
     TIM6_Init();
-    robotic_grab(600);
+    robotic_grab(800);
     cloud_tai(1080);
 }
 

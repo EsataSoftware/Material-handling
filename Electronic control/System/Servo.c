@@ -1,15 +1,14 @@
 #include "Servo.h"
-#define Cloud_Location    1080 // 云台观察位置
-#define Cloud_Palace1     2350 // 云台放置载物台1上位置
-#define Cloud_Palace2     2300 // 云台放置载物台2上位置
-#define Cloud_Palace3     2300 // 云台放置载物台3上位置
-#define stage_state1      600  // 载物台物块1放置
-#define stage_state2      1080 // 载物台物块2放置
-#define stage_state3      1710 // 载物台物块3放置
-#define claw_grab         300  // 机械爪抓取
-#define claw_free         700  // 机械爪释放
-#define claw_free_stage   500  // 载物台机械爪释放
-/// 1载物330，2载物970，3载物1710，抓取330 970 1710
+#define Cloud_Location  1080 // 云台观察位置
+#define Cloud_Palace1   2330 // 云台放置载物台1上位置
+#define Cloud_Palace2   2280 // 云台放置载物台2上位置
+#define Cloud_Palace3   2350 // 云台放置载物台3上位置
+#define stage_state1    1950  // 载物台物块1放置
+#define stage_state2    1080 // 载物台物块2放置
+#define stage_state3    610 // 载物台物块3放置
+#define claw_grab       600  // 机械爪抓取
+#define claw_free       900  // 机械爪释放
+#define claw_free_stage 800  // 载物台机械爪释放
 
 void Servo_Init(void)
 {

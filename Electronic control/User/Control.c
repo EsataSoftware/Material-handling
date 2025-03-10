@@ -55,15 +55,15 @@ unsigned char Find2_1  = 1, Find2_2, Find2_3;
 unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 
 #define Cloud_Location  1080 // 云台观察位置
-#define Cloud_Palace1   2350 // 云台放置载物台1上位置
-#define Cloud_Palace2   2300 // 云台放置载物台2上位置
-#define Cloud_Palace3   2300 // 云台放置载物台3上位置
-#define stage_state1    600  // 载物台物块1放置
+#define Cloud_Palace1   2330 // 云台放置载物台1上位置
+#define Cloud_Palace2   2280 // 云台放置载物台2上位置
+#define Cloud_Palace3   2350 // 云台放置载物台3上位置
+#define stage_state1    1950  // 载物台物块1放置
 #define stage_state2    1080 // 载物台物块2放置
-#define stage_state3    1710 // 载物台物块3放置
-#define claw_grab       300  // 机械爪抓取
-#define claw_free       600  // 机械爪释放
-#define claw_free_stage 500  // 载物台机械爪释放
+#define stage_state3    610 // 载物台物块3放置
+#define claw_grab       600  // 机械爪抓取
+#define claw_free       900  // 机械爪释放
+#define claw_free_stage 800  // 载物台机械爪释放
 PidObject *(pPidObject[]) = {&pidYaw, &pidRateZ, &PID_FOR_L, &PID_FOR_R, &PID_BAC_L, &PID_BAC_R, &pidLX, &pidLY};
 
 // 0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
@@ -973,7 +973,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Red_Place_Over == 0 && Place_Red == 0 && Place_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Red_Place_Over == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Red_Place_Over == 0 ) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Red == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -981,11 +981,7 @@ void Place_ALL(unsigned char Place_F)
                 Place_Red      = 1;
                 Place_Over_Red = 1;
             }
-        } else if (Write_Flag == 0XCD && Red_Place_Over == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
-        }
+        } 
     } else if (Place_F == 2) { // 放绿色
         if (P_2 == 0) {
             Serial_TxPacket[0] = 0xAF;
@@ -995,21 +991,15 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Green_Place_Over == 0 && Place_Green == 0 && Place_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Green_Place_Over == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Green_Place_Over == 0 ) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Green == 0) {
                 Serial_TxPacket[0] = 0x01;
                 Serial4_SendPacket();
-            }
-            if (Place_Over_Green == 0) {
                 Place_Green      = 1;
                 Place_Over_Green = 1;
             }
-        } else if (Write_Flag == 0XCD && Green_Place_Over == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
-        }
+        } 
     } else if (Place_F == 3) { // 放蓝色
         if (P_3 == 0) {
             Serial_TxPacket[0] = 0xBA;
@@ -1019,21 +1009,15 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Blue_Place_Over == 0 && Place_Blue == 0 && Place_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Blue_Place_Over == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Blue_Place_Over == 0 ) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Blue == 0) {
                 Serial_TxPacket[0] = 0x01;
                 Serial4_SendPacket();
-            }
-            if (Place_Over_Blue == 0) {
                 Place_Blue      = 1;
                 Place_Over_Blue = 1;
             }
-        } else if (Write_Flag == 0XCD && Blue_Place_Over == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
-        }
+        } 
     }
 }
 
@@ -1089,16 +1073,12 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Red == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Red == 0 ) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
             Catch_Red      = 1;
             Catch_Over_Red = 1;
-        } else if (Write_Flag == 0XCD && Catch_Over_Red == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
         }
     } else if (Catch_F == 2) {
         if (C_2 == 0) {
@@ -1109,17 +1089,13 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Green == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Green == 0 ) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
             Catch_Green      = 1;
             Catch_Over_Green = 1;
-        } else if (Write_Flag == 0XCD && Catch_Over_Green == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
-        }
+        } 
     }
 
     else if (Catch_F == 3) {
@@ -1131,17 +1107,13 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Blue == 0 && Write_Flag == 0XCD) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Blue == 0 ) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
             Catch_Blue      = 1;
             Catch_Over_Blue = 1;
-        } else if (Write_Flag == 0XCD && Catch_Over_Blue == 0) {
-            Write_Flag         = 0x01;
-            Serial_TxPacket[0] = 0xAF;
-            Serial4_SendPacket();
-        }
+        } 
     }
 }
 
