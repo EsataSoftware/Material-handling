@@ -190,11 +190,11 @@ void UART4_IRQHandler(void)
                     Serial_RxPacket[pRxPacket++] = RxData;
             }
             if (RxData == 0xFE) {
-                RxState    = 0;
-                //Serial_Yaw = Serial_RxPacket[0]; // 偏航角
+                RxState = 0;
+                // Serial_Yaw = Serial_RxPacket[0]; // 偏航角
                 // Serial_RxPacket[1]无意义懒得改
-                //				Serial_Yaw = Kalman_Filter(&KF_Angle,Serial_Yaw);
-                //Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
+                // Serial_Yaw = Kalman_Filter(&KF_Angle,Serial_Yaw);
+                // Last_Yaw   = Kalman_Filter(&KF_Angle, Serial_Yaw);
                 LX         = Serial_RxPacket[2] * 3;
                 LY         = Serial_RxPacket[3] * 2;
                 Write_Flag = Serial_RxPacket[4]; // 寻白,寻黄和抓取标志位

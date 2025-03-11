@@ -29,7 +29,7 @@ void ALL_Init()
     MpuGetOffset();
     pid_Para_Init_Location();
     TIM6_Init();
-    robotic_grab(800);
+    robotic_grab(900);
     cloud_tai(1080);
 }
 
@@ -39,26 +39,26 @@ void pid_Para_Init_Location()
     PID_FOR_R.kp = 16;    // 430 420  430
     PID_BAC_L.kp = 16;    // 430  420   430
     PID_BAC_R.kp = 30;    // 450    455  455
-    pidYaw.kp    = 0.87;  // 0.85    1.35  0.95 1.15  0.85
-    pidRateZ.kp  = 0.67;  // 0.454   0.460   0.465   0.4658   0.335  0.400  0.410 0.80  0.60
+    pidYaw.kp    = 0.85;  // 0.85    1.35  0.95 1.15  0.85 0.87
+    pidRateZ.kp  = 0.65;  // 0.454   0.460   0.465   0.4658   0.335  0.400  0.410 0.80  0.60 0.67
     pidLX.kp     = 0.015; // 0.065   0.002  0.013  0.023  0.01
     pidLY.kp     = 0.013; // 0.055    0.002  0.013  0.023  0.006
 
-    pidLX1.kp     = 0.026; // 0.065   0.002  0.013  0.023  0.01
-    pidLY1.kp     = 0.02; // 0.055    0.002  0.013  0.023  0.006
+    pidLX1.kp     = 0.028; // 0.026
+    pidLY1.kp     = 0.025; // 0.02
 
 
-    PID_FOR_L.ki = 3;   // 360
-    PID_FOR_R.ki = 3;   // 360
-    PID_BAC_L.ki = 3;   // 360
-    PID_BAC_R.ki = 3;   // 360
+    PID_FOR_L.ki = 3;   // 3
+    PID_FOR_R.ki = 3;   // 3
+    PID_BAC_L.ki = 3;   // 3
+    PID_BAC_R.ki = 3;   // 3
     pidYaw.ki    = 0.0; // 0.015 0.39
     pidRateZ.ki  = 0.0; // 0.25 0.08 0.21
     pidLX.ki     = 0.00;
     pidLY.ki     = 0.00;
 
-    pidLX1.ki     = 0.00;
-    pidLY1.ki     = 0.00;
+    pidLX1.ki     = 0.0;
+    pidLY1.ki     = 0.0;
 
     PID_FOR_L.kd = 0.05;   // 0.01
     PID_FOR_R.kd = 0.05;   // 0.001
@@ -69,6 +69,6 @@ void pid_Para_Init_Location()
     pidLX.kd     = 0.001;
     pidLY.kd     = 0.002;
 
-    pidLX1.kd     = 0.001;
+    pidLX1.kd     = 0.0012;
     pidLY1.kd     = 0.002;
 }

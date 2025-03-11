@@ -12,7 +12,9 @@
 extern unsigned char ALL_Place;
 
 void Forward_Mode(float dt);
+void Forward_Mode_Low(float dt);
 void Back_Mode(float dt);
+void Back_Mode_Low(float dt);
 void Trans_Mode(float dt); // 横移模式
 void Location_Mode(float dt);
 void Revolve_Mode(float dt); // 旋转模式
@@ -26,7 +28,6 @@ void Catch_Mode(unsigned char Color);
 void Place_Mode(unsigned char Color);
 void Place_Sthing(void);
 void Place_ALL(unsigned char Place_F);
-void Forward_Mode_Low(float dt);
 void Catch_All(unsigned char Catch_F);
 void Catch_Sthing(void);
 void Revolve_Mode_90(float dt);
@@ -46,6 +47,7 @@ void Revolve_Mode_180(float dt);
 #define REVOLVE_MODE_0      21 // 右转
 #define REVOLVE_MODE_180    22 // 翻转
 #define TRANS_RIGHT_MODE    23
+#define BACK_MODE_LOW        24
 void Control_Moto(void);
 
 #endif

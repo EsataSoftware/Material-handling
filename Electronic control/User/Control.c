@@ -58,9 +58,9 @@ unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 #define Cloud_Palace1   2330 // 云台放置载物台1上位置
 #define Cloud_Palace2   2280 // 云台放置载物台2上位置
 #define Cloud_Palace3   2350 // 云台放置载物台3上位置
-#define stage_state1    1950  // 载物台物块1放置
-#define stage_state2    1080 // 载物台物块2放置
-#define stage_state3    610 // 载物台物块3放置
+#define stage_state1    1950 // 载物台物块1放置
+#define stage_state2    1020 // 载物台物块2放置
+#define stage_state3    630  // 载物台物块3放置
 #define claw_grab       600  // 机械爪抓取
 #define claw_free       900  // 机械爪释放
 #define claw_free_stage 800  // 载物台机械爪释放
@@ -99,7 +99,10 @@ void Pid_Control_Trans() // 模式工作函数
     } else if (Mode_Flag == FOR_MODE_LOW) {
         Forward_Mode_Low(0.005f);
         Control_Moto();
-    } else if (Mode_Flag == REVOLVE_MODE_90) { // 左转
+    } else if (Mode_Flag == BACK_MODE_LOW) { // 翻转
+        Back_Mode_Low(0.005f);
+        Control_Moto();
+    }else if (Mode_Flag == REVOLVE_MODE_90) { // 左转
         Revolve_Mode_90(0.005f);
         Control_Moto();
     } else if (Mode_Flag == REVOLVE_MODE_0) { // 右转
@@ -124,14 +127,14 @@ void Control_Mode()
                 Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
             }
         }
-        if (Trans_Flag >= 1900 && Stop_Flag == 0) {
+        if (Trans_Flag >= 2000 && Stop_Flag == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0XFC; // 树莓派定位转盘
             Serial4_SendPacket();
             Serial_TxPacket[0] = 0XAD;
             // OLED_ShowHexNum_high(1, 1, Serial_TxPacket[0], 4);
             Stop_Flag = 1;
-        } else if (Trans_Flag >= 1750 && Stop_Flag == 0) {
+        } else if (Trans_Flag >= 1850 && Stop_Flag == 0) {
             Mode_Flag = TRANS_RIGHT_MODE;
         }
         if (LX != 0 && LY != 0 && Location_Flag == 0) {
@@ -202,14 +205,17 @@ void Control_Mode()
             Serial4_SendPacket();
             Search_Flag = 1;
         }
-        if (Find1 == 1 && Search_Flag == 1) {
+        if (Find1 == 1 && Search_Flag == 1 && Modes_Flag == 2) {
             Place_ALL(Serial_TxPacket[1]);
-        } else if (Find2 == 1) {
+            Modes_Flag++;
+        } else if (Find2 == 1 && Modes_Flag == 3) {
             Place_ALL(Serial_TxPacket[2]);
-        } else if (Find3 == 1) {
+            Modes_Flag++;
+        } else if (Find3 == 1 && Modes_Flag == 4) {
             Place_ALL(Serial_TxPacket[3]);
+            Modes_Flag++;
         }
-        if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
+        if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0 && Modes_Flag == 5) { // 放置到粗加工后再夹起来
             if (Catch_11 == 0) {
                 if (Serial_TxPacket[1] <= Serial_TxPacket[3]) {
                     Mode_Flag = BACK_MODE;
@@ -219,15 +225,18 @@ void Control_Mode()
                 Catch_11 = 1;
             }
             Catch_All(Serial_TxPacket[1]);
+            Modes_Flag++;
         }
-        if (Catch2 == 1) {
+        if (Catch2 == 1 && Modes_Flag == 6) {
             Catch_All(Serial_TxPacket[2]);
+            Modes_Flag++;
         }
-        if (Catch3 == 1) {
+        if (Catch3 == 1 && Modes_Flag == 7) {
             Catch_All(Serial_TxPacket[3]);
+            Modes_Flag++;
         }
 
-        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 2) // 此处Mode_Flag由main函数设置
+        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 8) // 此处Mode_Flag由main函数设置
         {
             Modes_Flag++;
             pidRest(pPidObject, 6);                // 数据复位
@@ -236,7 +245,7 @@ void Control_Mode()
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
         }
-        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 9) {
             Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
@@ -331,7 +340,7 @@ void Revolve_Mode_0(float dt)
 {
     //*****************************************************************************************
     // 姿态环pid
-    pidYaw.desired  = Angle_Yaw - 75;
+    pidYaw.desired  = Angle_Yaw - 90;
     pidYaw.measured = Angle.yaw;
     pidUpdate(&pidYaw, dt);
     //*****************************************************************************************
@@ -358,7 +367,7 @@ void Revolve_Mode_90(float dt)
 {
     //*****************************************************************************************
     // 姿态环pid
-    pidYaw.desired  = Angle_Yaw + 75;
+    pidYaw.desired  = Angle_Yaw + 90;
     pidYaw.measured = Angle.yaw;
     pidUpdate(&pidYaw, dt);
     //*****************************************************************************************
@@ -487,6 +496,36 @@ void Back_Mode(float dt)
     PID_FOR_R.desired = -5 * u + pidRateZ.out;
     PID_BAC_L.desired = -5 * u - pidRateZ.out;
     PID_BAC_R.desired = -5 * u + pidRateZ.out;
+    //*****************************************************************************************
+    // 测量值导入
+    PID_FOR_L.measured = F_L_Speed;
+    PID_FOR_R.measured = F_R_Speed;
+    PID_BAC_L.measured = B_L_Speed;
+    PID_BAC_R.measured = B_R_Speed;
+    //*****************************************************************************************
+    // pid运算
+    pidUpdate(&PID_FOR_L, dt);
+    pidUpdate(&PID_FOR_R, dt);
+    pidUpdate(&PID_BAC_L, dt);
+    pidUpdate(&PID_BAC_R, dt);
+}
+void Back_Mode_Low(float dt)
+{
+    //*****************************************************************************************
+    // 姿态环pid
+    pidYaw.desired  = Angle_Yaw;
+    pidYaw.measured = Angle.yaw;
+    pidUpdate(&pidYaw, dt);
+    //******************************************************************************
+    // 角速度环pid
+    pidRateZ.desired  = pidYaw.out;
+    pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
+    pidUpdate(&pidRateZ, dt);
+
+    PID_FOR_L.desired = -2 * u - pidRateZ.out;
+    PID_FOR_R.desired = -2 * u + pidRateZ.out;
+    PID_BAC_L.desired = -2 * u - pidRateZ.out;
+    PID_BAC_R.desired = -2 * u + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -741,11 +780,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             cloud_tai(Cloud_Palace1);
             Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.6);
+            DOWN(1.3);
             Delay_ms(1000);
             robotic_grab(claw_free_stage);
             Micorstep_Enable();
-            UP(1.6);
+            UP(1.3);
             cloud_tai(Cloud_Location);
             break;
         case 2:
@@ -760,11 +799,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             cloud_tai(Cloud_Palace2);
             Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.6);
+            DOWN(1.3);
             Delay_ms(1000);
             robotic_grab(claw_free_stage);
             Micorstep_Enable();
-            UP(1.6);
+            UP(1.3);
             cloud_tai(Cloud_Location);
             break;
         case 3:
@@ -779,11 +818,11 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             cloud_tai(Cloud_Palace3);
             Delay_ms(1500);
             Micorstep_Enable();
-            DOWN(1.6);
+            DOWN(1.3);
             Delay_ms(1000);
             robotic_grab(claw_free_stage);
             Micorstep_Enable();
-            UP(1.6);
+            UP(1.3);
             cloud_tai(Cloud_Location);
             break;
     }
@@ -973,7 +1012,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Red_Place_Over == 0 && Place_Red == 0 && Place_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Red_Place_Over == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Red_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Red == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -981,7 +1020,7 @@ void Place_ALL(unsigned char Place_F)
                 Place_Red      = 1;
                 Place_Over_Red = 1;
             }
-        } 
+        }
     } else if (Place_F == 2) { // 放绿色
         if (P_2 == 0) {
             Serial_TxPacket[0] = 0xAF;
@@ -991,7 +1030,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Green_Place_Over == 0 && Place_Green == 0 && Place_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Green_Place_Over == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Green_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Green == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -999,7 +1038,7 @@ void Place_ALL(unsigned char Place_F)
                 Place_Green      = 1;
                 Place_Over_Green = 1;
             }
-        } 
+        }
     } else if (Place_F == 3) { // 放蓝色
         if (P_3 == 0) {
             Serial_TxPacket[0] = 0xBA;
@@ -1009,7 +1048,7 @@ void Place_ALL(unsigned char Place_F)
         if (LX != 0 && LY != 0 && Blue_Place_Over == 0 && Place_Blue == 0 && Place_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Blue_Place_Over == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Blue_Place_Over == 0) {
             Mode_Flag = STOP_MODE;
             if (Place_Over_Blue == 0) {
                 Serial_TxPacket[0] = 0x01;
@@ -1017,7 +1056,7 @@ void Place_ALL(unsigned char Place_F)
                 Place_Blue      = 1;
                 Place_Over_Blue = 1;
             }
-        } 
+        }
     }
 }
 
@@ -1034,9 +1073,9 @@ void Place_Sthing()
         Find1 = 0;
         Find3 = 0;
         if (Serial_TxPacket[2] <= Serial_TxPacket[1]) {
-            Mode_Flag = BACK_MODE;
+            Mode_Flag = BACK_MODE_LOW;
         } else {
-            Mode_Flag = FOR_MODE;
+            Mode_Flag = FOR_MODE_LOW;
         }
     } else if (Frequence == 2) {
         pidRest(pPidObject, 6);
@@ -1044,9 +1083,9 @@ void Place_Sthing()
         Find1 = 0;
         Find2 = 0;
         if (Serial_TxPacket[3] <= Serial_TxPacket[2]) {
-            Mode_Flag = BACK_MODE;
+            Mode_Flag = BACK_MODE_LOW;
         } else {
-            Mode_Flag = FOR_MODE;
+            Mode_Flag = FOR_MODE_LOW;
         }
     } else if (Frequence == 3) {
         pidRest(pPidObject, 6);
@@ -1073,7 +1112,7 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Red == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Red == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Red == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
@@ -1089,13 +1128,13 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Green == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Green == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Green == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
             Catch_Green      = 1;
             Catch_Over_Green = 1;
-        } 
+        }
     }
 
     else if (Catch_F == 3) {
@@ -1107,13 +1146,13 @@ void Catch_All(unsigned char Catch_F)
         if (LX != 0 && LY != 0 && Catch_Over_Blue == 0) {
             Mode_Flag = LOCATION_PLACE_MODE;
         }
-        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Blue == 0 ) {
+        if (LX >= 305 && LX <= 325 && LY >= 180 && LY <= 200 && Catch_Over_Blue == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0x01;
             Serial4_SendPacket();
             Catch_Blue      = 1;
             Catch_Over_Blue = 1;
-        } 
+        }
     }
 }
 
@@ -1129,9 +1168,9 @@ void Catch_Sthing()
         Catch1 = 0;
         Catch3 = 0;
         if (Serial_TxPacket[2] <= Serial_TxPacket[1]) {
-            Mode_Flag = BACK_MODE;
+            Mode_Flag = BACK_MODE_LOW;
         } else {
-            Mode_Flag = FOR_MODE;
+            Mode_Flag = FOR_MODE_LOW;
         }
     }
     if (Frequence == 2) {
@@ -1139,9 +1178,9 @@ void Catch_Sthing()
         Catch2 = 0;
         Catch1 = 0;
         if (Serial_TxPacket[3] <= Serial_TxPacket[2]) {
-            Mode_Flag = BACK_MODE;
+            Mode_Flag = BACK_MODE_LOW;
         } else {
-            Mode_Flag = FOR_MODE;
+            Mode_Flag = FOR_MODE_LOW;
         }
     }
     if (Frequence == 3) {
