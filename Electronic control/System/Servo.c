@@ -4,11 +4,10 @@
 #define Cloud_Palace2   2280 // 云台放置载物台2上位置
 #define Cloud_Palace3   2350 // 云台放置载物台3上位置
 #define stage_state1    1950 // 载物台物块1放置
-#define stage_state2    1020 // 载物台物块2放置
+#define stage_state2    1100 // 载物台物块2放置
 #define stage_state3    630  // 载物台物块3放置
-#define claw_grab       600  // 机械爪抓取
-#define claw_free       900  // 机械爪释放
-#define claw_free_stage 800  // 载物台机械爪释放
+#define claw_grab       550  // 机械爪抓取
+#define claw_free       800  // 机械爪释放
 
 void Servo_Init(void)
 {

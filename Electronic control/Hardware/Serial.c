@@ -5,7 +5,7 @@
 #include "all_data.h"
 #include "Filter.h"
 #include "control.h"
-uint8_t Serial_TxPacket[10] = {0xFC, 0X03, 0X01, 0X02}; // FF 01 02 03 04 FE [0]是寻找标志位 [1] [2] [3]扫码得到的物料顺序
+uint8_t Serial_TxPacket[10] = {0x01, 0X02, 0X03, 0X04}; // FF 01 02 03 04 FE [0]是寻找标志位 [1] [2] [3]扫码得到的物料顺序
 uint8_t Serial_RxPacket[10];
 uint8_t Serial5_RxPacket[10] = {0};
 uint8_t Serial_RxFlag;

@@ -20,8 +20,8 @@ unsigned char QrCode = 0;
 int main(void)
 {
     unsigned char Catch_Frequency = 0; // 抓取的次数
-    Serial4_Init();
-    //while (Write_Flag != 0xFA);
+    //Serial4_Init();
+    // while (Write_Flag != 0xFA);
     ALL_Init();
     while (1) {
         if (QrCode == 0 && (Serial5_RxPacket[5] == 1 || Serial5_RxPacket[5] == 2 || Serial5_RxPacket[5] == 3)) // 屏幕显示扫到的二维码
@@ -41,14 +41,16 @@ int main(void)
             Serial_SendHMI("t5", "txt", Serial5_RxPacket[5]);
             QrCode = 1;
         }
-        if (Write_Flag == 0xcc && Catch_Flag == 1) { // 收到树莓派抓取指令,开始抓取
+        if (Catch_Flag == 1) {
+            DOWN(2.00);
+            Catch_Flag++;
+        }
+        if (Write_Flag == 0xcc && Catch_Flag == 2) { // 收到树莓派抓取指令,开始抓取
             Catch_Frequency %= 3;
-            robotic_grab(900);
+            robotic_grab(800);
             Write_Flag = 0x01;
             Catch_Mode(++Catch_Frequency);
-            if (Catch_Frequency == 3) { // 三个物块抓取完毕
-                // UP(3.00);
-                // Delay_ms(500);
+            if (Catch_Frequency == 3) {    // 三个物块抓取完毕
                 Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
                 Serial4_SendPacket();
                 Mode_Flag = REVOLVE_MODE_90;
@@ -93,19 +95,16 @@ void TIM6_IRQHandler(void)
         if (i == 0) {
             MpuGetData();
             GetAngle(&MPU6050, &Angle, 0.005f);
-        }
-        if (i == 1) {
+        } else if (i == 1) {
             Get_Speed();
-        }
-        if (i == 2) {
+        } else if (i == 2) {
             Control_Mode();
-        }
-        if (i == 3) {
+        } else if (i == 3) {
             Pid_Control_Trans();
         }
-        // if (j == 3) {
-        //     Serial4_SendPacket();
-        // }
+        if (!QrCode && j == 3) {
+            Serial4_SendPacket();
+        }
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
     }
 }
