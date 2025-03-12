@@ -42,6 +42,7 @@ int main(void)
             QrCode = 1;
         }
         if (Catch_Flag == 1) {
+            Micorstep_Enable();
             DOWN(2.00);
             Catch_Flag++;
         }

@@ -51,15 +51,15 @@ unsigned char Catch_13 = 0;
 unsigned char Find2_1  = 1, Find2_2, Find2_3;
 unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 
-#define Cloud_Location  1080 // 云台观察位置
-#define Cloud_Palace1   2330 // 云台放置载物台1上位置
-#define Cloud_Palace2   2280 // 云台放置载物台2上位置
-#define Cloud_Palace3   2350 // 云台放置载物台3上位置
-#define stage_state1    1950 // 载物台物块1放置
-#define stage_state2    1100 // 载物台物块2放置
-#define stage_state3    630  // 载物台物块3放置
-#define claw_grab       550  // 机械爪抓取
-#define claw_free       800  // 机械爪释放
+#define Cloud_Location 1080 // 云台观察位置
+#define Cloud_Palace1  2330 // 云台放置载物台1上位置
+#define Cloud_Palace2  2280 // 云台放置载物台2上位置
+#define Cloud_Palace3  2350 // 云台放置载物台3上位置
+#define stage_state1   1950 // 载物台物块1放置
+#define stage_state2   1100 // 载物台物块2放置
+#define stage_state3   630  // 载物台物块3放置
+#define claw_grab      550  // 机械爪抓取
+#define claw_free      800  // 机械爪释放
 PidObject *(pPidObject[]) = {&pidYaw, &pidRateZ, &PID_FOR_L, &PID_FOR_R, &PID_BAC_L, &PID_BAC_R, &pidLX, &pidLY};
 
 // 0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
@@ -125,8 +125,7 @@ void Control_Mode()
             Serial_TxPacket[0] = 0XFC; // 树莓派定位转盘
             Serial4_SendPacket();
             Serial_TxPacket[0] = 0XAD;
-            // OLED_ShowHexNum_high(1, 1, Serial_TxPacket[0], 4);
-            Stop_Flag = 1;
+            Stop_Flag          = 1;
         } else if (Trans_Flag >= 1300 && Stop_Flag == 0) {
             Mode_Flag = TRANS_RIGHT_MODE;
         }
@@ -311,10 +310,10 @@ void Revolve_Mode_0(float dt)
     //*****************************************************************************************
     // 编码器环pid
     // 目标值更改
-    PID_FOR_L.desired = u - pidYaw.out;
-    PID_FOR_R.desired = u + pidYaw.out;
-    PID_BAC_L.desired = u - pidYaw.out;
-    PID_BAC_R.desired = u + pidYaw.out;
+    PID_FOR_L.desired = -pidYaw.out;
+    PID_FOR_R.desired = +pidYaw.out;
+    PID_BAC_L.desired = -pidYaw.out;
+    PID_BAC_R.desired = +pidYaw.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -338,10 +337,10 @@ void Revolve_Mode_90(float dt)
     //*****************************************************************************************
     // 编码器环pid
     // 目标值更改
-    PID_FOR_L.desired = u - pidYaw.out;
-    PID_FOR_R.desired = u + pidYaw.out;
-    PID_BAC_L.desired = u - pidYaw.out;
-    PID_BAC_R.desired = u + pidYaw.out;
+    PID_FOR_L.desired = -pidYaw.out;
+    PID_FOR_R.desired = +pidYaw.out;
+    PID_BAC_L.desired = -pidYaw.out;
+    PID_BAC_R.desired = +pidYaw.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -396,10 +395,10 @@ void Forward_Mode_Low(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = 2 * u - pidRateZ.out;
-    PID_FOR_R.desired = 2 * u + pidRateZ.out;
-    PID_BAC_L.desired = 2 * u - pidRateZ.out;
-    PID_BAC_R.desired = 2 * u + pidRateZ.out;
+    PID_FOR_L.desired = 1 * u - pidRateZ.out;
+    PID_FOR_R.desired = 1 * u + pidRateZ.out;
+    PID_BAC_L.desired = 1 * u - pidRateZ.out;
+    PID_BAC_R.desired = 1 * u + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -487,10 +486,10 @@ void Back_Mode_Low(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = -2 * u - pidRateZ.out;
-    PID_FOR_R.desired = -2 * u + pidRateZ.out;
-    PID_BAC_L.desired = -2 * u - pidRateZ.out;
-    PID_BAC_R.desired = -2 * u + pidRateZ.out;
+    PID_FOR_L.desired = -1 * u - pidRateZ.out;
+    PID_FOR_R.desired = -1 * u + pidRateZ.out;
+    PID_BAC_L.desired = -1 * u - pidRateZ.out;
+    PID_BAC_R.desired = -1 * u + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -830,9 +829,10 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         } else {
             DOWN(10.35);
         }
-        Delay_ms(1500);
+        Delay_ms(1000);
         robotic_grab(claw_free);
         Micorstep_Enable();
+        Delay_ms(500);
         if (ALL_Place == 5) {
             UP(6.0);
         } else {
@@ -858,9 +858,10 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         } else {
             DOWN(10.35);
         }
-        Delay_ms(1500);
+        Delay_ms(1000);
         robotic_grab(claw_grab);
         Micorstep_Enable();
+        Delay_ms(500);
         if (ALL_Place == 5) {
             UP(6.0);
         } else {
@@ -886,9 +887,10 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         } else {
             DOWN(10.35);
         }
-        Delay_ms(1500);
+        Delay_ms(1000);
         robotic_grab(claw_free);
         Micorstep_Enable();
+        Delay_ms(500);
         if (ALL_Place == 5) {
             UP(6.0);
         } else {

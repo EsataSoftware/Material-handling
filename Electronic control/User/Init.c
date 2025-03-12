@@ -13,7 +13,7 @@ void ALL_Init()
 {
     Delay_ms(1200);
     Kalman_Init();
-    Micorstep_Driver_Init(); // 步进电机初始化 最高11.30
+    Micorstep_Driver_Init(); // 步进电机初始化 最高11.30 17.3
     UP(6.30);
     Delay_ms(1000);
     Micorstep_Enable();

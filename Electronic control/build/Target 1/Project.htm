@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\build\Target 1\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\build\Target 1\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Mar 12 19:47:09 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Mar 12 22:25:42 2025
 <BR><P>
 <H3>Maximum Stack Usage =        344 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -340,7 +340,6 @@ Global Symbols
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trans_Left_Mode
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_90
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_180
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_0
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Location_Mode_Place
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Location_Mode
@@ -362,7 +361,6 @@ Global Symbols
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trans_Right_Mode
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trans_Mode
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Trans_Left_Mode
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_90
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_180
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_0
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode
@@ -450,9 +448,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_90
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_180
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_0
+<BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode_180
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Revolve_Mode
 </UL>
 
@@ -690,7 +686,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
 
-<P><STRONG><a name="[7b]"></a>Back_Mode_Low</STRONG> (Thumb, 246 bytes, Stack size 16 bytes, Control.o(i.Back_Mode_Low))
+<P><STRONG><a name="[7b]"></a>Back_Mode_Low</STRONG> (Thumb, 238 bytes, Stack size 16 bytes, Control.o(i.Back_Mode_Low))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = Back_Mode_Low &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
@@ -843,7 +839,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
 
-<P><STRONG><a name="[9d]"></a>Forward_Mode_Low</STRONG> (Thumb, 238 bytes, Stack size 16 bytes, Control.o(i.Forward_Mode_Low))
+<P><STRONG><a name="[9d]"></a>Forward_Mode_Low</STRONG> (Thumb, 230 bytes, Stack size 16 bytes, Control.o(i.Forward_Mode_Low))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = Forward_Mode_Low &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
@@ -1041,7 +1037,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[6b]"></a>Micorstep_Enable</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, Step_Diver.o(i.Micorstep_Enable))
-<BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
+<BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode
@@ -1245,7 +1242,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Mode
 </UL>
 
-<P><STRONG><a name="[dc]"></a>Place_Mode</STRONG> (Thumb, 474 bytes, Stack size 8 bytes, Control.o(i.Place_Mode))
+<P><STRONG><a name="[dc]"></a>Place_Mode</STRONG> (Thumb, 498 bytes, Stack size 8 bytes, Control.o(i.Place_Mode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Place_Mode &rArr; UP &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
@@ -1321,13 +1318,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
 
-<P><STRONG><a name="[da]"></a>Revolve_Mode_0</STRONG> (Thumb, 194 bytes, Stack size 16 bytes, Control.o(i.Revolve_Mode_0))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = Revolve_Mode_0 &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
+<P><STRONG><a name="[da]"></a>Revolve_Mode_0</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, Control.o(i.Revolve_Mode_0))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = Revolve_Mode_0 &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidUpdate
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
@@ -1343,13 +1338,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
 
-<P><STRONG><a name="[d9]"></a>Revolve_Mode_90</STRONG> (Thumb, 194 bytes, Stack size 16 bytes, Control.o(i.Revolve_Mode_90))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = Revolve_Mode_90 &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
+<P><STRONG><a name="[d9]"></a>Revolve_Mode_90</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, Control.o(i.Revolve_Mode_90))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = Revolve_Mode_90 &rArr; pidUpdate &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidUpdate
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidUpdate
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pid_Control_Trans
 </UL>
@@ -2039,10 +2032,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Init
 </UL>
 
-<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 372 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 378 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = main &rArr; ALL_Init &rArr; MpuGetOffset &rArr; MpuGetData &rArr; kalman_1 &rArr; __aeabi_fsub &rArr; __aeabi_fadd &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendHMI
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Micorstep_Enable
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DOWN
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;robotic_grab
