@@ -27,7 +27,7 @@ void ALL_Init()
     MpuGetOffset();
     pid_Para_Init_Location();
     TIM6_Init();
-    robotic_grab(900);
+    robotic_grab(1200);
     cloud_tai(1080);
 }
 
@@ -42,8 +42,8 @@ void pid_Para_Init_Location()
     pidLX.kp     = 0.015; 
     pidLY.kp     = 0.013; 
 
-    pidLX1.kp     = 0.027;
-    pidLY1.kp     = 0.028; 
+    pidLX1.kp     = 0.028; //0.027
+    pidLY1.kp     = 0.032; //0.028  0.03
 
 
     PID_FOR_L.ki = 3;   
@@ -55,8 +55,8 @@ void pid_Para_Init_Location()
     pidLX.ki     = 0.00;
     pidLY.ki     = 0.00;
 
-    pidLX1.ki     = 0.0;
-    pidLY1.ki     = 0.0;
+    pidLX1.ki     = 0.003;
+    pidLY1.ki     = 0.007;//0.004
 
     PID_FOR_L.kd = 0.05;   
     PID_FOR_R.kd = 0.05;  
@@ -67,6 +67,6 @@ void pid_Para_Init_Location()
     pidLX.kd     = 0.001;
     pidLY.kd     = 0.002;
 
-    pidLX1.kd     = 0.0012;
-    pidLY1.kd     = 0.002;
+    pidLX1.kd     = 0.0014;
+    pidLY1.kd     = 0.0018;//0.002
 }

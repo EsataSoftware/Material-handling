@@ -51,15 +51,16 @@ unsigned char Catch_13 = 0;
 unsigned char Find2_1  = 1, Find2_2, Find2_3;
 unsigned char Catch2_1 = 1, Catch2_2, Catch2_3;
 
-#define Cloud_Location 1080 // 云台观察位置
-#define Cloud_Palace1  2330 // 云台放置载物台1上位置
-#define Cloud_Palace2  2280 // 云台放置载物台2上位置
-#define Cloud_Palace3  2350 // 云台放置载物台3上位置
-#define stage_state1   1950 // 载物台物块1放置
-#define stage_state2   1100 // 载物台物块2放置
-#define stage_state3   630  // 载物台物块3放置
-#define claw_grab      550  // 机械爪抓取
-#define claw_free      800  // 机械爪释放
+#define Cloud_Location  1080 // 云台观察位置
+#define Cloud_Palace1   2330 // 云台放置载物台1上位置
+#define Cloud_Palace2   2280 // 云台放置载物台2上位置
+#define Cloud_Palace3   2350 // 云台放置载物台3上位置
+#define stage_state1    1950 // 载物台物块1放置
+#define stage_state2    1070 // 载物台物块2放置
+#define stage_state3    630  // 载物台物块3放置
+#define claw_grab       550  // 机械爪抓取
+#define claw_free       1200 // 机械爪释放
+#define claw_free_stage 1200 // 机械爪载物台放置
 PidObject *(pPidObject[]) = {&pidYaw, &pidRateZ, &PID_FOR_L, &PID_FOR_R, &PID_BAC_L, &PID_BAC_R, &pidLX, &pidLY};
 
 // 0.85与地面交互 9.30抓起车载物料盘物料 1.9放下物料到车载物料盘 5.0抓起原料区物料
@@ -160,11 +161,11 @@ void Control_Mode()
             Modes_Flag++;
         } else if (Mode_Flag == TRANS_RIGHT_MODE && Modes_Flag == 4) {
             Yellow_Flag++;
-            if (Yellow_Flag == 1000) {
+            if (Yellow_Flag == 1200) {
                 Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
                 Serial4_SendPacket();
             }
-            if (Yellow_Flag >= 1000) {
+            if (Yellow_Flag >= 1200) {
                 if (Write_Flag == 0XAD) {
                     pidRest(pPidObject, 6);
                     Mode_Flag    = FOR_MODE;
@@ -178,8 +179,8 @@ void Control_Mode()
         }
     } else if (ALL_Place == 1 || ALL_Place == 4) {
         Trans_Flag++;
-        if (Trans_Flag >= 650 && Mode_Flag == FOR_MODE && Modes_Flag == 0) {
-            Mode_Flag = LOCATION_PLACE_MODE;
+        if (Trans_Flag >= 700 && Mode_Flag == FOR_MODE && Modes_Flag == 0) {
+            Mode_Flag = STOP_MODE;
             Modes_Flag++;
         }
         if (Find1 == 1) {
@@ -190,14 +191,6 @@ void Control_Mode()
             Place_ALL(Serial_TxPacket[3]);
         }
         if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
-            if (Catch_11 == 0) {
-                if (Serial_TxPacket[1] <= Serial_TxPacket[3]) {
-                    Mode_Flag = BACK_MODE;
-                } else {
-                    Mode_Flag = FOR_MODE;
-                }
-                Catch_11 = 1;
-            }
             Catch_All(Serial_TxPacket[1]);
         }
         if (Catch2 == 1) {
@@ -208,12 +201,12 @@ void Control_Mode()
         }
         if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 1) // 此处Mode_Flag由main函数设置
         {
-            Modes_Flag++;
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle_Yaw;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
+            Modes_Flag++;
         }
         if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 2) {
             Mode_Flag = BACK_MODE;
@@ -304,7 +297,7 @@ void Revolve_Mode_0(float dt)
 {
     //*****************************************************************************************
     // 姿态环pid
-    pidYaw.desired  = Angle_Yaw - 90;
+    pidYaw.desired  = Angle_Yaw - 75;
     pidYaw.measured = Angle.yaw;
     pidUpdate(&pidYaw, dt);
     //*****************************************************************************************
@@ -331,7 +324,7 @@ void Revolve_Mode_90(float dt)
 {
     //*****************************************************************************************
     // 姿态环pid
-    pidYaw.desired  = Angle_Yaw + 90;
+    pidYaw.desired  = Angle_Yaw + 75;
     pidYaw.measured = Angle.yaw;
     pidUpdate(&pidYaw, dt);
     //*****************************************************************************************
@@ -738,18 +731,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             DOWN(3.30);
             Delay_ms(500);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
             UP(5.30);
             cloud_tai(Cloud_Palace1);
             Delay_ms(500);
             Micorstep_Enable();
-            DOWN(1.10);
+            DOWN(1.80);
             Delay_ms(500);
-            robotic_grab(claw_free);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             Delay_ms(500);
-            UP(1.10);
+            UP(1.80);
             Delay_ms(500);
             cloud_tai(Cloud_Location);
             Micorstep_Enable();
@@ -762,18 +755,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             DOWN(3.30);
             Delay_ms(500);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
             UP(5.30);
             cloud_tai(Cloud_Palace2);
             Delay_ms(500);
             Micorstep_Enable();
-            DOWN(1.10);
+            DOWN(1.80);
             Delay_ms(500);
-            robotic_grab(claw_free);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             Delay_ms(500);
-            UP(1.10);
+            UP(1.80);
             Delay_ms(500);
             cloud_tai(Cloud_Location);
             Micorstep_Enable();
@@ -786,18 +779,18 @@ void Catch_Mode(unsigned char Color) // 将原料区物块抓取放置在托盘�
             DOWN(3.30);
             Delay_ms(500);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
             UP(5.30);
             cloud_tai(Cloud_Palace3);
             Delay_ms(500);
             Micorstep_Enable();
-            DOWN(1.10);
+            DOWN(1.80);
             Delay_ms(500);
-            robotic_grab(claw_free);
+            robotic_grab(claw_free_stage);
             Micorstep_Enable();
             Delay_ms(500);
-            UP(1.10);
+            UP(1.80);
             Delay_ms(500);
             cloud_tai(Cloud_Location);
             Micorstep_Enable();
@@ -814,20 +807,21 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
     if (Color == 1) {
         stage(stage_state1);
         cloud_tai(Cloud_Palace1);
+        Delay_ms(500);
         Micorstep_Enable();
-        DOWN(1.6);
+        DOWN(2.3);
         Delay_ms(500);
         robotic_grab(claw_grab);
         Delay_ms(1000);
         Micorstep_Enable();
-        UP(1.6);
+        UP(2.3);
         cloud_tai(Cloud_Location);
         Delay_ms(1000);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             DOWN(6.0);
         } else {
-            DOWN(10.35);
+            DOWN(12.00);
         }
         Delay_ms(1000);
         robotic_grab(claw_free);
@@ -836,56 +830,28 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         if (ALL_Place == 5) {
             UP(6.0);
         } else {
-            UP(10.35);
+            UP(12.00);
         }
         Delay_ms(500);
     }
     if (Color == 2) {
         stage(stage_state2);
         cloud_tai(Cloud_Palace2);
+        Delay_ms(500);
         Micorstep_Enable();
-        DOWN(1.6);
+        DOWN(2.3);
         Delay_ms(500);
         robotic_grab(claw_grab);
         Delay_ms(1000);
         Micorstep_Enable();
-        UP(1.6);
+        UP(2.3);
         cloud_tai(Cloud_Location);
         Delay_ms(1000);
         Micorstep_Enable();
         if (ALL_Place == 5) {
             DOWN(6.0);
         } else {
-            DOWN(10.35);
-        }
-        Delay_ms(1000);
-        robotic_grab(claw_grab);
-        Micorstep_Enable();
-        Delay_ms(500);
-        if (ALL_Place == 5) {
-            UP(6.0);
-        } else {
-            UP(10.35);
-        }
-        Delay_ms(500);
-    }
-    if (Color == 3) {
-        stage(stage_state3);
-        cloud_tai(Cloud_Palace3);
-        Micorstep_Enable();
-        DOWN(1.6);
-        Delay_ms(500);
-        robotic_grab(claw_grab);
-        Delay_ms(1000);
-        Micorstep_Enable();
-        UP(1.6);
-        cloud_tai(Cloud_Location);
-        Delay_ms(1000);
-        Micorstep_Enable();
-        if (ALL_Place == 5) {
-            DOWN(6.0);
-        } else {
-            DOWN(10.35);
+            DOWN(12.00);
         }
         Delay_ms(1000);
         robotic_grab(claw_free);
@@ -894,7 +860,37 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         if (ALL_Place == 5) {
             UP(6.0);
         } else {
-            UP(10.35);
+            UP(12.00);
+        }
+        Delay_ms(500);
+    }
+    if (Color == 3) {
+        stage(stage_state3);
+        cloud_tai(Cloud_Palace3);
+        Delay_ms(500);
+        Micorstep_Enable();
+        DOWN(2.3);
+        Delay_ms(500);
+        robotic_grab(claw_grab);
+        Delay_ms(1000);
+        Micorstep_Enable();
+        UP(2.3);
+        cloud_tai(Cloud_Location);
+        Delay_ms(1000);
+        Micorstep_Enable();
+        if (ALL_Place == 5) {
+            DOWN(6.0);
+        } else {
+            DOWN(12.00);
+        }
+        Delay_ms(1000);
+        robotic_grab(claw_free);
+        Micorstep_Enable();
+        Delay_ms(500);
+        if (ALL_Place == 5) {
+            UP(6.0);
+        } else {
+            UP(12.00);
         }
         Delay_ms(500);
     }
@@ -908,14 +904,15 @@ void Catch_Mode_St(unsigned char Color)
         case 1:
             stage(stage_state1);
             Micorstep_Enable();
-            DOWN(10.35);
+            DOWN(12.00);
             Delay_ms(1000);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
-            UP(10.35);
+            UP(12.00);
             Delay_ms(1000);
             cloud_tai(Cloud_Palace1);
+            Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1500);
@@ -928,14 +925,15 @@ void Catch_Mode_St(unsigned char Color)
         case 2:
             stage(stage_state2);
             Micorstep_Enable();
-            DOWN(10.35);
+            DOWN(12.00);
             Delay_ms(1000);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
-            UP(10.35);
+            UP(12.00);
             Delay_ms(1000);
             cloud_tai(Cloud_Palace2);
+            Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1500);
@@ -948,14 +946,15 @@ void Catch_Mode_St(unsigned char Color)
         case 3:
             stage(stage_state3);
             Micorstep_Enable();
-            DOWN(10.35);
+            DOWN(12.00);
             Delay_ms(1000);
             robotic_grab(claw_grab);
-            Delay_ms(1000);
+            Delay_ms(500);
             Micorstep_Enable();
-            UP(10.35);
+            UP(12.00);
             Delay_ms(1000);
             cloud_tai(Cloud_Palace3);
+            Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
             Delay_ms(1500);
@@ -1052,10 +1051,13 @@ void Place_Sthing()
         Find3 = 0;
         Find1 = 0;
         Find2 = 0;
+        if (Serial_TxPacket[3] >= Serial_TxPacket[1]) {
+            Mode_Flag = BACK_MODE_LOW;
+        } else {
+            Mode_Flag = FOR_MODE_LOW;
+        }
         if (ALL_Place == 2 || ALL_Place == 5) {
-            Mode_Flag          = REVOLVE_MODE_0;
-            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-            Serial4_SendPacket();
+            Mode_Flag = REVOLVE_MODE_0;
         }
     }
 }
@@ -1142,9 +1144,7 @@ void Catch_Sthing()
         Catch2 = 0;
         Catch1 = 0;
         if (ALL_Place == 1 || ALL_Place == 4) {
-            Mode_Flag          = REVOLVE_MODE_0;
-            Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
-            Serial4_SendPacket();
+            Mode_Flag = REVOLVE_MODE_0;
         }
     }
 }

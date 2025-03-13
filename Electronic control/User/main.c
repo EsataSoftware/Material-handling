@@ -48,7 +48,7 @@ int main(void)
         }
         if (Write_Flag == 0xcc && Catch_Flag == 2) { // 收到树莓派抓取指令,开始抓取
             Catch_Frequency %= 3;
-            robotic_grab(800);
+            robotic_grab(1200);
             Write_Flag = 0x01;
             Catch_Mode(++Catch_Frequency);
             if (Catch_Frequency == 3) {    // 三个物块抓取完毕

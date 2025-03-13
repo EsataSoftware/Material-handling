@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\build\Target 1\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\build\Target 1\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Mar 12 22:25:42 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Mar 13 21:59:10 2025
 <BR><P>
 <H3>Maximum Stack Usage =        344 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -724,7 +724,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[82]"></a>Catch_Mode_St</STRONG> (Thumb, 388 bytes, Stack size 8 bytes, Control.o(i.Catch_Mode_St))
+<P><STRONG><a name="[82]"></a>Catch_Mode_St</STRONG> (Thumb, 412 bytes, Stack size 8 bytes, Control.o(i.Catch_Mode_St))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Catch_Mode_St &rArr; UP &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
@@ -738,17 +738,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Sthing
 </UL>
 
-<P><STRONG><a name="[83]"></a>Catch_Sthing</STRONG> (Thumb, 198 bytes, Stack size 8 bytes, Control.o(i.Catch_Sthing))
+<P><STRONG><a name="[83]"></a>Catch_Sthing</STRONG> (Thumb, 188 bytes, Stack size 8 bytes, Control.o(i.Catch_Sthing))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Catch_Sthing &rArr; Catch_Mode_St &rArr; UP &rArr; NVIC_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
+<BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Mode_St
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[84]"></a>Control_Mode</STRONG> (Thumb, 1532 bytes, Stack size 8 bytes, Control.o(i.Control_Mode))
+<P><STRONG><a name="[84]"></a>Control_Mode</STRONG> (Thumb, 1490 bytes, Stack size 8 bytes, Control.o(i.Control_Mode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Control_Mode &rArr; Place_ALL &rArr; Serial4_SendPacket &rArr; Serial4_SendArray &rArr; Serial4_SendByte
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
@@ -1242,7 +1241,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Mode
 </UL>
 
-<P><STRONG><a name="[dc]"></a>Place_Mode</STRONG> (Thumb, 498 bytes, Stack size 8 bytes, Control.o(i.Place_Mode))
+<P><STRONG><a name="[dc]"></a>Place_Mode</STRONG> (Thumb, 522 bytes, Stack size 8 bytes, Control.o(i.Place_Mode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Place_Mode &rArr; UP &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UP
@@ -1256,11 +1255,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Sthing
 </UL>
 
-<P><STRONG><a name="[dd]"></a>Place_Sthing</STRONG> (Thumb, 228 bytes, Stack size 8 bytes, Control.o(i.Place_Sthing))
+<P><STRONG><a name="[dd]"></a>Place_Sthing</STRONG> (Thumb, 244 bytes, Stack size 8 bytes, Control.o(i.Place_Sthing))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Place_Sthing &rArr; Place_Mode &rArr; UP &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pidRest
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial4_SendPacket
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Mode
 </UL>
@@ -1391,10 +1389,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_IRQHandler
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_Sthing
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Place_ALL
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Mode
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_Sthing
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Catch_All
 </UL>
 
@@ -2077,7 +2073,7 @@ Global Symbols
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Back_Mode
 </UL>
 
-<P><STRONG><a name="[74]"></a>pid_Para_Init_Location</STRONG> (Thumb, 160 bytes, Stack size 0 bytes, Init.o(i.pid_Para_Init_Location))
+<P><STRONG><a name="[74]"></a>pid_Para_Init_Location</STRONG> (Thumb, 164 bytes, Stack size 0 bytes, Init.o(i.pid_Para_Init_Location))
 <BR><BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ALL_Init
 </UL>
 
