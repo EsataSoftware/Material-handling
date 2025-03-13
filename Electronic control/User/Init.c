@@ -43,7 +43,7 @@ void pid_Para_Init_Location()
     pidLY.kp     = 0.013; 
 
     pidLX1.kp     = 0.028; //0.027
-    pidLY1.kp     = 0.034; //0.028  0.03
+    pidLY1.kp     = 0.035; //0.028  0.03 0.034
 
 
     PID_FOR_L.ki = 3;   
@@ -56,7 +56,7 @@ void pid_Para_Init_Location()
     pidLY.ki     = 0.00;
 
     pidLX1.ki     = 0.003;
-    pidLY1.ki     = 0.006;//0.004
+    pidLY1.ki     = 0.007;//0.004
 
     PID_FOR_L.kd = 0.05;   
     PID_FOR_R.kd = 0.05;  

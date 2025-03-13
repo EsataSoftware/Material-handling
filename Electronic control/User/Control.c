@@ -179,7 +179,7 @@ void Control_Mode()
         }
     } else if (ALL_Place == 1 || ALL_Place == 4) {
         Trans_Flag++;
-        if (Trans_Flag >= 700 && Mode_Flag == FOR_MODE && Modes_Flag == 0) {
+        if (Trans_Flag >= 650 && Mode_Flag == FOR_MODE && Modes_Flag == 0) {
             Mode_Flag = STOP_MODE;
             Modes_Flag++;
         }
@@ -199,10 +199,11 @@ void Control_Mode()
         if (Catch3 == 1) {
             Catch_All(Serial_TxPacket[3]);
         }
-        if (Catch1 == 0 && Catch2 == 0 && Catch3 == 0) {
+        if (Catch1 == 0 && Catch2 == 0 && Catch3 == 0 && Modes_Flag == 1) {
             Mode_Flag = REVOLVE_MODE_0;
+            Modes_Flag++;
         }
-        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 1) // 此处Mode_Flag由main函数设置
+        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 2) // 此处Mode_Flag由main函数设置
         {
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
@@ -211,7 +212,7 @@ void Control_Mode()
             Serial4_SendPacket();
             Modes_Flag++;
         }
-        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 2) {
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
             Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
@@ -241,10 +242,11 @@ void Control_Mode()
         if (Find3 == 1) {
             Place_ALL(Serial_TxPacket[3]);
         }
-        if (Find1 == 0 && Find2 == 0 && Find3 == 0) {
+        if (Find1 == 0 && Find2 == 0 && Find3 == 0 && Modes_Flag == 0) {
             Mode_Flag = REVOLVE_MODE_0;
+            Modes_Flag++;
         }
-        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 0) // 此处Mode_Flag由main函数设置
+        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 1) // 此处Mode_Flag由main函数设置
         {
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
@@ -252,12 +254,12 @@ void Control_Mode()
             Modes_Flag++;
         }
 
-        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 1) {
+        if (Write_Flag == 0XAD && (Mode_Flag == TRANS_RIGHT_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 2) {
             Mode_Flag    = BACK_MODE;
             Adjust_Timer = 0;
             Modes_Flag++;
         }
-        if ((Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 2) {
+        if ((Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
             Trans_Flag++;
             if (Trans_Flag >= 500) {
                 if (ALL_Place == 2) {
@@ -286,7 +288,7 @@ void Control_Mode()
                 Blue_Place_Over  = 0;
                 Green_Place_Over = 0;
             }
-        } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)) {
+        } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)&& Modes_Flag == 3) {
             Trans_Flag++;
             if (Trans_Flag >= 1500) {
                 Mode_Flag = TRANS_RIGHT_MODE;
@@ -815,12 +817,12 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         cloud_tai(Cloud_Palace1);
         Delay_ms(500);
         Micorstep_Enable();
-        DOWN(2.3);
+        DOWN(2.80);
         Delay_ms(500);
         robotic_grab(claw_grab);
         Delay_ms(500);
         Micorstep_Enable();
-        UP(2.3);
+        UP(2.80);
         Delay_ms(500);
         cloud_tai(Cloud_Location);
         Micorstep_Enable();
@@ -845,12 +847,12 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         cloud_tai(Cloud_Palace2);
         Delay_ms(500);
         Micorstep_Enable();
-        DOWN(2.3);
+        DOWN(2.80);
         Delay_ms(500);
         robotic_grab(claw_grab);
         Delay_ms(500);
         Micorstep_Enable();
-        UP(2.3);
+        UP(2.80);
         Delay_ms(500);
         cloud_tai(Cloud_Location);
         Micorstep_Enable();
@@ -875,12 +877,12 @@ void Place_Mode(unsigned char Color) // 将物块放置在对应位置上的一�
         cloud_tai(Cloud_Palace3);
         Delay_ms(500);
         Micorstep_Enable();
-        DOWN(2.3);
+        DOWN(2.80);
         Delay_ms(500);
         robotic_grab(claw_grab);
         Delay_ms(500);
         Micorstep_Enable();
-        UP(2.3);
+        UP(2.80);
         Delay_ms(500);
         cloud_tai(Cloud_Location);
         Micorstep_Enable();
