@@ -2381,3 +2381,38 @@ These source files will be recompiled
 [2025-03-13 22:40:07]	[done]
 	build successfully !
 
+[2025-03-14 10:15:52]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 10:15:55]	[done]
+	build successfully !
+
+[2025-03-14 10:16:32]	[done]
+	build successfully !
+
+[2025-03-14 10:16:52]	[done]
+	build successfully !
+
+[2025-03-14 10:34:50]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 10:34:51]	[done]
+	build successfully !
+
+[2025-03-14 10:34:57]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 10:34:58]	[done]
+	build successfully !
+
+[2025-03-14 10:35:12]	[done]
+	build successfully !
+

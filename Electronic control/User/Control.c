@@ -96,7 +96,7 @@ void Pid_Control_Trans() // 模式工作函数
     } else if (Mode_Flag == FOR_MODE_LOW) {
         Forward_Mode_Low(0.005f);
         Control_Moto();
-    } else if (Mode_Flag == BACK_MODE_LOW) { // 翻转
+    } else if (Mode_Flag == BACK_MODE_LOW) {
         Back_Mode_Low(0.005f);
         Control_Moto();
     } else if (Mode_Flag == REVOLVE_MODE_90) { // 左转
@@ -116,18 +116,18 @@ void Control_Mode()
 
     if (ALL_Place == 0 || ALL_Place == 3) {
         Trans_Flag++;
-        if (Trans_Flag >= 230 && Start_Flag == 0) // 代码开始左平移出库，之后到达计时时间直走
+        if (Trans_Flag >= 280 && Start_Flag == 0) // 代码开始左平移出库，之后到达计时时间直走
         {
             Mode_Flag  = FOR_MODE;
             Start_Flag = 1; // 起始标志位置1无法再次进入起始条件
         }
-        if (Trans_Flag >= 1400 && Stop_Flag == 0) {
+        if (Trans_Flag >= 1550 && Stop_Flag == 0) {
             Mode_Flag          = STOP_MODE;
             Serial_TxPacket[0] = 0XFC; // 树莓派定位转盘
             Serial4_SendPacket();
             Serial_TxPacket[0] = 0XAD;
             Stop_Flag          = 1;
-        } else if (Trans_Flag >= 1300 && Stop_Flag == 0) {
+        } else if (Trans_Flag >= 1350 && Stop_Flag == 0) {
             Mode_Flag = TRANS_RIGHT_MODE;
         }
         if (LX != 0 && LY != 0 && Location_Flag == 0) {
@@ -146,8 +146,7 @@ void Control_Mode()
             Modes_Flag++;
             Serial_TxPacket[0] = 0XAD; // 给树莓派寻黄的指令
             Serial4_SendPacket();
-        }
-        if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Modes_Flag == 2) {
+        } else if (Write_Flag == 0XAD && Mode_Flag == TRANS_RIGHT_MODE && Modes_Flag == 2) {
             Mode_Flag          = REVOLVE_MODE_90;
             Write_Flag         = 0x01;
             Serial_TxPacket[0] = 0X01; // 防止树莓派重复进入状态
@@ -192,19 +191,15 @@ void Control_Mode()
         }
         if (Catch1 == 1 && Find1 == 0 && Find2 == 0 && Find3 == 0) { // 放置到粗加工后再夹起来
             Catch_All(Serial_TxPacket[1]);
-        }
-        if (Catch2 == 1) {
+        } else if (Catch2 == 1) {
             Catch_All(Serial_TxPacket[2]);
-        }
-        if (Catch3 == 1) {
+        } else if (Catch3 == 1) {
             Catch_All(Serial_TxPacket[3]);
         }
         if (Catch1 == 0 && Catch2 == 0 && Catch3 == 0 && Modes_Flag == 1) {
             Mode_Flag = REVOLVE_MODE_0;
             Modes_Flag++;
-        }
-        if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 2) // 此处Mode_Flag由main函数设置
-        {
+        } else if (Angle.yaw >= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 2) {
             pidRest(pPidObject, 6);                // 数据复位
             Mode_Flag          = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw          = Angle_Yaw;
@@ -216,8 +211,6 @@ void Control_Mode()
             Mode_Flag = BACK_MODE;
             Adjust_Timer++;
             if (Adjust_Timer >= 400) {
-                Serial_TxPacket[0] = 0XFB; // 树莓派定位色环
-                Serial4_SendPacket();
                 Mode_Flag = LOCATION_PLACE_MODE;
                 ALL_Place++;
                 Find1            = 1;
@@ -245,9 +238,7 @@ void Control_Mode()
         if (Find1 == 0 && Find2 == 0 && Find3 == 0 && Modes_Flag == 0) {
             Mode_Flag = REVOLVE_MODE_0;
             Modes_Flag++;
-        }
-        if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 1) // 此处Mode_Flag由main函数设置
-        {
+        } else if (Angle.yaw <= Angle_Yaw - 75 && Mode_Flag == REVOLVE_MODE_0 && Modes_Flag == 1) {
             pidRest(pPidObject, 6);       // 数据复位
             Mode_Flag = TRANS_RIGHT_MODE; // 切换模式到平移模式
             Angle_Yaw = Angle_Yaw;
@@ -288,7 +279,7 @@ void Control_Mode()
                 Blue_Place_Over  = 0;
                 Green_Place_Over = 0;
             }
-        } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE)&& Modes_Flag == 3) {
+        } else if (Write_Flag == 0xEA && (Mode_Flag == BACK_MODE || Mode_Flag == STOP_MODE) && Modes_Flag == 3) {
             Trans_Flag++;
             if (Trans_Flag >= 1500) {
                 Mode_Flag = TRANS_RIGHT_MODE;
@@ -396,10 +387,10 @@ void Forward_Mode_Low(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = 1 * u - pidRateZ.out;
-    PID_FOR_R.desired = 1 * u + pidRateZ.out;
-    PID_BAC_L.desired = 1 * u - pidRateZ.out;
-    PID_BAC_R.desired = 1 * u + pidRateZ.out;
+    PID_FOR_L.desired = 1 - pidRateZ.out;
+    PID_FOR_R.desired = 1 + pidRateZ.out;
+    PID_BAC_L.desired = 1 - pidRateZ.out;
+    PID_BAC_R.desired = 1 + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -487,10 +478,10 @@ void Back_Mode_Low(float dt)
     pidRateZ.measured = MPU6050.gyroZ * Gyro_G;
     pidUpdate(&pidRateZ, dt);
 
-    PID_FOR_L.desired = -1 * u - pidRateZ.out;
-    PID_FOR_R.desired = -1 * u + pidRateZ.out;
-    PID_BAC_L.desired = -1 * u - pidRateZ.out;
-    PID_BAC_R.desired = -1 * u + pidRateZ.out;
+    PID_FOR_L.desired = -1 - pidRateZ.out;
+    PID_FOR_R.desired = -1 + pidRateZ.out;
+    PID_BAC_L.desired = -1 - pidRateZ.out;
+    PID_BAC_R.desired = -1 + pidRateZ.out;
     //*****************************************************************************************
     // 测量值导入
     PID_FOR_L.measured = F_L_Speed;
@@ -600,8 +591,8 @@ void Location_Mode(float dt)
     //************************************************************************************
     // 位置环pid
 
-    pidLX.desired = 315;
-    pidLY.desired = 225;
+    pidLX.desired = 305;
+    pidLY.desired = 200;
     if (LX == 0 || LY == 0) {
         pidLX.desired = 0;
         pidLY.desired = 0;
@@ -646,8 +637,8 @@ void Location_Mode_Place(float dt)
     //************************************************************************************
     // 位置环pid
 
-    pidLX1.desired = 315;
-    pidLY1.desired = 190;
+    pidLX1.desired = 305;
+    pidLY1.desired = 200;
     if (LX == 0 || LY == 0) {
         pidLX1.desired = 0;
         pidLY1.desired = 0;
@@ -913,17 +904,17 @@ void Catch_Mode_St(unsigned char Color)
             stage(stage_state1);
             Micorstep_Enable();
             DOWN(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             cloud_tai(Cloud_Palace1);
             Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
-            Delay_ms(1500);
+            Delay_ms(500);
             robotic_grab(claw_free);
             Micorstep_Enable();
             UP(1.9);
@@ -934,17 +925,17 @@ void Catch_Mode_St(unsigned char Color)
             stage(stage_state2);
             Micorstep_Enable();
             DOWN(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             cloud_tai(Cloud_Palace2);
             Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
-            Delay_ms(1500);
+            Delay_ms(500);
             robotic_grab(claw_free);
             Micorstep_Enable();
             UP(1.9);
@@ -955,17 +946,17 @@ void Catch_Mode_St(unsigned char Color)
             stage(stage_state3);
             Micorstep_Enable();
             DOWN(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             robotic_grab(claw_grab);
             Delay_ms(500);
             Micorstep_Enable();
             UP(12.00);
-            Delay_ms(1000);
+            Delay_ms(500);
             cloud_tai(Cloud_Palace3);
             Delay_ms(500);
             Micorstep_Enable();
             DOWN(1.9);
-            Delay_ms(1500);
+            Delay_ms(500);
             robotic_grab(claw_free);
             Micorstep_Enable();
             UP(1.9);
@@ -1064,9 +1055,9 @@ void Place_Sthing()
         } else {
             Mode_Flag = FOR_MODE_LOW;
         }
-        // if (ALL_Place == 2 || ALL_Place == 5) {
-        //     Mode_Flag = REVOLVE_MODE_0;
-        // }
+        if (ALL_Place == 2 || ALL_Place == 5) {
+            Mode_Flag = REVOLVE_MODE_0;
+        }
     }
 }
 
@@ -1151,8 +1142,8 @@ void Catch_Sthing()
         Catch3 = 0;
         Catch2 = 0;
         Catch1 = 0;
-        // if (ALL_Place == 1 || ALL_Place == 4) {
-        //     Mode_Flag = REVOLVE_MODE_0;
-        // }
+        if (ALL_Place == 1 || ALL_Place == 4) {
+            Mode_Flag = REVOLVE_MODE_0;
+        }
     }
 }
