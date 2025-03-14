@@ -39,11 +39,11 @@ void pid_Para_Init_Location()
     PID_BAC_R.kp = 30;    
     pidYaw.kp    = 0.85;  
     pidRateZ.kp  = 0.65;  
-    pidLX.kp     = 0.015; 
-    pidLY.kp     = 0.013; 
+    pidLX.kp     = 0.015; //0.015
+    pidLY.kp     = 0.013; //0.013
 
-    pidLX1.kp     = 0.035; //0.027
-    pidLY1.kp     = 0.038; //0.028  0.03 0.034
+    pidLX1.kp     = 0.029; //0.029 0.030
+    pidLY1.kp     = 0.038; //0.038
 
 
     PID_FOR_L.ki = 3;   
@@ -55,8 +55,8 @@ void pid_Para_Init_Location()
     pidLX.ki     = 0.00;
     pidLY.ki     = 0.00;
 
-    pidLX1.ki     = 0.003;
-    pidLY1.ki     = 0.001;//0.004
+    pidLX1.ki     = 0.003;//0.003
+    pidLY1.ki     = 0.002;//0.001
 
     PID_FOR_L.kd = 0.05;   
     PID_FOR_R.kd = 0.05;  
@@ -67,6 +67,6 @@ void pid_Para_Init_Location()
     pidLX.kd     = 0.001;
     pidLY.kd     = 0.002;
 
-    pidLX1.kd     = 0.0013;
-    pidLY1.kd     = 0.0018;//0.002
+    pidLX1.kd     = 0.0015;//0.0014
+    pidLY1.kd     = 0.0018;//0.0018
 }

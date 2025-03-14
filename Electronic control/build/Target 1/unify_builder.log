@@ -2416,3 +2416,234 @@ These source files will be recompiled
 [2025-03-14 10:35:12]	[done]
 	build successfully !
 
+[2025-03-14 10:42:05]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 10:42:06]	[done]
+	build successfully !
+
+[2025-03-14 10:45:33]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 10:45:34]	[done]
+	build successfully !
+
+[2025-03-14 10:45:53]	[done]
+	build successfully !
+
+[2025-03-14 10:46:13]	[done]
+	build successfully !
+
+[2025-03-14 10:46:20]	[done]
+	build successfully !
+
+[2025-03-14 10:46:28]	[done]
+	build successfully !
+
+[2025-03-14 10:55:58]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 10:55:59]	[done]
+	build successfully !
+
+[2025-03-14 10:58:23]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 10:58:24]	[done]
+	build successfully !
+
+[2025-03-14 10:58:51]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 10:58:52]	[done]
+	build successfully !
+
+[2025-03-14 11:06:21]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 11:06:22]	[done]
+	build successfully !
+
+[2025-03-14 11:18:05]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:18:06]	[done]
+	build successfully !
+
+[2025-03-14 11:19:57]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:19:57]	[done]
+	build successfully !
+
+[2025-03-14 11:28:12]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 11:28:13]	[done]
+	build successfully !
+
+[2025-03-14 11:31:11]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:31:12]	[done]
+	build successfully !
+
+[2025-03-14 11:31:19]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:31:20]	[done]
+	build successfully !
+
+[2025-03-14 11:31:35]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:31:36]	[done]
+	build successfully !
+
+[2025-03-14 11:33:47]	[info] incremental build: 2 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 11:33:48]	[done]
+	build successfully !
+
+[2025-03-14 11:34:52]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 11:34:53]	[done]
+	build successfully !
+
+[2025-03-14 11:49:36]	[info] incremental build: 4 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\Hardware\Serial.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+
+[2025-03-14 11:49:36]	compilation failed at : "d:\project\stm32\Material handling\Electronic control\User\Control.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\User\Control.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\User\Control.d" .\User\Control.c
+   at unify_builder.Program.Main(String[] args_)
+---
+".\User\Control.c", line 1142: Warning:  #174-D: expression has no effect
+          }Serial_TxPacket[3] - Serial_TxPacket[1] == 2)
+           ^
+".\User\Control.c", line 1142: Error:  #65: expected a ";"
+          }Serial_TxPacket[3] - Serial_TxPacket[1] == 2)
+                                                       ^
+".\User\Control.c", line 1153: Warning:  #12-D: parsing restarts here after previous syntax error
+      }
+      ^
+.\User\Control.c: 2 warnings, 1 error
+
+[2025-03-14 11:50:02]	[info] incremental build: 3 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+
+[2025-03-14 11:50:02]	compilation failed at : "d:\project\stm32\Material handling\Electronic control\User\Control.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\User\Control.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\User\Control.d" .\User\Control.c
+   at unify_builder.Program.Main(String[] args_)
+---
+".\User\Control.c", line 1144: Error:  #20: identifier "BACK_MODE_Mid" is undefined
+              Mode_Flag = BACK_MODE_Mid;
+                          ^
+".\User\Control.c", line 1148: Error:  #20: identifier "FOR_MODE_Mid" is undefined
+              Mode_Flag = FOR_MODE_Mid;
+                          ^
+.\User\Control.c: 0 warnings, 2 errors
+
+[2025-03-14 11:50:52]	[info] incremental build: 3 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+
+[2025-03-14 11:50:53]	compilation failed at : "d:\project\stm32\Material handling\Electronic control\User\Control.c", exit code: 1
+command: 
+  "c:\Keil_v5\ARM\ARMCC\bin\armcc.exe" -c --apcs=interwork -I. -IStart -ILibrary -IUser -ISystem -IHardware -IMATH -I"RTE/_Target 1" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -o ".\build\Target 1\.obj\User\Control.o" --no_depend_system_headers --depend ".\build\Target 1\.obj\User\Control.d" .\User\Control.c
+   at unify_builder.Program.Main(String[] args_)
+---
+".\User\Control.c", line 1151: Error:  #20: identifier "BACK_MODE_Mid" is undefined
+              Mode_Flag = BACK_MODE_Mid;
+                          ^
+".\User\Control.c", line 1155: Error:  #20: identifier "FOR_MODE_Mid" is undefined
+              Mode_Flag = FOR_MODE_Mid;
+                          ^
+.\User\Control.c: 0 warnings, 2 errors
+
+[2025-03-14 11:51:14]	[info] incremental build: 3 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+'d:\project\stm32\Material handling\Electronic control\User\main.c': dependence 'd:\project\stm32\Material handling\Electronic control\User\control.h' has been changed.
+
+[2025-03-14 11:51:15]	[done]
+	build successfully !
+
+[2025-03-14 11:52:07]	[done]
+	build successfully !
+
+[2025-03-14 11:52:27]	[done]
+	build successfully !
+
+[2025-03-14 12:01:45]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Init.c': source file has been changed.
+
+[2025-03-14 12:01:46]	[done]
+	build successfully !
+
+[2025-03-14 12:02:20]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 12:02:20]	[done]
+	build successfully !
+
+[2025-03-14 12:02:42]	[info] incremental build: 1 source files changed
+These source files will be recompiled
+---
+'d:\project\stm32\Material handling\Electronic control\User\Control.c': source file has been changed.
+
+[2025-03-14 12:02:43]	[done]
+	build successfully !
+
